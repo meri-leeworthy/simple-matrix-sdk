@@ -38,7 +38,12 @@ export function login(username: string, password: string) {
       })
     });
     const data = await response.json();
-    return data;
+
+    if (!("access_token" in data)) {
+      throw new Error("No access token in response");
+    }
+
+    return data.access_token;
   }
 }
 
