@@ -9,7 +9,7 @@ const password = process.env.PASSWORD!;
 
 test("authenticated fetch returns something", async () => {
   const url = "https://matrix.org/_matrix/client/v3/joined_rooms";
-  const response = await authenticatedGet(accessToken)(url);
+  const response = await authenticatedGet(url, accessToken);
   // console.log(response);
   expect(response).toBeTruthy();
 })
@@ -20,7 +20,7 @@ test("authenticated put returns something", async () => {
     "msgtype": "m.text",
     "body": "Hello world"
   };
-  const response = await authenticatedPut(accessToken, body)(url);
+  const response = await authenticatedPut(url, accessToken, body);
   // console.log(response);
   expect(response).toBeTruthy();
 })
@@ -31,11 +31,32 @@ test("getJoinedRooms returns something", async () => {
   expect(response).toBeTruthy();
 })
 
-test("getRoomMessages returns something", async () => {
+test("getRoomMessagesOneShot returns something", async () => {
   const client = new Client(baseUrl, accessToken);
-  const response = await client.getRoomMessages(testRoomId);
-  // console.log(response);
+  const response = await client.getRoomMessagesOneShot(testRoomId);
+  console.log("getRoomMessagesOneShot: ", response);
   expect(response).toBeTruthy();
+})
+
+test("getRoomMessagesOneShotParams returns something", async () => {
+  const client = new Client(baseUrl, accessToken);
+  const response = await client.getRoomMessagesOneShotParams(testRoomId);
+  console.log("getRoomMessagesOneShotParams: ", response);
+  expect(response).toBeTruthy();
+})
+
+test("getRoomMessagesAsyncGenerator returns something", async () => {
+  const client = new Client(baseUrl, accessToken);
+  const messagesAsyncIterator = client.getRoomMessagesAsyncGenerator(testRoomId)();
+  const {chunk, end} = (await messagesAsyncIterator.next()).value;
+  console.log("getRoomMessage chunk: ", chunk);
+
+  //seems like this bit might not be working
+  const {chunk2, end2} = (await messagesAsyncIterator.next(end)).value
+  console.log("getRoomMessage chunk2: ", chunk2);
+  // console.log("getRoomMessages1: ", await response().next());
+  // console.log("getRoomMessages2: ", await response().next());
+  expect(chunk).toBeTruthy();
 })
 
 test("sendRoomMessage returns something", async () => {
@@ -47,6 +68,6 @@ test("sendRoomMessage returns something", async () => {
 
 test("login returns something", async () => {
   const response = await login(username, password)(baseUrl);
-  // console.log(response);
+  console.log(response);
   expect(response).toBeTruthy();
 })
