@@ -54,6 +54,7 @@ test("getRoomMessagesAsyncGenerator returns something", () => __awaiter(void 0, 
     const messagesAsyncIterator = client.getRoomMessagesAsyncGenerator(testRoomId)();
     const { chunk, end } = (yield messagesAsyncIterator.next()).value;
     console.log("getRoomMessage chunk: ", chunk);
+    //seems like this bit might not be working
     const { chunk2, end2 } = (yield messagesAsyncIterator.next(end)).value;
     console.log("getRoomMessage chunk2: ", chunk2);
     // console.log("getRoomMessages1: ", await response().next());
