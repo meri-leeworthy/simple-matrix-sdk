@@ -21,7 +21,7 @@ var __asyncGenerator = (this && this.__asyncGenerator) || function (thisArg, _ar
     function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Client = exports.login = exports.authenticatedPut = exports.authenticatedGet = void 0;
+exports.Room = exports.Client = exports.login = exports.authenticatedPut = exports.authenticatedGet = void 0;
 function authenticatedGet(url, accessToken, params) {
     return __awaiter(this, void 0, void 0, function* () {
         // return async function (url: string) {
@@ -58,27 +58,25 @@ function authenticatedPut(url, accessToken, body, params) {
     });
 }
 exports.authenticatedPut = authenticatedPut;
-function login(username, password) {
-    return function (baseUrl) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield fetch(`${baseUrl}/_matrix/client/v3/login`, {
-                method: 'POST',
-                body: JSON.stringify({
-                    type: 'm.login.password',
-                    identifier: {
-                        type: 'm.id.user',
-                        user: username
-                    },
-                    password: password
-                })
-            });
-            const data = yield response.json();
-            if (!("access_token" in data)) {
-                throw new Error("No access token in response");
-            }
-            return data.access_token;
+function login(baseUrl, username, password) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const response = yield fetch(`${baseUrl}/_matrix/client/v3/login`, {
+            method: 'POST',
+            body: JSON.stringify({
+                type: 'm.login.password',
+                identifier: {
+                    type: 'm.id.user',
+                    user: username
+                },
+                password: password
+            })
         });
-    };
+        const data = yield response.json();
+        if (!("access_token" in data)) {
+            throw new Error("No access token in response");
+        }
+        return data.access_token;
+    });
 }
 exports.login = login;
 // What do I want for this sdk?
@@ -107,23 +105,51 @@ class Client {
             return this.get('joined_rooms');
         });
     }
-    getRoomMessagesOneShot(roomId) {
+}
+exports.Client = Client;
+class Room {
+    constructor(roomId, client) {
+        this.roomId = roomId;
+        this.client = client;
+    }
+    useRoomName() {
+        return this.name;
+    }
+    useRoomID() {
+        return this.roomId;
+    }
+    getRoomName() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.get(`rooms/${roomId}/messages`);
+            const name = yield this.client.get(`rooms/${this.roomId}/state/m.room.name`);
+            this.name = name;
+            return name;
         });
     }
-    getRoomMessagesOneShotParams(roomId) {
+    getRoomState() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.get(`rooms/${roomId}/messages`, { dir: "b", limit: "10" });
+            const state = yield this.client.get(`rooms/${this.roomId}/state`);
+            const name = state.find(event => event.type === "m.room.name").content.name;
+            this.name = name;
+            return state;
+        });
+    }
+    getRoomMessagesOneShot() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.get(`rooms/${this.roomId}/messages`);
+        });
+    }
+    getRoomMessagesOneShotParams() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.get(`rooms/${this.roomId}/messages`, { dir: "b", limit: "10" });
         });
     }
     // returned async generator function produces an iterator with a provided endpoint parameter
     // the resulting iterator can be called repeatedly to paginate through the messages
-    getRoomMessagesAsyncGenerator(roomId, direction, limit) {
+    getRoomMessagesAsyncGenerator(direction, limit) {
         const dir = direction || "b";
-        const lim = limit || 5;
-        const accessToken = this.accessToken;
-        const url = this.buildUrl(`rooms/${roomId}/messages`);
+        const lim = limit || 100;
+        const accessToken = this.client.accessToken;
+        const url = this.client.buildUrl(`rooms/${this.roomId}/messages`);
         function messagesGenerator(end) {
             return __asyncGenerator(this, arguments, function* messagesGenerator_1() {
                 console.log("end", end);
@@ -143,10 +169,10 @@ class Client {
         }
         return messagesGenerator;
     }
-    sendRoomMessage(roomId, body) {
+    sendRoomMessage(body) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.put(`rooms/${roomId}/send/m.room.message/${Date.now()}`, body);
+            return this.client.put(`rooms/${this.roomId}/send/m.room.message/${Date.now()}`, body);
         });
     }
 }
-exports.Client = Client;
+exports.Room = Room;

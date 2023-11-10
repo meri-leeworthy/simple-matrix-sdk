@@ -34,27 +34,25 @@ export async function authenticatedPut(url: string, accessToken:string, body: an
   return data;
 }
 
-export function login(username: string, password: string) {
-  return async function (baseUrl: string) {
-    const response = await fetch(`${baseUrl}/_matrix/client/v3/login`, {
-      method: 'POST',
-      body: JSON.stringify({
-        type: 'm.login.password',
-        identifier: {
-          type: 'm.id.user',
-          user: username
-        },
-        password: password
-      })
-    });
-    const data = await response.json();
+export async function login(baseUrl: string, username: string, password: string) {
+  const response = await fetch(`${baseUrl}/_matrix/client/v3/login`, {
+    method: 'POST',
+    body: JSON.stringify({
+      type: 'm.login.password',
+      identifier: {
+        type: 'm.id.user',
+        user: username
+      },
+      password: password
+    })
+  });
+  const data = await response.json();
 
-    if (!("access_token" in data)) {
-      throw new Error("No access token in response");
-    }
-
-    return data.access_token;
+  if (!("access_token" in data)) {
+    throw new Error("No access token in response");
   }
+
+  return data.access_token;
 }
 
 // What do I want for this sdk?
@@ -66,7 +64,7 @@ export function login(username: string, password: string) {
 
 export class Client {
   private baseUrl: string;
-  private accessToken: string;
+  accessToken: string;
 
   constructor(baseUrl: string, accessToken: string) { 
     this.baseUrl = baseUrl;
@@ -88,23 +86,55 @@ export class Client {
   async getJoinedRooms(): Promise<{joined_rooms: string[]}> {
       return this.get('joined_rooms');
   }
+}
 
-  async getRoomMessagesOneShot(roomId: string): Promise<any> {
-    return this.get(`rooms/${roomId}/messages`);
+export class Room {
+  private roomId: string;
+  private client: Client;
+  private name?: string;
+
+  constructor(roomId: string, client: Client) {
+    this.roomId = roomId;
+    this.client = client;
   }
 
-  async getRoomMessagesOneShotParams(roomId: string): Promise<any> {
-    return this.get(`rooms/${roomId}/messages`, { dir: "b", limit: "10" });
+  useRoomName(): string | undefined {
+    return this.name;
+  }
+
+  useRoomID(): string {
+    return this.roomId;
+  }
+  
+  async getRoomName(): Promise<string> {
+    const name = await this.client.get(`rooms/${this.roomId}/state/m.room.name`)
+    this.name = name;
+    return name;
+  }
+
+  async getRoomState(): Promise<any> {
+    const state: any[] = await this.client.get(`rooms/${this.roomId}/state`);
+    const name = state.find(event => event.type === "m.room.name").content.name;
+    this.name = name;
+    return state;
+  }
+
+  async getRoomMessagesOneShot(): Promise<any> {
+    return this.client.get(`rooms/${this.roomId}/messages`);
+  }
+
+  async getRoomMessagesOneShotParams(): Promise<any> {
+    return this.client.get(`rooms/${this.roomId}/messages`, { dir: "b", limit: "10" });
   }
 
   // returned async generator function produces an iterator with a provided endpoint parameter
   // the resulting iterator can be called repeatedly to paginate through the messages
-  getRoomMessagesAsyncGenerator(roomId: string, direction?: "f" | "b", limit?: number): (end?: string) => AsyncGenerator<any, void, any> {
+  getRoomMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): (end?: string) => AsyncGenerator<any, void, any> {
     const dir = direction || "b";
-    const lim = limit || 5;
+    const lim = limit || 100;
 
-    const accessToken = this.accessToken;
-    const url = this.buildUrl(`rooms/${roomId}/messages`);
+    const accessToken = this.client.accessToken;
+    const url = this.client.buildUrl(`rooms/${this.roomId}/messages`);
 
     async function* messagesGenerator(end?: string) {
       console.log("end", end);
@@ -125,7 +155,7 @@ export class Client {
     return messagesGenerator;
   }
 
-  async sendRoomMessage(roomId: string, body: any): Promise<{event_id: string}> {
-    return this.put(`rooms/${roomId}/send/m.room.message/${Date.now()}`, body);
+  async sendRoomMessage(body: any): Promise<{event_id: string}> {
+    return this.client.put(`rooms/${this.roomId}/send/m.room.message/${Date.now()}`, body);
   }
 }

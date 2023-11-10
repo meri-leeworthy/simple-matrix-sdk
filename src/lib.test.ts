@@ -1,4 +1,4 @@
-import { authenticatedGet, authenticatedPut, login, Client } from './lib';
+import { authenticatedGet, authenticatedPut, login, Client, Room } from './lib';
 require('dotenv').config();
 
 const baseUrl = process.env.BASE_URL || "https://matrix.org";
@@ -33,21 +33,24 @@ test("getJoinedRooms returns something", async () => {
 
 test("getRoomMessagesOneShot returns something", async () => {
   const client = new Client(baseUrl, accessToken);
-  const response = await client.getRoomMessagesOneShot(testRoomId);
+  const room = new Room(testRoomId, client)
+  const response = await room.getRoomMessagesOneShot();
   console.log("getRoomMessagesOneShot: ", response);
   expect(response).toBeTruthy();
 })
 
 test("getRoomMessagesOneShotParams returns something", async () => {
   const client = new Client(baseUrl, accessToken);
-  const response = await client.getRoomMessagesOneShotParams(testRoomId);
+  const room = new Room(testRoomId, client)
+  const response = await room.getRoomMessagesOneShotParams();
   console.log("getRoomMessagesOneShotParams: ", response);
   expect(response).toBeTruthy();
 })
 
 test("getRoomMessagesAsyncGenerator returns something", async () => {
   const client = new Client(baseUrl, accessToken);
-  const messagesAsyncIterator = client.getRoomMessagesAsyncGenerator(testRoomId)();
+  const room = new Room(testRoomId, client)
+  const messagesAsyncIterator = room.getRoomMessagesAsyncGenerator()();
   const {chunk, end} = (await messagesAsyncIterator.next()).value;
   console.log("getRoomMessage chunk: ", chunk);
 
@@ -61,13 +64,14 @@ test("getRoomMessagesAsyncGenerator returns something", async () => {
 
 test("sendRoomMessage returns something", async () => {
   const client = new Client(baseUrl, accessToken);
-  const response = await client.sendRoomMessage(testRoomId, "Hello world");
+  const room = new Room(testRoomId, client)
+  const response = await room.sendRoomMessage("Hello world");
   // console.log(response);
   expect(response).toBeTruthy();
 })
 
 test("login returns something", async () => {
-  const response = await login(username, password)(baseUrl);
+  const response = await login(baseUrl, username, password);
   console.log(response);
   expect(response).toBeTruthy();
 })

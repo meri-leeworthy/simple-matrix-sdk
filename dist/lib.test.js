@@ -39,19 +39,22 @@ test("getJoinedRooms returns something", () => __awaiter(void 0, void 0, void 0,
 }));
 test("getRoomMessagesOneShot returns something", () => __awaiter(void 0, void 0, void 0, function* () {
     const client = new lib_1.Client(baseUrl, accessToken);
-    const response = yield client.getRoomMessagesOneShot(testRoomId);
+    const room = new lib_1.Room(testRoomId, client);
+    const response = yield room.getRoomMessagesOneShot();
     console.log("getRoomMessagesOneShot: ", response);
     expect(response).toBeTruthy();
 }));
 test("getRoomMessagesOneShotParams returns something", () => __awaiter(void 0, void 0, void 0, function* () {
     const client = new lib_1.Client(baseUrl, accessToken);
-    const response = yield client.getRoomMessagesOneShotParams(testRoomId);
+    const room = new lib_1.Room(testRoomId, client);
+    const response = yield room.getRoomMessagesOneShotParams();
     console.log("getRoomMessagesOneShotParams: ", response);
     expect(response).toBeTruthy();
 }));
 test("getRoomMessagesAsyncGenerator returns something", () => __awaiter(void 0, void 0, void 0, function* () {
     const client = new lib_1.Client(baseUrl, accessToken);
-    const messagesAsyncIterator = client.getRoomMessagesAsyncGenerator(testRoomId)();
+    const room = new lib_1.Room(testRoomId, client);
+    const messagesAsyncIterator = room.getRoomMessagesAsyncGenerator()();
     const { chunk, end } = (yield messagesAsyncIterator.next()).value;
     console.log("getRoomMessage chunk: ", chunk);
     //seems like this bit might not be working
@@ -63,12 +66,13 @@ test("getRoomMessagesAsyncGenerator returns something", () => __awaiter(void 0, 
 }));
 test("sendRoomMessage returns something", () => __awaiter(void 0, void 0, void 0, function* () {
     const client = new lib_1.Client(baseUrl, accessToken);
-    const response = yield client.sendRoomMessage(testRoomId, "Hello world");
+    const room = new lib_1.Room(testRoomId, client);
+    const response = yield room.sendRoomMessage("Hello world");
     // console.log(response);
     expect(response).toBeTruthy();
 }));
 test("login returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const response = yield (0, lib_1.login)(username, password)(baseUrl);
+    const response = yield (0, lib_1.login)(baseUrl, username, password);
     console.log(response);
     expect(response).toBeTruthy();
 }));

@@ -1,1 +1,1 @@
-export { Client, authenticatedGet, authenticatedPut, login } from "./lib";
+export { Client, Room, authenticatedGet, authenticatedPut, login } from "./lib";
