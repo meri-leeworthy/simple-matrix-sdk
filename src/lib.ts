@@ -107,7 +107,7 @@ export class Room {
   }
   
   async getRoomName(): Promise<string> {
-    const name = await this.client.get(`rooms/${this.roomId}/state/m.room.name`)
+    const name: string = await this.client.get(`rooms/${this.roomId}/state/m.room.name`)
     this.name = name;
     return name;
   }
