@@ -1,11 +1,22 @@
 type Params = Record<string, string>;
-export declare function authenticatedGet(url: string, accessToken: string, params?: Params): Promise<any>;
-export declare function authenticatedPut(url: string, accessToken: string, body: any, params?: Params): Promise<any>;
-export declare function login(baseUrl: string, username: string, password: string): Promise<any>;
+export type Event = Record<string, any> & {
+    type: string;
+    content?: Record<string, any> & {
+        body?: string;
+    };
+    sender?: any;
+    room_id: string;
+    event_id: string;
+    origin_server_ts: number;
+    unsigned?: any;
+};
 export declare class Client {
     private baseUrl;
     accessToken: string;
     constructor(baseUrl: string, accessToken: string);
+    static authenticatedGet(url: string, accessToken: string, params?: Params): Promise<any>;
+    static authenticatedPut(url: string, accessToken: string, body: any, params?: Params): Promise<any>;
+    static login(baseUrl: string, username: string, password: string): Promise<any>;
     buildUrl(endpoint: string): string;
     get(endpoint: string, params?: Params): Promise<any>;
     put(endpoint: string, body: any, params?: Params): Promise<any>;
@@ -18,15 +29,19 @@ export declare class Room {
     private client;
     private name?;
     constructor(roomId: string, client: Client);
-    useRoomName(): string | undefined;
-    useRoomID(): string;
-    getRoomName(): Promise<string>;
-    getRoomState(): Promise<any>;
-    getRoomMessagesOneShot(): Promise<any>;
-    getRoomMessagesOneShotParams(): Promise<any>;
-    getRoomMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): (end?: string) => AsyncGenerator<any, void, any>;
-    sendRoomMessage(body: any): Promise<{
+    useName(): {
+        name: string;
+    } | undefined;
+    useID(): string;
+    getName(): Promise<unknown>;
+    getState(): Promise<any>;
+    getMessagesOneShot(): Promise<any>;
+    getMessagesOneShotParams(): Promise<any>;
+    getMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): (end?: string) => AsyncGenerator<any, void, any>;
+    sendMessage(body: any): Promise<{
         event_id: string;
     }>;
+    getType(): Promise<string | undefined>;
+    static sortEvents(events: Event[]): Record<string, Event[]>;
 }
 export {};

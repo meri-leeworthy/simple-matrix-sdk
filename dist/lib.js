@@ -21,64 +21,7 @@ var __asyncGenerator = (this && this.__asyncGenerator) || function (thisArg, _ar
     function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Room = exports.Client = exports.login = exports.authenticatedPut = exports.authenticatedGet = void 0;
-function authenticatedGet(url, accessToken, params) {
-    return __awaiter(this, void 0, void 0, function* () {
-        // return async function (url: string) {
-        if (params) {
-            const paramsString = new URLSearchParams(params).toString();
-            url = `${url}?${paramsString}`;
-        }
-        const response = yield fetch(url, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
-        const data = yield response.json();
-        return data;
-        // }
-    });
-}
-exports.authenticatedGet = authenticatedGet;
-function authenticatedPut(url, accessToken, body, params) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (params) {
-            const paramsString = new URLSearchParams(params).toString();
-            url = `${url}?${paramsString}`;
-        }
-        const response = yield fetch(url, {
-            method: 'PUT',
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            },
-            body: JSON.stringify(body)
-        });
-        const data = yield response.json();
-        return data;
-    });
-}
-exports.authenticatedPut = authenticatedPut;
-function login(baseUrl, username, password) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const response = yield fetch(`${baseUrl}/_matrix/client/v3/login`, {
-            method: 'POST',
-            body: JSON.stringify({
-                type: 'm.login.password',
-                identifier: {
-                    type: 'm.id.user',
-                    user: username
-                },
-                password: password
-            })
-        });
-        const data = yield response.json();
-        if (!("access_token" in data)) {
-            throw new Error("No access token in response");
-        }
-        return data.access_token;
-    });
-}
-exports.login = login;
+exports.Room = exports.Client = void 0;
 // What do I want for this sdk?
 // 1. A way to get a list of all the rooms I'm in
 // 2. A way to get a list of all the messages in a room
@@ -89,16 +32,70 @@ class Client {
         this.baseUrl = baseUrl;
         this.accessToken = accessToken;
     }
+    static authenticatedGet(url, accessToken, params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // return async function (url: string) {
+            if (params) {
+                const paramsString = new URLSearchParams(params).toString();
+                url = `${url}?${paramsString}`;
+            }
+            const response = yield fetch(url, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
+            const data = yield response.json();
+            return data;
+            // }
+        });
+    }
+    static authenticatedPut(url, accessToken, body, params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (params) {
+                const paramsString = new URLSearchParams(params).toString();
+                url = `${url}?${paramsString}`;
+            }
+            const response = yield fetch(url, {
+                method: 'PUT',
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                },
+                body: JSON.stringify(body)
+            });
+            const data = yield response.json();
+            return data;
+        });
+    }
+    static login(baseUrl, username, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch(`${baseUrl}/_matrix/client/v3/login`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    type: 'm.login.password',
+                    identifier: {
+                        type: 'm.id.user',
+                        user: username
+                    },
+                    password: password
+                })
+            });
+            const data = yield response.json();
+            if (!("access_token" in data)) {
+                throw new Error("No access token in response");
+            }
+            return data.access_token;
+        });
+    }
     buildUrl(endpoint) {
         return `${this.baseUrl}/_matrix/client/v3/${endpoint}`;
     }
     get(endpoint, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield authenticatedGet(this.buildUrl(endpoint), this.accessToken, params);
+            return yield Client.authenticatedGet(this.buildUrl(endpoint), this.accessToken, params);
         });
     }
     put(endpoint, body, params) {
-        return authenticatedPut(this.buildUrl(endpoint), this.accessToken, body, params);
+        return Client.authenticatedPut(this.buildUrl(endpoint), this.accessToken, body, params);
     }
     getJoinedRooms() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -112,20 +109,20 @@ class Room {
         this.roomId = roomId;
         this.client = client;
     }
-    useRoomName() {
+    useName() {
         return this.name;
     }
-    useRoomID() {
+    useID() {
         return this.roomId;
     }
-    getRoomName() {
+    getName() {
         return __awaiter(this, void 0, void 0, function* () {
             const name = yield this.client.get(`rooms/${this.roomId}/state/m.room.name`);
             this.name = name;
             return name;
         });
     }
-    getRoomState() {
+    getState() {
         return __awaiter(this, void 0, void 0, function* () {
             const state = yield this.client.get(`rooms/${this.roomId}/state`);
             const name = state.find(event => event.type === "m.room.name").content.name;
@@ -133,32 +130,32 @@ class Room {
             return state;
         });
     }
-    getRoomMessagesOneShot() {
+    getMessagesOneShot() {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.get(`rooms/${this.roomId}/messages`);
         });
     }
-    getRoomMessagesOneShotParams() {
+    getMessagesOneShotParams() {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.get(`rooms/${this.roomId}/messages`, { dir: "b", limit: "10" });
         });
     }
     // returned async generator function produces an iterator with a provided endpoint parameter
     // the resulting iterator can be called repeatedly to paginate through the messages
-    getRoomMessagesAsyncGenerator(direction, limit) {
+    getMessagesAsyncGenerator(direction, limit) {
         const dir = direction || "b";
         const lim = limit || 100;
         const accessToken = this.client.accessToken;
         const url = this.client.buildUrl(`rooms/${this.roomId}/messages`);
         function messagesGenerator(end) {
             return __asyncGenerator(this, arguments, function* messagesGenerator_1() {
-                console.log("end", end);
+                // console.log("end", end);
                 while (true) {
                     const params = { dir, limit: `${lim}` };
                     if (end) {
                         params.from = end;
                     }
-                    const response = yield __await(authenticatedGet(url, accessToken, params));
+                    const response = yield __await(Client.authenticatedGet(url, accessToken, params));
                     if (!("end" in response)) {
                         break;
                     }
@@ -169,10 +166,26 @@ class Room {
         }
         return messagesGenerator;
     }
-    sendRoomMessage(body) {
+    sendMessage(body) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`rooms/${this.roomId}/send/m.room.message/${Date.now()}`, body);
         });
+    }
+    getType() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const roomCreateEvent = yield this.client.get(`rooms/${this.roomId}/state`); // is this right?
+            return roomCreateEvent.type;
+        });
+    }
+    static sortEvents(events) {
+        const sortedEvents = {};
+        events.forEach(event => {
+            if (!(event.type in sortedEvents)) {
+                sortedEvents[event.type] = [];
+            }
+            sortedEvents[event.type].push(event);
+        });
+        return sortedEvents;
     }
 }
 exports.Room = Room;
