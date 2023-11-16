@@ -98,9 +98,8 @@ export class Client {
       return this.get('joined_rooms');
   }
 
-  async getProfile(): Promise<{displayname: string}> {
-    const profile = await this.get('profile');
-    console.log("profile", profile);
+  async getProfile(userId: string): Promise<{displayname: string}> {
+    const profile = await this.get(`profile/${userId}/displayname`);
     return profile;
   }
 }

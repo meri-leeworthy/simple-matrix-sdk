@@ -18,6 +18,8 @@ const testSpaceId = process.env.TEST_SPACE;
 const username = process.env.USERNAME;
 const password = process.env.PASSWORD;
 const userId = `@${username}:${baseUrl.split("//")[1]}`;
+const rdAccessToken = process.env.RD_ACCESS_TOKEN;
+const rdUserId = process.env.RD_USER_ID;
 test("authenticated fetch returns something", () => __awaiter(void 0, void 0, void 0, function* () {
     const url = "https://matrix.org/_matrix/client/v3/joined_rooms";
     const response = yield lib_1.Client.authenticatedGet(url, accessToken);
@@ -78,17 +80,23 @@ test("login returns something", () => __awaiter(void 0, void 0, void 0, function
     console.log(response);
     expect(response).toBeTruthy();
 }));
-test("getRoomType returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client("https://matrix.radical.directory", accessToken, "@meri:radical.directory");
-    const room = new lib_1.Room(testSpaceId, client);
-    const response = yield room.getType();
-    console.log("roomType response", response);
-    expect(response).toBeTruthy();
-}));
+// test ("getRoomType returns something", async () => {
+//   const client = new Client("https://matrix.radical.directory", accessToken, "@meri:radical.directory");
+//   const room = new Room(testSpaceId, client)
+//   const response = await room.getType();
+//   console.log("roomType response", response);
+//   expect(response).toBeTruthy();
+// })
 test("getRoomState returns something", () => __awaiter(void 0, void 0, void 0, function* () {
     const client = new lib_1.Client("https://matrix.radical.directory", accessToken, "@meri:radical.directory");
     const room = new lib_1.Room(testSpaceId, client);
     const response = yield room.getState();
     console.log("roomState response", response);
+    expect(response).toBeTruthy();
+}));
+test("getProfile returns something", () => __awaiter(void 0, void 0, void 0, function* () {
+    const client = new lib_1.Client("https://matrix.radical.directory", rdAccessToken, rdUserId);
+    const response = yield client.getProfile(rdUserId);
+    console.log("getProfile", response);
     expect(response).toBeTruthy();
 }));

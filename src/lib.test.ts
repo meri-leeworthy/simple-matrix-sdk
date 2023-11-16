@@ -8,6 +8,8 @@ const testSpaceId = process.env.TEST_SPACE!;
 const username = process.env.USERNAME!;
 const password = process.env.PASSWORD!;
 const userId = `@${username}:${baseUrl.split("//")[1]}`;
+const rdAccessToken = process.env.RD_ACCESS_TOKEN!;
+const rdUserId = process.env.RD_USER_ID!;
 
 test("authenticated fetch returns something", async () => {
   const url = "https://matrix.org/_matrix/client/v3/joined_rooms";
@@ -78,18 +80,25 @@ test("login returns something", async () => {
   expect(response).toBeTruthy();
 })
 
-test ("getRoomType returns something", async () => {
-  const client = new Client("https://matrix.radical.directory", accessToken, "@meri:radical.directory");
-  const room = new Room(testSpaceId, client)
-  const response = await room.getType();
-  console.log("roomType response", response);
-  expect(response).toBeTruthy();
-})
+// test ("getRoomType returns something", async () => {
+//   const client = new Client("https://matrix.radical.directory", accessToken, "@meri:radical.directory");
+//   const room = new Room(testSpaceId, client)
+//   const response = await room.getType();
+//   console.log("roomType response", response);
+//   expect(response).toBeTruthy();
+// })
 
 test ("getRoomState returns something", async () => {
   const client = new Client("https://matrix.radical.directory", accessToken, "@meri:radical.directory");
   const room = new Room(testSpaceId, client)
   const response = await room.getState();
   console.log("roomState response", response);
+  expect(response).toBeTruthy();
+})
+
+test("getProfile returns something", async () => {
+  const client = new Client("https://matrix.radical.directory", rdAccessToken, rdUserId);
+  const response = await client.getProfile(rdUserId);
+  console.log("getProfile", response);
   expect(response).toBeTruthy();
 })

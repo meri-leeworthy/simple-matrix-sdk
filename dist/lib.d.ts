@@ -24,7 +24,7 @@ export declare class Client {
     getJoinedRooms(): Promise<{
         joined_rooms: string[];
     }>;
-    getProfile(): Promise<{
+    getProfile(userId: string): Promise<{
         displayname: string;
     }>;
 }
