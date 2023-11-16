@@ -13,7 +13,8 @@ export type Event = Record<string, any> & {
 export declare class Client {
     private baseUrl;
     accessToken: string;
-    constructor(baseUrl: string, accessToken: string);
+    private userId;
+    constructor(baseUrl: string, accessToken: string, userId: string);
     static authenticatedGet(url: string, accessToken: string, params?: Params): Promise<any>;
     static authenticatedPut(url: string, accessToken: string, body: any, params?: Params): Promise<any>;
     static login(baseUrl: string, username: string, password: string): Promise<any>;

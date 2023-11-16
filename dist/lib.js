@@ -28,9 +28,10 @@ exports.Room = exports.Client = void 0;
 // 3. A way to send a message to a room
 // 4. A way to get a list of all the users in a room
 class Client {
-    constructor(baseUrl, accessToken) {
+    constructor(baseUrl, accessToken, userId) {
         this.baseUrl = baseUrl;
         this.accessToken = accessToken;
+        this.userId = userId;
     }
     static authenticatedGet(url, accessToken, params) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -132,8 +133,8 @@ class Room {
     getState() {
         return __awaiter(this, void 0, void 0, function* () {
             const state = yield this.client.get(`rooms/${this.roomId}/state`);
-            const name = state.find(event => event.type === "m.room.name").content.name;
-            this.name = name;
+            // const name = state.find(event => event.type === "m.room.name").content.name;
+            // this.name = name; 
             return state;
         });
     }

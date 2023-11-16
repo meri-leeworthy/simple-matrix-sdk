@@ -17,6 +17,7 @@ const testRoomId = process.env.TEST_ROOM;
 const testSpaceId = process.env.TEST_SPACE;
 const username = process.env.USERNAME;
 const password = process.env.PASSWORD;
+const userId = `@${username}:${baseUrl.split("//")[1]}`;
 test("authenticated fetch returns something", () => __awaiter(void 0, void 0, void 0, function* () {
     const url = "https://matrix.org/_matrix/client/v3/joined_rooms";
     const response = yield lib_1.Client.authenticatedGet(url, accessToken);
@@ -34,26 +35,26 @@ test("authenticated put returns something", () => __awaiter(void 0, void 0, void
     expect(response).toBeTruthy();
 }));
 test("getJoinedRooms returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client(baseUrl, accessToken);
+    const client = new lib_1.Client(baseUrl, accessToken, userId);
     const response = yield client.getJoinedRooms();
     expect(response).toBeTruthy();
 }));
 test("getRoomMessagesOneShot returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client(baseUrl, accessToken);
+    const client = new lib_1.Client(baseUrl, accessToken, userId);
     const room = new lib_1.Room(testRoomId, client);
     const response = yield room.getMessagesOneShot();
     // console.log("getRoomMessagesOneShot: ", response);
     expect(response).toBeTruthy();
 }));
 test("getRoomMessagesOneShotParams returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client(baseUrl, accessToken);
+    const client = new lib_1.Client(baseUrl, accessToken, userId);
     const room = new lib_1.Room(testRoomId, client);
     const response = yield room.getMessagesOneShotParams();
     // console.log("getRoomMessagesOneShotParams: ", response);
     expect(response).toBeTruthy();
 }));
 test("getRoomMessagesAsyncGenerator returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client(baseUrl, accessToken);
+    const client = new lib_1.Client(baseUrl, accessToken, userId);
     const room = new lib_1.Room(testRoomId, client);
     const messagesAsyncIterator = room.getMessagesAsyncGenerator()();
     const { chunk, end } = (yield messagesAsyncIterator.next()).value;
@@ -66,7 +67,7 @@ test("getRoomMessagesAsyncGenerator returns something", () => __awaiter(void 0, 
     expect(chunk).toBeTruthy();
 }));
 test("sendRoomMessage returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client(baseUrl, accessToken);
+    const client = new lib_1.Client(baseUrl, accessToken, userId);
     const room = new lib_1.Room(testRoomId, client);
     const response = yield room.sendMessage("Hello world");
     // console.log(response);
@@ -78,14 +79,14 @@ test("login returns something", () => __awaiter(void 0, void 0, void 0, function
     expect(response).toBeTruthy();
 }));
 test("getRoomType returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client("https://matrix.radical.directory", accessToken);
+    const client = new lib_1.Client("https://matrix.radical.directory", accessToken, "@meri:radical.directory");
     const room = new lib_1.Room(testSpaceId, client);
     const response = yield room.getType();
     console.log("roomType response", response);
     expect(response).toBeTruthy();
 }));
 test("getRoomState returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client("https://matrix.radical.directory", accessToken);
+    const client = new lib_1.Client("https://matrix.radical.directory", accessToken, "@meri:radical.directory");
     const room = new lib_1.Room(testSpaceId, client);
     const response = yield room.getState();
     console.log("roomState response", response);
