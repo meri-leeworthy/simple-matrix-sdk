@@ -15,6 +15,7 @@ export declare class Client {
     accessToken: string;
     private userId;
     constructor(baseUrl: string, accessToken: string, userId: string);
+    useUserId(): string;
     static authenticatedGet(url: string, accessToken: string, params?: Params): Promise<any>;
     static authenticatedPut(url: string, accessToken: string, body: any, params?: Params): Promise<any>;
     static login(baseUrl: string, username: string, password: string): Promise<any>;

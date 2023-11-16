@@ -33,6 +33,9 @@ class Client {
         this.accessToken = accessToken;
         this.userId = userId;
     }
+    useUserId() {
+        return this.userId;
+    }
     static authenticatedGet(url, accessToken, params) {
         return __awaiter(this, void 0, void 0, function* () {
             // return async function (url: string) {
@@ -42,8 +45,8 @@ class Client {
             }
             const response = yield fetch(url, {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`
-                }
+                    Authorization: `Bearer ${accessToken}`,
+                },
             });
             const data = yield response.json();
             return data;
@@ -57,11 +60,11 @@ class Client {
                 url = `${url}?${paramsString}`;
             }
             const response = yield fetch(url, {
-                method: 'PUT',
+                method: "PUT",
                 headers: {
-                    Authorization: `Bearer ${accessToken}`
+                    Authorization: `Bearer ${accessToken}`,
                 },
-                body: JSON.stringify(body)
+                body: JSON.stringify(body),
             });
             const data = yield response.json();
             return data;
@@ -70,15 +73,15 @@ class Client {
     static login(baseUrl, username, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield fetch(`${baseUrl}/_matrix/client/v3/login`, {
-                method: 'POST',
+                method: "POST",
                 body: JSON.stringify({
-                    type: 'm.login.password',
+                    type: "m.login.password",
                     identifier: {
-                        type: 'm.id.user',
-                        user: username
+                        type: "m.id.user",
+                        user: username,
                     },
-                    password: password
-                })
+                    password: password,
+                }),
             });
             const data = yield response.json();
             if (!("access_token" in data)) {
@@ -100,7 +103,7 @@ class Client {
     }
     getJoinedRooms() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.get('joined_rooms');
+            return this.get("joined_rooms");
         });
     }
     getProfile(userId) {
@@ -133,7 +136,7 @@ class Room {
         return __awaiter(this, void 0, void 0, function* () {
             const state = yield this.client.get(`rooms/${this.roomId}/state`);
             // const name = state.find(event => event.type === "m.room.name").content.name;
-            // this.name = name; 
+            // this.name = name;
             return state;
         });
     }
@@ -144,7 +147,10 @@ class Room {
     }
     getMessagesOneShotParams() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.get(`rooms/${this.roomId}/messages`, { dir: "b", limit: "10" });
+            return this.client.get(`rooms/${this.roomId}/messages`, {
+                dir: "b",
+                limit: "10",
+            });
         });
     }
     // returned async generator function produces an iterator with a provided endpoint parameter

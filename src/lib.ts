@@ -1,7 +1,7 @@
-type Params = Record<string, string>;
+type Params = Record<string, string>
 export type Event = Record<string, any> & {
   type: string
-  content?: Record<string,any> & {body?: string}
+  content?: Record<string, any> & { body?: string }
   sender?: any
   room_id: string
   event_id: string
@@ -17,140 +17,170 @@ export type Event = Record<string, any> & {
 // 4. A way to get a list of all the users in a room
 
 export class Client {
-  private baseUrl: string;
-  accessToken: string;
-  private userId: string;
+  private baseUrl: string
+  accessToken: string
+  private userId: string
 
-  constructor(baseUrl: string, accessToken: string, userId: string) { 
-    this.baseUrl = baseUrl;
-    this.accessToken = accessToken;
-    this.userId = userId;
+  constructor(baseUrl: string, accessToken: string, userId: string) {
+    this.baseUrl = baseUrl
+    this.accessToken = accessToken
+    this.userId = userId
   }
 
-  static async authenticatedGet(url: string, accessToken: string, params?: Params) {
+  useUserId(): string {
+    return this.userId
+  }
+
+  static async authenticatedGet(
+    url: string,
+    accessToken: string,
+    params?: Params
+  ) {
     // return async function (url: string) {
-      if (params) {
-        const paramsString = new URLSearchParams(params).toString();
-        url = `${url}?${paramsString}`;
-      }
-  
-      const response = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      });
-  
-      const data = await response.json();
-      return data;
+    if (params) {
+      const paramsString = new URLSearchParams(params).toString()
+      url = `${url}?${paramsString}`
+    }
+
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+
+    const data = await response.json()
+    return data
     // }
   }
-  
-  static async authenticatedPut(url: string, accessToken:string, body: any, params?: Params) {
+
+  static async authenticatedPut(
+    url: string,
+    accessToken: string,
+    body: any,
+    params?: Params
+  ) {
     if (params) {
-      const paramsString = new URLSearchParams(params).toString();
-      url = `${url}?${paramsString}`;
+      const paramsString = new URLSearchParams(params).toString()
+      url = `${url}?${paramsString}`
     }
     const response = await fetch(url, {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(body)
-    });
-    const data = await response.json();
-    return data;
+      body: JSON.stringify(body),
+    })
+    const data = await response.json()
+    return data
   }
-  
+
   static async login(baseUrl: string, username: string, password: string) {
     const response = await fetch(`${baseUrl}/_matrix/client/v3/login`, {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
-        type: 'm.login.password',
+        type: "m.login.password",
         identifier: {
-          type: 'm.id.user',
-          user: username
+          type: "m.id.user",
+          user: username,
         },
-        password: password
-      })
-    });
-    const data = await response.json();
-  
+        password: password,
+      }),
+    })
+    const data = await response.json()
+
     if (!("access_token" in data)) {
-      throw new Error("No access token in response");
+      throw new Error("No access token in response")
     }
-  
-    return data.access_token;
+
+    return data.access_token
   }
 
   buildUrl(endpoint: string) {
-    return `${this.baseUrl}/_matrix/client/v3/${endpoint}`;
+    return `${this.baseUrl}/_matrix/client/v3/${endpoint}`
   }
 
   async get(endpoint: string, params?: Params) {
-    return await Client.authenticatedGet(this.buildUrl(endpoint), this.accessToken, params);
+    return await Client.authenticatedGet(
+      this.buildUrl(endpoint),
+      this.accessToken,
+      params
+    )
   }
 
   put(endpoint: string, body: any, params?: Params) {
-    return Client.authenticatedPut(this.buildUrl(endpoint), this.accessToken, body, params);
+    return Client.authenticatedPut(
+      this.buildUrl(endpoint),
+      this.accessToken,
+      body,
+      params
+    )
   }
 
-  async getJoinedRooms(): Promise<{joined_rooms: string[]}> {
-      return this.get('joined_rooms');
+  async getJoinedRooms(): Promise<{ joined_rooms: string[] }> {
+    return this.get("joined_rooms")
   }
 
-  async getProfile(userId: string): Promise<{displayname: string}> {
-    const profile = await this.get(`profile/${userId}/displayname`);
-    return profile;
+  async getProfile(userId: string): Promise<{ displayname: string }> {
+    const profile = await this.get(`profile/${userId}/displayname`)
+    return profile
   }
 }
 
 export class Room {
-  private roomId: string;
-  private client: Client;
-  private name?: {name:string};
+  private roomId: string
+  private client: Client
+  private name?: { name: string }
 
   constructor(roomId: string, client: Client) {
-    this.roomId = roomId;
-    this.client = client;
+    this.roomId = roomId
+    this.client = client
   }
 
-  useName(): {name:string} | undefined {
-    return this.name;
+  useName(): { name: string } | undefined {
+    return this.name
   }
 
   useID(): string {
-    return this.roomId;
+    return this.roomId
   }
-  
+
   async getName(): Promise<unknown> {
-    const name: {name: string} = await this.client.get(`rooms/${this.roomId}/state/m.room.name`)
-    this.name = name;
+    const name: { name: string } = await this.client.get(
+      `rooms/${this.roomId}/state/m.room.name`
+    )
+    this.name = name
     return name
   }
 
   async getState(): Promise<any> {
-    const state: any[] = await this.client.get(`rooms/${this.roomId}/state`);
+    const state: any[] = await this.client.get(`rooms/${this.roomId}/state`)
     // const name = state.find(event => event.type === "m.room.name").content.name;
-    // this.name = name; 
-    return state;
+    // this.name = name;
+    return state
   }
 
   async getMessagesOneShot(): Promise<any> {
-    return this.client.get(`rooms/${this.roomId}/messages`);
+    return this.client.get(`rooms/${this.roomId}/messages`)
   }
 
   async getMessagesOneShotParams(): Promise<any> {
-    return this.client.get(`rooms/${this.roomId}/messages`, { dir: "b", limit: "10" });
+    return this.client.get(`rooms/${this.roomId}/messages`, {
+      dir: "b",
+      limit: "10",
+    })
   }
 
   // returned async generator function produces an iterator with a provided endpoint parameter
   // the resulting iterator can be called repeatedly to paginate through the messages
-  getMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): (end?: string) => AsyncGenerator<any, void, any> {
-    const dir = direction || "b";
-    const lim = limit || 100;
+  getMessagesAsyncGenerator(
+    direction?: "f" | "b",
+    limit?: number
+  ): (end?: string) => AsyncGenerator<any, void, any> {
+    const dir = direction || "b"
+    const lim = limit || 100
 
-    const accessToken = this.client.accessToken;
-    const url = this.client.buildUrl(`rooms/${this.roomId}/messages`);
+    const accessToken = this.client.accessToken
+    const url = this.client.buildUrl(`rooms/${this.roomId}/messages`)
 
     async function* messagesGenerator(end?: string) {
       // console.log("end", end);
@@ -158,36 +188,41 @@ export class Room {
       while (true) {
         const params: Params = { dir, limit: `${lim}` }
         if (end) {
-          params.from = end;
+          params.from = end
         }
-        const response = await Client.authenticatedGet(url, accessToken, params);
+        const response = await Client.authenticatedGet(url, accessToken, params)
         if (!("end" in response)) {
-          break;
+          break
         }
-        yield response;
-        end = response.end;
+        yield response
+        end = response.end
       }
     }
-    return messagesGenerator;
+    return messagesGenerator
   }
 
-  async sendMessage(body: any): Promise<{event_id: string}> {
-    return this.client.put(`rooms/${this.roomId}/send/m.room.message/${Date.now()}`, body);
+  async sendMessage(body: any): Promise<{ event_id: string }> {
+    return this.client.put(
+      `rooms/${this.roomId}/send/m.room.message/${Date.now()}`,
+      body
+    )
   }
 
-  async getType(): Promise<string|undefined> {
-    const roomCreateEvent: {type?: string} = await this.client.get(`rooms/${this.roomId}/state`); // is this right?
-    return roomCreateEvent.type;
+  async getType(): Promise<string | undefined> {
+    const roomCreateEvent: { type?: string } = await this.client.get(
+      `rooms/${this.roomId}/state`
+    ) // is this right?
+    return roomCreateEvent.type
   }
 
   static sortEvents(events: Event[]): Record<string, Event[]> {
-    const sortedEvents: Record<string, Event[]> = {};
+    const sortedEvents: Record<string, Event[]> = {}
     events.forEach(event => {
       if (!(event.type in sortedEvents)) {
-        sortedEvents[event.type] = [];
+        sortedEvents[event.type] = []
       }
-      sortedEvents[event.type].push(event);
-    });
-    return sortedEvents;
+      sortedEvents[event.type].push(event)
+    })
+    return sortedEvents
   }
 }
