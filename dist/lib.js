@@ -102,6 +102,13 @@ class Client {
             return this.get('joined_rooms');
         });
     }
+    getProfile() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const profile = yield this.get('profile');
+            console.log("profile", profile);
+            return profile;
+        });
+    }
 }
 exports.Client = Client;
 class Room {

@@ -23,6 +23,9 @@ export declare class Client {
     getJoinedRooms(): Promise<{
         joined_rooms: string[];
     }>;
+    getProfile(): Promise<{
+        displayname: string;
+    }>;
 }
 export declare class Room {
     private roomId;

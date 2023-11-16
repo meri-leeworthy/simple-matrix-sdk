@@ -7,6 +7,7 @@ const testRoomId = process.env.TEST_ROOM!;
 const testSpaceId = process.env.TEST_SPACE!;
 const username = process.env.USERNAME!;
 const password = process.env.PASSWORD!;
+const userId = `@${username}:${baseUrl.split("//")[1]}`;
 
 test("authenticated fetch returns something", async () => {
   const url = "https://matrix.org/_matrix/client/v3/joined_rooms";
@@ -27,13 +28,13 @@ test("authenticated put returns something", async () => {
 })
 
 test("getJoinedRooms returns something", async () => {
-  const client = new Client(baseUrl, accessToken);
+  const client = new Client(baseUrl, accessToken, userId);
   const response = await client.getJoinedRooms();
   expect(response).toBeTruthy();
 })
 
 test("getRoomMessagesOneShot returns something", async () => {
-  const client = new Client(baseUrl, accessToken);
+  const client = new Client(baseUrl, accessToken, userId);
   const room = new Room(testRoomId, client)
   const response = await room.getMessagesOneShot();
   // console.log("getRoomMessagesOneShot: ", response);
@@ -41,7 +42,7 @@ test("getRoomMessagesOneShot returns something", async () => {
 })
 
 test("getRoomMessagesOneShotParams returns something", async () => {
-  const client = new Client(baseUrl, accessToken);
+  const client = new Client(baseUrl, accessToken, userId);
   const room = new Room(testRoomId, client)
   const response = await room.getMessagesOneShotParams();
   // console.log("getRoomMessagesOneShotParams: ", response);
@@ -49,7 +50,7 @@ test("getRoomMessagesOneShotParams returns something", async () => {
 })
 
 test("getRoomMessagesAsyncGenerator returns something", async () => {
-  const client = new Client(baseUrl, accessToken);
+  const client = new Client(baseUrl, accessToken, userId);
   const room = new Room(testRoomId, client)
   const messagesAsyncIterator = room.getMessagesAsyncGenerator()();
   const {chunk, end} = (await messagesAsyncIterator.next()).value;
@@ -64,7 +65,7 @@ test("getRoomMessagesAsyncGenerator returns something", async () => {
 })
 
 test("sendRoomMessage returns something", async () => {
-  const client = new Client(baseUrl, accessToken);
+  const client = new Client(baseUrl, accessToken, userId);
   const room = new Room(testRoomId, client)
   const response = await room.sendMessage("Hello world");
   // console.log(response);
@@ -78,7 +79,7 @@ test("login returns something", async () => {
 })
 
 test ("getRoomType returns something", async () => {
-  const client = new Client("https://matrix.radical.directory", accessToken);
+  const client = new Client("https://matrix.radical.directory", accessToken, "@meri:radical.directory");
   const room = new Room(testSpaceId, client)
   const response = await room.getType();
   console.log("roomType response", response);
@@ -86,7 +87,7 @@ test ("getRoomType returns something", async () => {
 })
 
 test ("getRoomState returns something", async () => {
-  const client = new Client("https://matrix.radical.directory", accessToken);
+  const client = new Client("https://matrix.radical.directory", accessToken, "@meri:radical.directory");
   const room = new Room(testSpaceId, client)
   const response = await room.getState();
   console.log("roomState response", response);

@@ -19,10 +19,12 @@ export type Event = Record<string, any> & {
 export class Client {
   private baseUrl: string;
   accessToken: string;
+  private userId: string;
 
-  constructor(baseUrl: string, accessToken: string) { 
+  constructor(baseUrl: string, accessToken: string, userId: string) { 
     this.baseUrl = baseUrl;
     this.accessToken = accessToken;
+    this.userId = userId;
   }
 
   static async authenticatedGet(url: string, accessToken: string, params?: Params) {
@@ -95,6 +97,12 @@ export class Client {
   async getJoinedRooms(): Promise<{joined_rooms: string[]}> {
       return this.get('joined_rooms');
   }
+
+  async getProfile(): Promise<{displayname: string}> {
+    const profile = await this.get('profile');
+    console.log("profile", profile);
+    return profile;
+  }
 }
 
 export class Room {
@@ -123,8 +131,8 @@ export class Room {
 
   async getState(): Promise<any> {
     const state: any[] = await this.client.get(`rooms/${this.roomId}/state`);
-    const name = state.find(event => event.type === "m.room.name").content.name;
-    this.name = name; 
+    // const name = state.find(event => event.type === "m.room.name").content.name;
+    // this.name = name; 
     return state;
   }
 
