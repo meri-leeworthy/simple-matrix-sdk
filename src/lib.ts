@@ -107,8 +107,8 @@ export class Client {
     )
   }
 
-  put(endpoint: string, body: any, params?: Params) {
-    return Client.authenticatedPut(
+  async put(endpoint: string, body: any, params?: Params) {
+    return await Client.authenticatedPut(
       this.buildUrl(endpoint),
       this.accessToken,
       body,
@@ -213,6 +213,18 @@ export class Room {
       `rooms/${this.roomId}/state`
     ) // is this right?
     return roomCreateEvent.type
+  }
+
+  async setName(name: string): Promise<void> {
+    return this.client.put(`rooms/${this.roomId}/state/m.room.name`, {
+      name,
+    })
+  }
+
+  async setTopic(topic: string): Promise<void> {
+    return this.client.put(`rooms/${this.roomId}/state/m.room.topic`, {
+      topic,
+    })
   }
 
   static sortEvents(events: Event[]): Record<string, Event[]> {

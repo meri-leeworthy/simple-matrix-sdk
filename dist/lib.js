@@ -99,7 +99,9 @@ class Client {
         });
     }
     put(endpoint, body, params) {
-        return Client.authenticatedPut(this.buildUrl(endpoint), this.accessToken, body, params);
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Client.authenticatedPut(this.buildUrl(endpoint), this.accessToken, body, params);
+        });
     }
     getJoinedRooms() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -188,6 +190,20 @@ class Room {
         return __awaiter(this, void 0, void 0, function* () {
             const roomCreateEvent = yield this.client.get(`rooms/${this.roomId}/state`); // is this right?
             return roomCreateEvent.type;
+        });
+    }
+    setName(name) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.put(`rooms/${this.roomId}/state/m.room.name`, {
+                name,
+            });
+        });
+    }
+    setTopic(topic) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.put(`rooms/${this.roomId}/state/m.room.topic`, {
+                topic,
+            });
         });
     }
     static sortEvents(events) {

@@ -47,6 +47,8 @@ export declare class Room {
         event_id: string;
     }>;
     getType(): Promise<string | undefined>;
+    setName(name: string): Promise<void>;
+    setTopic(topic: string): Promise<void>;
     static sortEvents(events: Event[]): Record<string, Event[]>;
 }
 export {};
