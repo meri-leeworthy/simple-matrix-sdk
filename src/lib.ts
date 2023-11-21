@@ -208,6 +208,13 @@ export class Room {
     )
   }
 
+  async sendEvent(type: string, body: any): Promise<{ event_id: string }> {
+    return this.client.put(
+      `rooms/${this.roomId}/send/${type}/${Date.now()}`,
+      body
+    )
+  }
+
   async getType(): Promise<string | undefined> {
     const roomCreateEvent: { type?: string } = await this.client.get(
       `rooms/${this.roomId}/state`

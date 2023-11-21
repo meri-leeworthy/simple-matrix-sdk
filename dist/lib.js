@@ -186,6 +186,11 @@ class Room {
             return this.client.put(`rooms/${this.roomId}/send/m.room.message/${Date.now()}`, body);
         });
     }
+    sendEvent(type, body) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.put(`rooms/${this.roomId}/send/${type}/${Date.now()}`, body);
+        });
+    }
     getType() {
         return __awaiter(this, void 0, void 0, function* () {
             const roomCreateEvent = yield this.client.get(`rooms/${this.roomId}/state`); // is this right?

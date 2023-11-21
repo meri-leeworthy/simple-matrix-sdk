@@ -122,3 +122,13 @@ test("setTopic returns something", () => __awaiter(void 0, void 0, void 0, funct
     console.log("setTopic", response);
     expect(response).toBeTruthy();
 }));
+test("sendEvent returns something", () => __awaiter(void 0, void 0, void 0, function* () {
+    const client = new lib_1.Client("https://matrix.radical.directory", rdTestAccessToken, rdTestUserId);
+    const room = new lib_1.Room(rdTestRoomId, client);
+    const response = yield room.sendEvent("m.room.message", {
+        body: "Test Event",
+        msgtype: "m.text",
+    });
+    console.log("sendEvent", response);
+    expect(response).toBeTruthy();
+}));
