@@ -191,9 +191,9 @@ class Room {
             return this.client.put(`rooms/${this.roomId}/send/${type}/${Date.now()}`, body);
         });
     }
-    sendStateEvent(type, body) {
+    sendStateEvent(type, body, stateKey) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.put(`rooms/${this.roomId}/state/${type}`, body);
+            return this.client.put(`rooms/${this.roomId}/state/${type}/${stateKey}`, body);
         });
     }
     getType() {

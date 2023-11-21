@@ -215,8 +215,15 @@ export class Room {
     )
   }
 
-  async sendStateEvent(type: string, body: any): Promise<{ event_id: string }> {
-    return this.client.put(`rooms/${this.roomId}/state/${type}`, body)
+  async sendStateEvent(
+    type: string,
+    body: any,
+    stateKey?: string
+  ): Promise<{ event_id: string }> {
+    return this.client.put(
+      `rooms/${this.roomId}/state/${type}/${stateKey}`,
+      body
+    )
   }
 
   async getType(): Promise<string | undefined> {

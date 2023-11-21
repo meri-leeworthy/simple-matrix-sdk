@@ -49,7 +49,7 @@ export declare class Room {
     sendEvent(type: string, body: any): Promise<{
         event_id: string;
     }>;
-    sendStateEvent(type: string, body: any): Promise<{
+    sendStateEvent(type: string, body: any, stateKey?: string): Promise<{
         event_id: string;
     }>;
     getType(): Promise<string | undefined>;
