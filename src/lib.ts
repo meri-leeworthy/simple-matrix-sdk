@@ -226,6 +226,10 @@ export class Room {
     )
   }
 
+  async getStateEvent(type: string, stateKey?: string): Promise<any> {
+    return this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`)
+  }
+
   async getType(): Promise<string | undefined> {
     const roomCreateEvent: { type?: string } = await this.client.get(
       `rooms/${this.roomId}/state`

@@ -52,6 +52,7 @@ export declare class Room {
     sendStateEvent(type: string, body: any, stateKey?: string): Promise<{
         event_id: string;
     }>;
+    getStateEvent(type: string, stateKey?: string): Promise<any>;
     getType(): Promise<string | undefined>;
     setName(name: string): Promise<void>;
     setTopic(topic: string): Promise<void>;

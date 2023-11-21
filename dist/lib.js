@@ -196,6 +196,11 @@ class Room {
             return this.client.put(`rooms/${this.roomId}/state/${type}/${stateKey}`, body);
         });
     }
+    getStateEvent(type, stateKey) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`);
+        });
+    }
     getType() {
         return __awaiter(this, void 0, void 0, function* () {
             const roomCreateEvent = yield this.client.get(`rooms/${this.roomId}/state`); // is this right?
