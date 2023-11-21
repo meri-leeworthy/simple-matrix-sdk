@@ -162,3 +162,17 @@ test("sendEvent returns something", async () => {
   console.log("sendEvent", response)
   expect(response).toBeTruthy()
 })
+
+test("sendStateEvent returns something", async () => {
+  const client = new Client(
+    "https://matrix.radical.directory",
+    rdTestAccessToken,
+    rdTestUserId
+  )
+  const room = new Room(rdTestRoomId, client)
+  const response = await room.sendStateEvent("m.room.name", {
+    name: "Test State Event",
+  })
+  console.log("sendStateEvent", response)
+  expect(response).toBeTruthy()
+})
