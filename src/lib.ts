@@ -1,7 +1,7 @@
 type Params = Record<string, string>
 export type Event = Record<string, any> & {
   type: string
-  content?: Record<string, any> & { body?: string }
+  content?: Record<string, any> & { body?: string; msgtype?: string }
   sender?: any
   room_id: string
   event_id: string
