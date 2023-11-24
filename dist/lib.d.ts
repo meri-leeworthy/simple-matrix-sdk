@@ -59,5 +59,17 @@ export declare class Room {
     setName(name: string): Promise<void>;
     setTopic(topic: string): Promise<void>;
     static sortEvents(events: Event[]): Record<string, Event[]>;
+    static replaceEditedMessages(messages: Event[]): (Event | {
+        content: {
+            body: string | undefined;
+            msgtype?: string | undefined;
+        };
+        type: string;
+        sender?: any;
+        room_id: string;
+        event_id: string;
+        origin_server_ts: number;
+        unsigned?: any;
+    })[];
 }
 export {};
