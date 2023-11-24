@@ -43,7 +43,7 @@ export declare class Room {
     getState(): Promise<any>;
     getMessagesOneShot(): Promise<any>;
     getMessagesOneShotParams(): Promise<any>;
-    getEvent(eventId: string): Promise<any>;
+    getEvent(eventId: string): Promise<Event>;
     getMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): (end?: string) => AsyncGenerator<any, void, any>;
     sendMessage(body: any): Promise<{
         event_id: string;
