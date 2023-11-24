@@ -170,6 +170,10 @@ export class Room {
     })
   }
 
+  async getEvent(eventId: string): Promise<any> {
+    return this.client.get(`rooms/${this.roomId}/event/${eventId}`)
+  }
+
   // returned async generator function produces an iterator with a provided endpoint parameter
   // the resulting iterator can be called repeatedly to paginate through the messages
   getMessagesAsyncGenerator(

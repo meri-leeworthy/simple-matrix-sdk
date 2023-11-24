@@ -3,6 +3,7 @@ export type Event = Record<string, any> & {
     type: string;
     content?: Record<string, any> & {
         body?: string;
+        msgtype?: string;
     };
     sender?: any;
     room_id: string;
@@ -42,6 +43,7 @@ export declare class Room {
     getState(): Promise<any>;
     getMessagesOneShot(): Promise<any>;
     getMessagesOneShotParams(): Promise<any>;
+    getEvent(eventId: string): Promise<any>;
     getMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): (end?: string) => AsyncGenerator<any, void, any>;
     sendMessage(body: any): Promise<{
         event_id: string;

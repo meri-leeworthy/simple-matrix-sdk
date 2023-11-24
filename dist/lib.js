@@ -155,6 +155,11 @@ class Room {
             });
         });
     }
+    getEvent(eventId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.get(`rooms/${this.roomId}/event/${eventId}`);
+        });
+    }
     // returned async generator function produces an iterator with a provided endpoint parameter
     // the resulting iterator can be called repeatedly to paginate through the messages
     getMessagesAsyncGenerator(direction, limit) {
