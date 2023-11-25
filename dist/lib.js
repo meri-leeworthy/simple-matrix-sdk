@@ -157,7 +157,7 @@ class Room {
     }
     getEvent(eventId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.get(`rooms/${this.roomId}/event/${eventId}`);
+            return this.client.get(`rooms/${this.roomId}/event/$${eventId}`);
         });
     }
     getStateEvent(type, stateKey) {

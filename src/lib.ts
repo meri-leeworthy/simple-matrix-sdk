@@ -171,7 +171,7 @@ export class Room {
   }
 
   async getEvent(eventId: string): Promise<Event> {
-    return this.client.get(`rooms/${this.roomId}/event/${eventId}`)
+    return this.client.get(`rooms/${this.roomId}/event/$${eventId}`)
   }
 
   async getStateEvent(type: string, stateKey?: string): Promise<any> {
