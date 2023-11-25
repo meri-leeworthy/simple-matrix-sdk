@@ -61,7 +61,8 @@ export declare class Room {
     static sortEvents(events: Event[]): Record<string, Event[]>;
     static replaceEditedMessages(messages: Event[]): (Event | {
         content: {
-            body: string | undefined;
+            [x: string]: any;
+            body?: string | undefined;
             msgtype?: string | undefined;
         };
         type: string;
