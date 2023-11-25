@@ -27,10 +27,6 @@ export class Client {
     this.userId = userId
   }
 
-  useUserId(): string {
-    return this.userId
-  }
-
   static async authenticatedGet(
     url: string,
     accessToken: string,
@@ -93,6 +89,10 @@ export class Client {
     }
 
     return data.access_token
+  }
+
+  useUserId(): string {
+    return this.userId
   }
 
   buildUrl(endpoint: string) {
@@ -174,6 +174,14 @@ export class Room {
     return this.client.get(`rooms/${this.roomId}/event/${eventId}`)
   }
 
+  async getStateEvent(type: string, stateKey?: string): Promise<any> {
+    return this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`)
+  }
+
+  async getPowerLevels(): Promise<any> {
+    return this.client.get(`rooms/${this.roomId}/state/m.room.power_levels`)
+  }
+
   // returned async generator function produces an iterator with a provided endpoint parameter
   // the resulting iterator can be called repeatedly to paginate through the messages
   getMessagesAsyncGenerator(
@@ -228,17 +236,6 @@ export class Room {
       `rooms/${this.roomId}/state/${type}/${stateKey}`,
       body
     )
-  }
-
-  async getStateEvent(type: string, stateKey?: string): Promise<any> {
-    return this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`)
-  }
-
-  async getType(): Promise<string | undefined> {
-    const roomCreateEvent: { type?: string } = await this.client.get(
-      `rooms/${this.roomId}/state`
-    ) // is this right?
-    return roomCreateEvent.type
   }
 
   async setName(name: string): Promise<void> {

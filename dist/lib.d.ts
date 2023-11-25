@@ -16,10 +16,10 @@ export declare class Client {
     accessToken: string;
     private userId;
     constructor(baseUrl: string, accessToken: string, userId: string);
-    useUserId(): string;
     static authenticatedGet(url: string, accessToken: string, params?: Params): Promise<any>;
     static authenticatedPut(url: string, accessToken: string, body: any, params?: Params): Promise<any>;
     static login(baseUrl: string, username: string, password: string): Promise<any>;
+    useUserId(): string;
     buildUrl(endpoint: string): string;
     get(endpoint: string, params?: Params): Promise<any>;
     put(endpoint: string, body: any, params?: Params): Promise<any>;
@@ -44,6 +44,8 @@ export declare class Room {
     getMessagesOneShot(): Promise<any>;
     getMessagesOneShotParams(): Promise<any>;
     getEvent(eventId: string): Promise<Event>;
+    getStateEvent(type: string, stateKey?: string): Promise<any>;
+    getPowerLevels(): Promise<any>;
     getMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): (end?: string) => AsyncGenerator<any, void, any>;
     sendMessage(body: any): Promise<{
         event_id: string;
@@ -54,8 +56,6 @@ export declare class Room {
     sendStateEvent(type: string, body: any, stateKey?: string): Promise<{
         event_id: string;
     }>;
-    getStateEvent(type: string, stateKey?: string): Promise<any>;
-    getType(): Promise<string | undefined>;
     setName(name: string): Promise<void>;
     setTopic(topic: string): Promise<void>;
     static sortEvents(events: Event[]): Record<string, Event[]>;

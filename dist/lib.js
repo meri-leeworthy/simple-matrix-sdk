@@ -33,9 +33,6 @@ class Client {
         this.accessToken = accessToken;
         this.userId = userId;
     }
-    useUserId() {
-        return this.userId;
-    }
     static authenticatedGet(url, accessToken, params) {
         return __awaiter(this, void 0, void 0, function* () {
             // return async function (url: string) {
@@ -89,6 +86,9 @@ class Client {
             }
             return data.access_token;
         });
+    }
+    useUserId() {
+        return this.userId;
     }
     buildUrl(endpoint) {
         return `${this.baseUrl}/_matrix/client/v3/${endpoint}`;
@@ -160,6 +160,16 @@ class Room {
             return this.client.get(`rooms/${this.roomId}/event/${eventId}`);
         });
     }
+    getStateEvent(type, stateKey) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`);
+        });
+    }
+    getPowerLevels() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.get(`rooms/${this.roomId}/state/m.room.power_levels`);
+        });
+    }
     // returned async generator function produces an iterator with a provided endpoint parameter
     // the resulting iterator can be called repeatedly to paginate through the messages
     getMessagesAsyncGenerator(direction, limit) {
@@ -199,17 +209,6 @@ class Room {
     sendStateEvent(type, body, stateKey) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`rooms/${this.roomId}/state/${type}/${stateKey}`, body);
-        });
-    }
-    getStateEvent(type, stateKey) {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`);
-        });
-    }
-    getType() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const roomCreateEvent = yield this.client.get(`rooms/${this.roomId}/state`); // is this right?
-            return roomCreateEvent.type;
         });
     }
     setName(name) {
