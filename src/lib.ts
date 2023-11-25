@@ -250,6 +250,13 @@ export class Room {
     })
   }
 
+  async redactEvent(eventId: string): Promise<void> {
+    return this.client.put(
+      `rooms/${this.roomId}/redact/${eventId}/${Date.now()}`,
+      {}
+    )
+  }
+
   static sortEvents(events: Event[]): Record<string, Event[]> {
     const sortedEvents: Record<string, Event[]> = {}
     events.forEach(event => {

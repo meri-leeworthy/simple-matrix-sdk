@@ -58,6 +58,7 @@ export declare class Room {
     }>;
     setName(name: string): Promise<void>;
     setTopic(topic: string): Promise<void>;
+    redactEvent(eventId: string): Promise<void>;
     static sortEvents(events: Event[]): Record<string, Event[]>;
     static replaceEditedMessages(messages: Event[]): (Event | {
         content: {

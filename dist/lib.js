@@ -225,6 +225,11 @@ class Room {
             });
         });
     }
+    redactEvent(eventId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.put(`rooms/${this.roomId}/redact/${eventId}/${Date.now()}`, {});
+        });
+    }
     static sortEvents(events) {
         const sortedEvents = {};
         events.forEach(event => {
