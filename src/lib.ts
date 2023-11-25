@@ -278,7 +278,13 @@ export class Room {
     )
 
     const originalMessagesStayingTheSame = messages.filter(
-      message => !toBeEditedMessageIds.includes(message.event_id)
+      message =>
+        !toBeEditedMessageIds.includes(message.event_id) &&
+        !(
+          message?.content &&
+          "m.relates_to" in message.content &&
+          message.content["m.relates_to"]["rel_type"] === "m.replace"
+        )
     )
 
     const originalMessagesWithEditedBodies = originalMessagesToBeEdited.map(

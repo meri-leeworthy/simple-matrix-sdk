@@ -241,7 +241,10 @@ class Room {
             "m.relates_to" in message.content &&
             message.content["m.relates_to"].event_id);
         const originalMessagesToBeEdited = messages.filter(message => toBeEditedMessageIds.includes(message.event_id));
-        const originalMessagesStayingTheSame = messages.filter(message => !toBeEditedMessageIds.includes(message.event_id));
+        const originalMessagesStayingTheSame = messages.filter(message => !toBeEditedMessageIds.includes(message.event_id) &&
+            !((message === null || message === void 0 ? void 0 : message.content) &&
+                "m.relates_to" in message.content &&
+                message.content["m.relates_to"]["rel_type"] === "m.replace"));
         const originalMessagesWithEditedBodies = originalMessagesToBeEdited.map(message => {
             const thisEditedMessage = editMessages.find(editMessage => (editMessage === null || editMessage === void 0 ? void 0 : editMessage.content) &&
                 "m.relates_to" in editMessage.content &&
