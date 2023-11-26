@@ -70,6 +70,27 @@ export class Client {
     return data
   }
 
+  static async authenticatedPost(
+    url: string,
+    accessToken: string,
+    body: any,
+    params?: Params
+  ) {
+    if (params) {
+      const paramsString = new URLSearchParams(params).toString()
+      url = `${url}?${paramsString}`
+    }
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(body),
+    })
+    const data = await response.json()
+    return data
+  }
+
   static async login(baseUrl: string, username: string, password: string) {
     const response = await fetch(`${baseUrl}/_matrix/client/v3/login`, {
       method: "POST",
@@ -123,6 +144,28 @@ export class Client {
   async getProfile(userId: string): Promise<{ displayname: string }> {
     const profile = await this.get(`profile/${userId}/displayname`)
     return profile
+  }
+
+  // async createMediaId(): Promise<any> {
+  //   return await Client.authenticatedPost(
+  //     `${this.baseUrl}/_matrix/media/r0/createContent`,
+  //     this.accessToken,
+  //     {}
+  //   )
+  // }
+
+  async uploadFile(file: File): Promise<any> {
+    const url = `${this.baseUrl}/_matrix/media/v3/upload`
+    const response = await fetch(url, {
+      method: "PUT",
+      body: file,
+      headers: {
+        Authorization: `Bearer ${this.accessToken}`,
+        "Content-Type": "application/octet-stream",
+      },
+    })
+    const data = await response.json()
+    return data
   }
 }
 

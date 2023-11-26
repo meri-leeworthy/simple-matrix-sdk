@@ -67,6 +67,23 @@ class Client {
             return data;
         });
     }
+    static authenticatedPost(url, accessToken, body, params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (params) {
+                const paramsString = new URLSearchParams(params).toString();
+                url = `${url}?${paramsString}`;
+            }
+            const response = yield fetch(url, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                body: JSON.stringify(body),
+            });
+            const data = yield response.json();
+            return data;
+        });
+    }
     static login(baseUrl, username, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield fetch(`${baseUrl}/_matrix/client/v3/login`, {
@@ -112,6 +129,28 @@ class Client {
         return __awaiter(this, void 0, void 0, function* () {
             const profile = yield this.get(`profile/${userId}/displayname`);
             return profile;
+        });
+    }
+    // async createMediaId(): Promise<any> {
+    //   return await Client.authenticatedPost(
+    //     `${this.baseUrl}/_matrix/media/r0/createContent`,
+    //     this.accessToken,
+    //     {}
+    //   )
+    // }
+    uploadFile(file) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const url = `${this.baseUrl}/_matrix/media/v3/upload`;
+            const response = yield fetch(url, {
+                method: "PUT",
+                body: file,
+                headers: {
+                    Authorization: `Bearer ${this.accessToken}`,
+                    "Content-Type": "application/octet-stream",
+                },
+            });
+            const data = yield response.json();
+            return data;
         });
     }
 }

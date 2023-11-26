@@ -18,6 +18,7 @@ export declare class Client {
     constructor(baseUrl: string, accessToken: string, userId: string);
     static authenticatedGet(url: string, accessToken: string, params?: Params): Promise<any>;
     static authenticatedPut(url: string, accessToken: string, body: any, params?: Params): Promise<any>;
+    static authenticatedPost(url: string, accessToken: string, body: any, params?: Params): Promise<any>;
     static login(baseUrl: string, username: string, password: string): Promise<any>;
     useUserId(): string;
     buildUrl(endpoint: string): string;
@@ -29,6 +30,7 @@ export declare class Client {
     getProfile(userId: string): Promise<{
         displayname: string;
     }>;
+    uploadFile(file: File): Promise<any>;
 }
 export declare class Room {
     private roomId;
