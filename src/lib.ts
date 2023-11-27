@@ -270,6 +270,8 @@ export class Room {
     const dir = direction || "b"
     const lim = limit || 100
 
+    const fetch = this.client.fetch
+
     const accessToken = this.client.accessToken
     const url = this.client.buildUrl(`rooms/${this.roomId}/messages`)
 
@@ -281,7 +283,10 @@ export class Room {
         if (end) {
           params.from = end
         }
-        const response = await Client.authenticatedGet(url, accessToken, params)
+        const response = await Client.authenticatedGet(url, accessToken, {
+          params,
+          fetch,
+        })
         if (!("end" in response)) {
           break
         }

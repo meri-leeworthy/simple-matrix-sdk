@@ -228,6 +228,7 @@ class Room {
     getMessagesAsyncGenerator(direction, limit) {
         const dir = direction || "b";
         const lim = limit || 100;
+        const fetch = this.client.fetch;
         const accessToken = this.client.accessToken;
         const url = this.client.buildUrl(`rooms/${this.roomId}/messages`);
         function messagesGenerator(end) {
@@ -238,7 +239,10 @@ class Room {
                     if (end) {
                         params.from = end;
                     }
-                    const response = yield __await(Client.authenticatedGet(url, accessToken, params));
+                    const response = yield __await(Client.authenticatedGet(url, accessToken, {
+                        params,
+                        fetch,
+                    }));
                     if (!("end" in response)) {
                         break;
                     }
