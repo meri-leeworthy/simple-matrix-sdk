@@ -20,23 +20,34 @@ export class Client {
   private baseUrl: string
   accessToken: string
   private userId: string
+  fetch: any
 
-  constructor(baseUrl: string, accessToken: string, userId: string) {
+  constructor(
+    baseUrl: string,
+    accessToken: string,
+    userId: string,
+    fetch?: any
+  ) {
     this.baseUrl = baseUrl
     this.accessToken = accessToken
     this.userId = userId
+    this.fetch = fetch || window.fetch
   }
 
   static async authenticatedGet(
     url: string,
     accessToken: string,
-    params?: Params
+    options?: {
+      params?: Params
+      fetch?: any
+    }
   ) {
     // return async function (url: string) {
-    if (params) {
-      const paramsString = new URLSearchParams(params).toString()
+    if (options?.params) {
+      const paramsString = new URLSearchParams(options.params).toString()
       url = `${url}?${paramsString}`
     }
+    const fetch = options?.fetch || window.fetch
 
     const response = await fetch(url, {
       headers: {
@@ -53,10 +64,14 @@ export class Client {
     url: string,
     accessToken: string,
     body: any,
-    params?: Params
+    options?: {
+      params?: Params
+      fetch?: any
+    }
   ) {
-    if (params) {
-      const paramsString = new URLSearchParams(params).toString()
+    const fetch = options?.fetch || window.fetch
+    if (options?.params) {
+      const paramsString = new URLSearchParams(options.params).toString()
       url = `${url}?${paramsString}`
     }
     const response = await fetch(url, {
@@ -74,10 +89,13 @@ export class Client {
     url: string,
     accessToken: string,
     body: any,
-    params?: Params
+    options?: {
+      params?: Params
+      fetch?: any
+    }
   ) {
-    if (params) {
-      const paramsString = new URLSearchParams(params).toString()
+    if (options?.params) {
+      const paramsString = new URLSearchParams(options.params).toString()
       url = `${url}?${paramsString}`
     }
     const response = await fetch(url, {
@@ -91,8 +109,14 @@ export class Client {
     return data
   }
 
-  static async login(baseUrl: string, username: string, password: string) {
-    const response = await fetch(`${baseUrl}/_matrix/client/v3/login`, {
+  static async login(
+    baseUrl: string,
+    username: string,
+    password: string,
+    fetch?: any
+  ) {
+    const fetcher = fetch || window.fetch
+    const response = await fetcher(`${baseUrl}/_matrix/client/v3/login`, {
       method: "POST",
       body: JSON.stringify({
         type: "m.login.password",
@@ -112,6 +136,10 @@ export class Client {
     return data.access_token
   }
 
+  useBaseUrl(): string {
+    return this.baseUrl
+  }
+
   useUserId(): string {
     return this.userId
   }
@@ -124,7 +152,10 @@ export class Client {
     return await Client.authenticatedGet(
       this.buildUrl(endpoint),
       this.accessToken,
-      params
+      {
+        params,
+        fetch: this.fetch,
+      }
     )
   }
 
@@ -133,7 +164,10 @@ export class Client {
       this.buildUrl(endpoint),
       this.accessToken,
       body,
-      params
+      {
+        params,
+        fetch: this.fetch,
+      }
     )
   }
 
@@ -156,8 +190,9 @@ export class Client {
 
   async uploadFile(file: File): Promise<any> {
     const url = `${this.baseUrl}/_matrix/media/v3/upload`
+
     const response = await fetch(url, {
-      method: "PUT",
+      method: "POST",
       body: file,
       headers: {
         Authorization: `Bearer ${this.accessToken}`,

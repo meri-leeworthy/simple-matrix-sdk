@@ -28,18 +28,20 @@ exports.Room = exports.Client = void 0;
 // 3. A way to send a message to a room
 // 4. A way to get a list of all the users in a room
 class Client {
-    constructor(baseUrl, accessToken, userId) {
+    constructor(baseUrl, accessToken, userId, fetch) {
         this.baseUrl = baseUrl;
         this.accessToken = accessToken;
         this.userId = userId;
+        this.fetch = fetch || window.fetch;
     }
-    static authenticatedGet(url, accessToken, params) {
+    static authenticatedGet(url, accessToken, options) {
         return __awaiter(this, void 0, void 0, function* () {
             // return async function (url: string) {
-            if (params) {
-                const paramsString = new URLSearchParams(params).toString();
+            if (options === null || options === void 0 ? void 0 : options.params) {
+                const paramsString = new URLSearchParams(options.params).toString();
                 url = `${url}?${paramsString}`;
             }
+            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || window.fetch;
             const response = yield fetch(url, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -50,10 +52,11 @@ class Client {
             // }
         });
     }
-    static authenticatedPut(url, accessToken, body, params) {
+    static authenticatedPut(url, accessToken, body, options) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (params) {
-                const paramsString = new URLSearchParams(params).toString();
+            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || window.fetch;
+            if (options === null || options === void 0 ? void 0 : options.params) {
+                const paramsString = new URLSearchParams(options.params).toString();
                 url = `${url}?${paramsString}`;
             }
             const response = yield fetch(url, {
@@ -67,10 +70,10 @@ class Client {
             return data;
         });
     }
-    static authenticatedPost(url, accessToken, body, params) {
+    static authenticatedPost(url, accessToken, body, options) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (params) {
-                const paramsString = new URLSearchParams(params).toString();
+            if (options === null || options === void 0 ? void 0 : options.params) {
+                const paramsString = new URLSearchParams(options.params).toString();
                 url = `${url}?${paramsString}`;
             }
             const response = yield fetch(url, {
@@ -84,9 +87,10 @@ class Client {
             return data;
         });
     }
-    static login(baseUrl, username, password) {
+    static login(baseUrl, username, password, fetch) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield fetch(`${baseUrl}/_matrix/client/v3/login`, {
+            const fetcher = fetch || window.fetch;
+            const response = yield fetcher(`${baseUrl}/_matrix/client/v3/login`, {
                 method: "POST",
                 body: JSON.stringify({
                     type: "m.login.password",
@@ -104,6 +108,9 @@ class Client {
             return data.access_token;
         });
     }
+    useBaseUrl() {
+        return this.baseUrl;
+    }
     useUserId() {
         return this.userId;
     }
@@ -112,12 +119,18 @@ class Client {
     }
     get(endpoint, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield Client.authenticatedGet(this.buildUrl(endpoint), this.accessToken, params);
+            return yield Client.authenticatedGet(this.buildUrl(endpoint), this.accessToken, {
+                params,
+                fetch: this.fetch,
+            });
         });
     }
     put(endpoint, body, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield Client.authenticatedPut(this.buildUrl(endpoint), this.accessToken, body, params);
+            return yield Client.authenticatedPut(this.buildUrl(endpoint), this.accessToken, body, {
+                params,
+                fetch: this.fetch,
+            });
         });
     }
     getJoinedRooms() {
@@ -142,7 +155,7 @@ class Client {
         return __awaiter(this, void 0, void 0, function* () {
             const url = `${this.baseUrl}/_matrix/media/v3/upload`;
             const response = yield fetch(url, {
-                method: "PUT",
+                method: "POST",
                 body: file,
                 headers: {
                     Authorization: `Bearer ${this.accessToken}`,

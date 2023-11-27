@@ -15,11 +15,22 @@ export declare class Client {
     private baseUrl;
     accessToken: string;
     private userId;
-    constructor(baseUrl: string, accessToken: string, userId: string);
-    static authenticatedGet(url: string, accessToken: string, params?: Params): Promise<any>;
-    static authenticatedPut(url: string, accessToken: string, body: any, params?: Params): Promise<any>;
-    static authenticatedPost(url: string, accessToken: string, body: any, params?: Params): Promise<any>;
-    static login(baseUrl: string, username: string, password: string): Promise<any>;
+    fetch: any;
+    constructor(baseUrl: string, accessToken: string, userId: string, fetch?: any);
+    static authenticatedGet(url: string, accessToken: string, options?: {
+        params?: Params;
+        fetch?: any;
+    }): Promise<any>;
+    static authenticatedPut(url: string, accessToken: string, body: any, options?: {
+        params?: Params;
+        fetch?: any;
+    }): Promise<any>;
+    static authenticatedPost(url: string, accessToken: string, body: any, options?: {
+        params?: Params;
+        fetch?: any;
+    }): Promise<any>;
+    static login(baseUrl: string, username: string, password: string, fetch?: any): Promise<any>;
+    useBaseUrl(): string;
     useUserId(): string;
     buildUrl(endpoint: string): string;
     get(endpoint: string, params?: Params): Promise<any>;
