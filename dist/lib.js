@@ -32,7 +32,7 @@ class Client {
         this.baseUrl = baseUrl;
         this.accessToken = accessToken;
         this.userId = userId;
-        this.fetch = fetch || window.fetch;
+        this.fetch = fetch || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
     }
     static authenticatedGet(url, accessToken, options) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -41,7 +41,7 @@ class Client {
                 const paramsString = new URLSearchParams(options.params).toString();
                 url = `${url}?${paramsString}`;
             }
-            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || window.fetch;
+            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
             const response = yield fetch(url, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -54,7 +54,7 @@ class Client {
     }
     static authenticatedPut(url, accessToken, body, options) {
         return __awaiter(this, void 0, void 0, function* () {
-            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || window.fetch;
+            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || (window === null || window === void 0 ? void 0 : window.fetch);
             if (options === null || options === void 0 ? void 0 : options.params) {
                 const paramsString = new URLSearchParams(options.params).toString();
                 url = `${url}?${paramsString}`;
@@ -76,6 +76,7 @@ class Client {
                 const paramsString = new URLSearchParams(options.params).toString();
                 url = `${url}?${paramsString}`;
             }
+            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
             const response = yield fetch(url, {
                 method: "POST",
                 headers: {
@@ -89,7 +90,7 @@ class Client {
     }
     static login(baseUrl, username, password, fetch) {
         return __awaiter(this, void 0, void 0, function* () {
-            const fetcher = fetch || window.fetch;
+            const fetcher = fetch || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
             const response = yield fetcher(`${baseUrl}/_matrix/client/v3/login`, {
                 method: "POST",
                 body: JSON.stringify({

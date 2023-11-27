@@ -31,7 +31,7 @@ export class Client {
     this.baseUrl = baseUrl
     this.accessToken = accessToken
     this.userId = userId
-    this.fetch = fetch || window.fetch
+    this.fetch = fetch || window?.fetch || undefined
   }
 
   static async authenticatedGet(
@@ -47,7 +47,7 @@ export class Client {
       const paramsString = new URLSearchParams(options.params).toString()
       url = `${url}?${paramsString}`
     }
-    const fetch = options?.fetch || window.fetch
+    const fetch = options?.fetch || window?.fetch || undefined
 
     const response = await fetch(url, {
       headers: {
@@ -69,7 +69,7 @@ export class Client {
       fetch?: any
     }
   ) {
-    const fetch = options?.fetch || window.fetch
+    const fetch = options?.fetch || window?.fetch
     if (options?.params) {
       const paramsString = new URLSearchParams(options.params).toString()
       url = `${url}?${paramsString}`
@@ -98,6 +98,7 @@ export class Client {
       const paramsString = new URLSearchParams(options.params).toString()
       url = `${url}?${paramsString}`
     }
+    const fetch = options?.fetch || window?.fetch || undefined
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -115,7 +116,7 @@ export class Client {
     password: string,
     fetch?: any
   ) {
-    const fetcher = fetch || window.fetch
+    const fetcher = fetch || window?.fetch || undefined
     const response = await fetcher(`${baseUrl}/_matrix/client/v3/login`, {
       method: "POST",
       body: JSON.stringify({
