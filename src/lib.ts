@@ -172,6 +172,18 @@ export class Client {
     )
   }
 
+  async post(endpoint: string, body: any, params?: Params) {
+    return await Client.authenticatedPost(
+      this.buildUrl(endpoint),
+      this.accessToken,
+      body,
+      {
+        params,
+        fetch: this.fetch,
+      }
+    )
+  }
+
   async getJoinedRooms(): Promise<{ joined_rooms: string[] }> {
     return this.get("joined_rooms")
   }
@@ -276,7 +288,7 @@ export class Room {
     const url = this.client.buildUrl(`rooms/${this.roomId}/messages`)
 
     async function* messagesGenerator(end?: string) {
-      // console.log("end", end);
+      console.log("end", end)
 
       while (true) {
         const params: Params = { dir, limit: `${lim}` }

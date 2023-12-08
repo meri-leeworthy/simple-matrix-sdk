@@ -35,6 +35,7 @@ export declare class Client {
     buildUrl(endpoint: string): string;
     get(endpoint: string, params?: Params): Promise<any>;
     put(endpoint: string, body: any, params?: Params): Promise<any>;
+    post(endpoint: string, body: any, params?: Params): Promise<any>;
     getJoinedRooms(): Promise<{
         joined_rooms: string[];
     }>;

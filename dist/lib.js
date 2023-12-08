@@ -134,6 +134,14 @@ class Client {
             });
         });
     }
+    post(endpoint, body, params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield Client.authenticatedPost(this.buildUrl(endpoint), this.accessToken, body, {
+                params,
+                fetch: this.fetch,
+            });
+        });
+    }
     getJoinedRooms() {
         return __awaiter(this, void 0, void 0, function* () {
             return this.get("joined_rooms");
