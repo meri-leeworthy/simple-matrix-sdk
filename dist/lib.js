@@ -53,7 +53,7 @@ class Client {
     }
     static authenticatedPut(url, accessToken, body, options) {
         return __awaiter(this, void 0, void 0, function* () {
-            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || (window === null || window === void 0 ? void 0 : window.fetch);
+            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
             if (options === null || options === void 0 ? void 0 : options.params) {
                 const paramsString = new URLSearchParams(options.params).toString();
                 url = `${url}?${paramsString}`;

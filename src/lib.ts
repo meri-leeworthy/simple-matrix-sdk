@@ -73,7 +73,7 @@ export class Client {
       fetch?: any
     }
   ) {
-    const fetch = options?.fetch || window?.fetch
+    const fetch = options?.fetch || window?.fetch || undefined
     if (options?.params) {
       const paramsString = new URLSearchParams(options.params).toString()
       url = `${url}?${paramsString}`
