@@ -9,45 +9,49 @@ export type Event = Record<string, any> & {
   unsigned?: any
 }
 
-// What do I want for this sdk?
-
-// 1. A way to get a list of all the rooms I'm in
-// 2. A way to get a list of all the messages in a room
-// 3. A way to send a message to a room
-// 4. A way to get a list of all the users in a room
+type ClientOptions = {
+  userId: string
+  params: Params
+  fetch?: any
+}
 
 export class Client {
   private baseUrl: string
   accessToken: string
-  private userId: string
+  private opts: ClientOptions
   fetch: any
 
   constructor(
     baseUrl: string,
     accessToken: string,
-    userId: string,
-    fetch?: any
+    opts?: Partial<ClientOptions>
   ) {
     this.baseUrl = baseUrl
     this.accessToken = accessToken
-    this.userId = userId
-    this.fetch = fetch || window?.fetch || undefined
+    this.opts = {
+      userId: opts?.userId || "",
+      params: opts?.params || {},
+    }
+    this.fetch = opts?.fetch || window?.fetch || undefined
   }
 
   static async authenticatedGet(
     url: string,
     accessToken: string,
-    options?: {
+    opts?: {
       params?: Params
       fetch?: any
     }
   ) {
+    const params = { ...opts?.params }
+
     // return async function (url: string) {
-    if (options?.params) {
-      const paramsString = new URLSearchParams(options.params).toString()
+    if (opts?.params) {
+      const paramsString = new URLSearchParams(opts.params).toString()
       url = `${url}?${paramsString}`
     }
-    const fetch = options?.fetch || window?.fetch || undefined
+
+    const fetch = opts?.fetch || window?.fetch || undefined
 
     const response = await fetch(url, {
       headers: {
@@ -142,7 +146,7 @@ export class Client {
   }
 
   useUserId(): string {
-    return this.userId
+    return this.opts.userId
   }
 
   buildUrl(endpoint: string) {
@@ -150,36 +154,39 @@ export class Client {
   }
 
   async get(endpoint: string, params?: Params) {
+    const combinedParams = { ...this.opts.params, ...params }
     return await Client.authenticatedGet(
       this.buildUrl(endpoint),
       this.accessToken,
       {
-        params,
-        fetch: this.fetch,
+        params: combinedParams,
+        fetch: this.opts.fetch,
       }
     )
   }
 
   async put(endpoint: string, body: any, params?: Params) {
+    const combinedParams = { ...this.opts.params, ...params }
     return await Client.authenticatedPut(
       this.buildUrl(endpoint),
       this.accessToken,
       body,
       {
-        params,
-        fetch: this.fetch,
+        params: combinedParams,
+        fetch: this.opts.fetch,
       }
     )
   }
 
   async post(endpoint: string, body: any, params?: Params) {
+    const combinedParams = { ...this.opts.params, ...params }
     return await Client.authenticatedPost(
       this.buildUrl(endpoint),
       this.accessToken,
       body,
       {
-        params,
-        fetch: this.fetch,
+        params: combinedParams,
+        fetch: this.opts.fetch,
       }
     )
   }
@@ -291,9 +298,9 @@ export class Room {
       console.log("end", end)
 
       while (true) {
-        const params: Params = { dir, limit: `${lim}` }
+        let params: Params = { dir, limit: `${lim}` }
         if (end) {
-          params.from = end
+          params["from"] = end
         }
         const response = await Client.authenticatedGet(url, accessToken, {
           params,

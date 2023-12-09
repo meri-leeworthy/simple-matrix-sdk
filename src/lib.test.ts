@@ -43,13 +43,13 @@ test("authenticated put returns something", async () => {
 })
 
 test("getJoinedRooms returns something", async () => {
-  const client = new Client(baseUrl, accessToken, userId)
+  const client = new Client(baseUrl, accessToken, { userId })
   const response = await client.getJoinedRooms()
   expect(response).toBeTruthy()
 })
 
 test("getRoomMessagesOneShot returns something", async () => {
-  const client = new Client(baseUrl, accessToken, userId)
+  const client = new Client(baseUrl, accessToken, { userId })
   const room = new Room(testRoomId, client)
   const response = await room.getMessagesOneShot()
   // console.log("getRoomMessagesOneShot: ", response);
@@ -57,7 +57,7 @@ test("getRoomMessagesOneShot returns something", async () => {
 })
 
 test("getRoomMessagesOneShotParams returns something", async () => {
-  const client = new Client(baseUrl, accessToken, userId)
+  const client = new Client(baseUrl, accessToken, { userId })
   const room = new Room(testRoomId, client)
   const response = await room.getMessagesOneShotParams()
   // console.log("getRoomMessagesOneShotParams: ", response);
@@ -65,22 +65,22 @@ test("getRoomMessagesOneShotParams returns something", async () => {
 })
 
 test("getRoomMessagesAsyncGenerator returns something", async () => {
-  const client = new Client(baseUrl, accessToken, userId)
+  const client = new Client(baseUrl, accessToken, { userId })
   const room = new Room(testRoomId, client)
   const messagesAsyncIterator = room.getMessagesAsyncGenerator()()
-  const { chunk, end } = (await messagesAsyncIterator.next()).value
-  // console.log("getRoomMessage chunk: ", chunk);
+  const response = await messagesAsyncIterator.next()
+  console.log("getRoomMessage chunk: ", response)
 
   //seems like this bit might not be working
-  // const {chunk2, end2} = (await messagesAsyncIterator.next(end)).value
-  // console.log("getRoomMessage chunk2: ", chunk2);
+  // const { chunk2, end2 } = (await messagesAsyncIterator.next(end)).value
+  // console.log("getRoomMessage chunk2: ", chunk2)
   // console.log("getRoomMessages1: ", await response().next());
   // console.log("getRoomMessages2: ", await response().next());
-  expect(chunk).toBeTruthy()
+  expect(response).toBeTruthy()
 })
 
 test("sendRoomMessage returns something", async () => {
-  const client = new Client(baseUrl, accessToken, userId)
+  const client = new Client(baseUrl, accessToken, { userId })
   const room = new Room(testRoomId, client)
   const response = await room.sendMessage("Hello world")
   // console.log(response);
@@ -102,11 +102,9 @@ test("login returns something", async () => {
 // })
 
 test("getRoomState returns something", async () => {
-  const client = new Client(
-    "https://matrix.radical.directory",
-    rdAccessToken,
-    "@meri:radical.directory"
-  )
+  const client = new Client("https://matrix.radical.directory", rdAccessToken, {
+    userId: "@meri:radical.directory",
+  })
   const room = new Room(testSpaceId, client)
   const response = await room.getState()
   console.log("roomState response", response)
@@ -114,11 +112,9 @@ test("getRoomState returns something", async () => {
 })
 
 test("getProfile returns something", async () => {
-  const client = new Client(
-    "https://matrix.radical.directory",
-    rdAccessToken,
-    rdUserId
-  )
+  const client = new Client("https://matrix.radical.directory", rdAccessToken, {
+    userId: rdUserId,
+  })
   const response = await client.getProfile(rdUserId)
   console.log("getProfile", response)
   expect(response).toBeTruthy()
@@ -128,7 +124,7 @@ test("setName returns something", async () => {
   const client = new Client(
     "https://matrix.radical.directory",
     rdTestAccessToken,
-    rdTestUserId
+    { userId: rdTestUserId }
   )
   const room = new Room(rdTestRoomId, client)
   const response = await room.setName("Test Name")
@@ -140,7 +136,7 @@ test("setTopic returns something", async () => {
   const client = new Client(
     "https://matrix.radical.directory",
     rdTestAccessToken,
-    rdTestUserId
+    { userId: rdTestUserId }
   )
   const room = new Room(rdTestRoomId, client)
   const response = await room.setTopic("Test Topic")
@@ -152,7 +148,7 @@ test("sendEvent returns something", async () => {
   const client = new Client(
     "https://matrix.radical.directory",
     rdTestAccessToken,
-    rdTestUserId
+    { userId: rdTestUserId }
   )
   const room = new Room(rdTestRoomId, client)
   const response = await room.sendEvent("m.room.message", {
@@ -167,7 +163,7 @@ test("sendStateEvent returns something", async () => {
   const client = new Client(
     "https://matrix.radical.directory",
     rdTestAccessToken,
-    rdTestUserId
+    { userId: rdTestUserId }
   )
   const room = new Room(rdTestRoomId, client)
   const response = await room.sendStateEvent("m.room.name", {

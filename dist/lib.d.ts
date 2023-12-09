@@ -11,13 +11,18 @@ export type Event = Record<string, any> & {
     origin_server_ts: number;
     unsigned?: any;
 };
+type ClientOptions = {
+    userId: string;
+    params: Params;
+    fetch?: any;
+};
 export declare class Client {
     private baseUrl;
     accessToken: string;
-    private userId;
+    private opts;
     fetch: any;
-    constructor(baseUrl: string, accessToken: string, userId: string, fetch?: any);
-    static authenticatedGet(url: string, accessToken: string, options?: {
+    constructor(baseUrl: string, accessToken: string, opts?: Partial<ClientOptions>);
+    static authenticatedGet(url: string, accessToken: string, opts?: {
         params?: Params;
         fetch?: any;
     }): Promise<any>;

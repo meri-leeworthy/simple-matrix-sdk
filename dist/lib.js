@@ -22,26 +22,25 @@ var __asyncGenerator = (this && this.__asyncGenerator) || function (thisArg, _ar
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Room = exports.Client = void 0;
-// What do I want for this sdk?
-// 1. A way to get a list of all the rooms I'm in
-// 2. A way to get a list of all the messages in a room
-// 3. A way to send a message to a room
-// 4. A way to get a list of all the users in a room
 class Client {
-    constructor(baseUrl, accessToken, userId, fetch) {
+    constructor(baseUrl, accessToken, opts) {
         this.baseUrl = baseUrl;
         this.accessToken = accessToken;
-        this.userId = userId;
-        this.fetch = fetch || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
+        this.opts = {
+            userId: (opts === null || opts === void 0 ? void 0 : opts.userId) || "",
+            params: (opts === null || opts === void 0 ? void 0 : opts.params) || {},
+        };
+        this.fetch = (opts === null || opts === void 0 ? void 0 : opts.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
     }
-    static authenticatedGet(url, accessToken, options) {
+    static authenticatedGet(url, accessToken, opts) {
         return __awaiter(this, void 0, void 0, function* () {
+            const params = Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params);
             // return async function (url: string) {
-            if (options === null || options === void 0 ? void 0 : options.params) {
-                const paramsString = new URLSearchParams(options.params).toString();
+            if (opts === null || opts === void 0 ? void 0 : opts.params) {
+                const paramsString = new URLSearchParams(opts.params).toString();
                 url = `${url}?${paramsString}`;
             }
-            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
+            const fetch = (opts === null || opts === void 0 ? void 0 : opts.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
             const response = yield fetch(url, {
                 headers: {
                     Authorization: `Bearer ${accessToken}`,
@@ -113,32 +112,35 @@ class Client {
         return this.baseUrl;
     }
     useUserId() {
-        return this.userId;
+        return this.opts.userId;
     }
     buildUrl(endpoint) {
         return `${this.baseUrl}/_matrix/client/v3/${endpoint}`;
     }
     get(endpoint, params) {
         return __awaiter(this, void 0, void 0, function* () {
+            const combinedParams = Object.assign(Object.assign({}, this.opts.params), params);
             return yield Client.authenticatedGet(this.buildUrl(endpoint), this.accessToken, {
-                params,
-                fetch: this.fetch,
+                params: combinedParams,
+                fetch: this.opts.fetch,
             });
         });
     }
     put(endpoint, body, params) {
         return __awaiter(this, void 0, void 0, function* () {
+            const combinedParams = Object.assign(Object.assign({}, this.opts.params), params);
             return yield Client.authenticatedPut(this.buildUrl(endpoint), this.accessToken, body, {
-                params,
-                fetch: this.fetch,
+                params: combinedParams,
+                fetch: this.opts.fetch,
             });
         });
     }
     post(endpoint, body, params) {
         return __awaiter(this, void 0, void 0, function* () {
+            const combinedParams = Object.assign(Object.assign({}, this.opts.params), params);
             return yield Client.authenticatedPost(this.buildUrl(endpoint), this.accessToken, body, {
-                params,
-                fetch: this.fetch,
+                params: combinedParams,
+                fetch: this.opts.fetch,
             });
         });
     }
@@ -241,11 +243,11 @@ class Room {
         const url = this.client.buildUrl(`rooms/${this.roomId}/messages`);
         function messagesGenerator(end) {
             return __asyncGenerator(this, arguments, function* messagesGenerator_1() {
-                // console.log("end", end);
+                console.log("end", end);
                 while (true) {
-                    const params = { dir, limit: `${lim}` };
+                    let params = { dir, limit: `${lim}` };
                     if (end) {
-                        params.from = end;
+                        params["from"] = end;
                     }
                     const response = yield __await(Client.authenticatedGet(url, accessToken, {
                         params,

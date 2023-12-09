@@ -45,39 +45,39 @@ test("authenticated put returns something", () => __awaiter(void 0, void 0, void
     expect(response).toBeTruthy();
 }));
 test("getJoinedRooms returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client(baseUrl, accessToken, userId);
+    const client = new lib_1.Client(baseUrl, accessToken, { userId });
     const response = yield client.getJoinedRooms();
     expect(response).toBeTruthy();
 }));
 test("getRoomMessagesOneShot returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client(baseUrl, accessToken, userId);
+    const client = new lib_1.Client(baseUrl, accessToken, { userId });
     const room = new lib_1.Room(testRoomId, client);
     const response = yield room.getMessagesOneShot();
     // console.log("getRoomMessagesOneShot: ", response);
     expect(response).toBeTruthy();
 }));
 test("getRoomMessagesOneShotParams returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client(baseUrl, accessToken, userId);
+    const client = new lib_1.Client(baseUrl, accessToken, { userId });
     const room = new lib_1.Room(testRoomId, client);
     const response = yield room.getMessagesOneShotParams();
     // console.log("getRoomMessagesOneShotParams: ", response);
     expect(response).toBeTruthy();
 }));
 test("getRoomMessagesAsyncGenerator returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client(baseUrl, accessToken, userId);
+    const client = new lib_1.Client(baseUrl, accessToken, { userId });
     const room = new lib_1.Room(testRoomId, client);
     const messagesAsyncIterator = room.getMessagesAsyncGenerator()();
-    const { chunk, end } = (yield messagesAsyncIterator.next()).value;
-    // console.log("getRoomMessage chunk: ", chunk);
+    const response = yield messagesAsyncIterator.next();
+    console.log("getRoomMessage chunk: ", response);
     //seems like this bit might not be working
-    // const {chunk2, end2} = (await messagesAsyncIterator.next(end)).value
-    // console.log("getRoomMessage chunk2: ", chunk2);
+    // const { chunk2, end2 } = (await messagesAsyncIterator.next(end)).value
+    // console.log("getRoomMessage chunk2: ", chunk2)
     // console.log("getRoomMessages1: ", await response().next());
     // console.log("getRoomMessages2: ", await response().next());
-    expect(chunk).toBeTruthy();
+    expect(response).toBeTruthy();
 }));
 test("sendRoomMessage returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client(baseUrl, accessToken, userId);
+    const client = new lib_1.Client(baseUrl, accessToken, { userId });
     const room = new lib_1.Room(testRoomId, client);
     const response = yield room.sendMessage("Hello world");
     // console.log(response);
@@ -96,34 +96,38 @@ test("login returns something", () => __awaiter(void 0, void 0, void 0, function
 //   expect(response).toBeTruthy();
 // })
 test("getRoomState returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client("https://matrix.radical.directory", rdAccessToken, "@meri:radical.directory");
+    const client = new lib_1.Client("https://matrix.radical.directory", rdAccessToken, {
+        userId: "@meri:radical.directory",
+    });
     const room = new lib_1.Room(testSpaceId, client);
     const response = yield room.getState();
     console.log("roomState response", response);
     expect(response).toBeTruthy();
 }));
 test("getProfile returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client("https://matrix.radical.directory", rdAccessToken, rdUserId);
+    const client = new lib_1.Client("https://matrix.radical.directory", rdAccessToken, {
+        userId: rdUserId,
+    });
     const response = yield client.getProfile(rdUserId);
     console.log("getProfile", response);
     expect(response).toBeTruthy();
 }));
 test("setName returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client("https://matrix.radical.directory", rdTestAccessToken, rdTestUserId);
+    const client = new lib_1.Client("https://matrix.radical.directory", rdTestAccessToken, { userId: rdTestUserId });
     const room = new lib_1.Room(rdTestRoomId, client);
     const response = yield room.setName("Test Name");
     console.log("setName", response);
     expect(response).toBeTruthy();
 }));
 test("setTopic returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client("https://matrix.radical.directory", rdTestAccessToken, rdTestUserId);
+    const client = new lib_1.Client("https://matrix.radical.directory", rdTestAccessToken, { userId: rdTestUserId });
     const room = new lib_1.Room(rdTestRoomId, client);
     const response = yield room.setTopic("Test Topic");
     console.log("setTopic", response);
     expect(response).toBeTruthy();
 }));
 test("sendEvent returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client("https://matrix.radical.directory", rdTestAccessToken, rdTestUserId);
+    const client = new lib_1.Client("https://matrix.radical.directory", rdTestAccessToken, { userId: rdTestUserId });
     const room = new lib_1.Room(rdTestRoomId, client);
     const response = yield room.sendEvent("m.room.message", {
         body: "Test Event",
@@ -133,7 +137,7 @@ test("sendEvent returns something", () => __awaiter(void 0, void 0, void 0, func
     expect(response).toBeTruthy();
 }));
 test("sendStateEvent returns something", () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = new lib_1.Client("https://matrix.radical.directory", rdTestAccessToken, rdTestUserId);
+    const client = new lib_1.Client("https://matrix.radical.directory", rdTestAccessToken, { userId: rdTestUserId });
     const room = new lib_1.Room(rdTestRoomId, client);
     const response = yield room.sendStateEvent("m.room.name", {
         name: "Test State Event",
