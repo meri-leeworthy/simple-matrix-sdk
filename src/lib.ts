@@ -12,13 +12,14 @@ export type Event = Record<string, any> & {
 type ClientOptions = {
   userId: string
   params: Params
-  fetch?: any
+  fetch: any
 }
 
 export class Client {
   private baseUrl: string
   accessToken: string
-  private opts: ClientOptions
+  userId: string
+  params: Params
   fetch: any
 
   constructor(
@@ -28,10 +29,8 @@ export class Client {
   ) {
     this.baseUrl = baseUrl
     this.accessToken = accessToken
-    this.opts = {
-      userId: opts?.userId || "",
-      params: opts?.params || {},
-    }
+    this.params = opts?.params || {}
+    this.userId = opts?.userId || ""
     this.fetch = opts?.fetch || window?.fetch || undefined
   }
 
@@ -147,7 +146,7 @@ export class Client {
   }
 
   useUserId(): string {
-    return this.opts.userId
+    return this.userId
   }
 
   buildUrl(endpoint: string) {
@@ -155,7 +154,7 @@ export class Client {
   }
 
   async get(endpoint: string, params?: Params) {
-    const combinedParams = { ...this.opts.params, ...params }
+    const combinedParams = { ...this.params, ...params }
     return await Client.authenticatedGet(
       this.buildUrl(endpoint),
       this.accessToken,
@@ -167,7 +166,7 @@ export class Client {
   }
 
   async put(endpoint: string, body: any, params?: Params) {
-    const combinedParams = { ...this.opts.params, ...params }
+    const combinedParams = { ...this.params, ...params }
     return await Client.authenticatedPut(
       this.buildUrl(endpoint),
       this.accessToken,
@@ -180,7 +179,7 @@ export class Client {
   }
 
   async post(endpoint: string, body: any, params?: Params) {
-    const combinedParams = { ...this.opts.params, ...params }
+    const combinedParams = { ...this.params, ...params }
     return await Client.authenticatedPost(
       this.buildUrl(endpoint),
       this.accessToken,
@@ -291,15 +290,15 @@ export class Room {
     const lim = limit || 100
 
     const fetch = this.client.fetch
-
     const accessToken = this.client.accessToken
+    const clientParams = this.client.params
     const url = this.client.buildUrl(`rooms/${this.roomId}/messages`)
 
     async function* messagesGenerator(end?: string) {
       console.log("end", end)
 
       while (true) {
-        let params: Params = { dir, limit: `${lim}` }
+        let params: Params = { ...clientParams, dir, limit: `${lim}` }
         if (end) {
           params["from"] = end
         }

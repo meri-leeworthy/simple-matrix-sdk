@@ -14,12 +14,13 @@ export type Event = Record<string, any> & {
 type ClientOptions = {
     userId: string;
     params: Params;
-    fetch?: any;
+    fetch: any;
 };
 export declare class Client {
     private baseUrl;
     accessToken: string;
-    private opts;
+    userId: string;
+    params: Params;
     fetch: any;
     constructor(baseUrl: string, accessToken: string, opts?: Partial<ClientOptions>);
     static authenticatedGet(url: string, accessToken: string, opts?: {

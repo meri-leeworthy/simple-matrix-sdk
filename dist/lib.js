@@ -26,10 +26,8 @@ class Client {
     constructor(baseUrl, accessToken, opts) {
         this.baseUrl = baseUrl;
         this.accessToken = accessToken;
-        this.opts = {
-            userId: (opts === null || opts === void 0 ? void 0 : opts.userId) || "",
-            params: (opts === null || opts === void 0 ? void 0 : opts.params) || {},
-        };
+        this.params = (opts === null || opts === void 0 ? void 0 : opts.params) || {};
+        this.userId = (opts === null || opts === void 0 ? void 0 : opts.userId) || "";
         this.fetch = (opts === null || opts === void 0 ? void 0 : opts.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
     }
     static authenticatedGet(url, accessToken, opts) {
@@ -114,14 +112,14 @@ class Client {
         return this.baseUrl;
     }
     useUserId() {
-        return this.opts.userId;
+        return this.userId;
     }
     buildUrl(endpoint) {
         return `${this.baseUrl}/_matrix/client/v3/${endpoint}`;
     }
     get(endpoint, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const combinedParams = Object.assign(Object.assign({}, this.opts.params), params);
+            const combinedParams = Object.assign(Object.assign({}, this.params), params);
             return yield Client.authenticatedGet(this.buildUrl(endpoint), this.accessToken, {
                 params: combinedParams,
                 fetch: this.fetch,
@@ -130,7 +128,7 @@ class Client {
     }
     put(endpoint, body, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const combinedParams = Object.assign(Object.assign({}, this.opts.params), params);
+            const combinedParams = Object.assign(Object.assign({}, this.params), params);
             return yield Client.authenticatedPut(this.buildUrl(endpoint), this.accessToken, body, {
                 params: combinedParams,
                 fetch: this.fetch,
@@ -139,7 +137,7 @@ class Client {
     }
     post(endpoint, body, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const combinedParams = Object.assign(Object.assign({}, this.opts.params), params);
+            const combinedParams = Object.assign(Object.assign({}, this.params), params);
             return yield Client.authenticatedPost(this.buildUrl(endpoint), this.accessToken, body, {
                 params: combinedParams,
                 fetch: this.fetch,
@@ -242,12 +240,13 @@ class Room {
         const lim = limit || 100;
         const fetch = this.client.fetch;
         const accessToken = this.client.accessToken;
+        const clientParams = this.client.params;
         const url = this.client.buildUrl(`rooms/${this.roomId}/messages`);
         function messagesGenerator(end) {
             return __asyncGenerator(this, arguments, function* messagesGenerator_1() {
                 console.log("end", end);
                 while (true) {
-                    let params = { dir, limit: `${lim}` };
+                    let params = Object.assign(Object.assign({}, clientParams), { dir, limit: `${lim}` });
                     if (end) {
                         params["from"] = end;
                     }
