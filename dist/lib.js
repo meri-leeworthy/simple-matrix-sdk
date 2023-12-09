@@ -58,6 +58,8 @@ class Client {
                 const paramsString = new URLSearchParams(options.params).toString();
                 url = `${url}?${paramsString}`;
             }
+            if (!fetch)
+                return;
             const response = yield fetch(url, {
                 method: "PUT",
                 headers: {
@@ -122,7 +124,7 @@ class Client {
             const combinedParams = Object.assign(Object.assign({}, this.opts.params), params);
             return yield Client.authenticatedGet(this.buildUrl(endpoint), this.accessToken, {
                 params: combinedParams,
-                fetch: this.opts.fetch,
+                fetch: this.fetch,
             });
         });
     }
@@ -131,7 +133,7 @@ class Client {
             const combinedParams = Object.assign(Object.assign({}, this.opts.params), params);
             return yield Client.authenticatedPut(this.buildUrl(endpoint), this.accessToken, body, {
                 params: combinedParams,
-                fetch: this.opts.fetch,
+                fetch: this.fetch,
             });
         });
     }
@@ -140,7 +142,7 @@ class Client {
             const combinedParams = Object.assign(Object.assign({}, this.opts.params), params);
             return yield Client.authenticatedPost(this.buildUrl(endpoint), this.accessToken, body, {
                 params: combinedParams,
-                fetch: this.opts.fetch,
+                fetch: this.fetch,
             });
         });
     }

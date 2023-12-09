@@ -78,6 +78,7 @@ export class Client {
       const paramsString = new URLSearchParams(options.params).toString()
       url = `${url}?${paramsString}`
     }
+    if (!fetch) return
     const response = await fetch(url, {
       method: "PUT",
       headers: {
@@ -160,7 +161,7 @@ export class Client {
       this.accessToken,
       {
         params: combinedParams,
-        fetch: this.opts.fetch,
+        fetch: this.fetch,
       }
     )
   }
@@ -173,7 +174,7 @@ export class Client {
       body,
       {
         params: combinedParams,
-        fetch: this.opts.fetch,
+        fetch: this.fetch,
       }
     )
   }
@@ -186,7 +187,7 @@ export class Client {
       body,
       {
         params: combinedParams,
-        fetch: this.opts.fetch,
+        fetch: this.fetch,
       }
     )
   }
