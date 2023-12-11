@@ -59,7 +59,7 @@ test("getRoomMessagesOneShot returns something", () => __awaiter(void 0, void 0,
 test("getRoomMessagesOneShotParams returns something", () => __awaiter(void 0, void 0, void 0, function* () {
     const client = new lib_1.Client(baseUrl, accessToken, { userId });
     const room = new lib_1.Room(testRoomId, client);
-    const response = yield room.getMessagesOneShotParams();
+    const response = yield room.getMessagesOneShotParams({});
     // console.log("getRoomMessagesOneShotParams: ", response);
     expect(response).toBeTruthy();
 }));

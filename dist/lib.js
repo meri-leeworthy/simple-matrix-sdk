@@ -190,6 +190,15 @@ class Room {
     useID() {
         return this.roomId;
     }
+    get(endpoint, params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const combinedParams = Object.assign(Object.assign({}, this.client.params), params);
+            return yield Client.authenticatedGet(this.client.buildUrl(endpoint + "/rooms/" + this.roomId), this.client.accessToken, {
+                params: combinedParams,
+                fetch: this.client.fetch,
+            });
+        });
+    }
     getName() {
         return __awaiter(this, void 0, void 0, function* () {
             const name = yield this.client.get(`rooms/${this.roomId}/state/m.room.name`);
@@ -210,12 +219,9 @@ class Room {
             return this.client.get(`rooms/${this.roomId}/messages`);
         });
     }
-    getMessagesOneShotParams() {
+    getMessagesOneShotParams(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.get(`rooms/${this.roomId}/messages`, {
-                dir: "b",
-                limit: "10",
-            });
+            return this.client.get(`rooms/${this.roomId}/messages`, Object.assign(Object.assign({}, this.client.params), params));
         });
     }
     getEvent(eventId) {

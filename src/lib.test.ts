@@ -59,7 +59,7 @@ test("getRoomMessagesOneShot returns something", async () => {
 test("getRoomMessagesOneShotParams returns something", async () => {
   const client = new Client(baseUrl, accessToken, { userId })
   const room = new Room(testRoomId, client)
-  const response = await room.getMessagesOneShotParams()
+  const response = await room.getMessagesOneShotParams({})
   // console.log("getRoomMessagesOneShotParams: ", response);
   expect(response).toBeTruthy()
 })

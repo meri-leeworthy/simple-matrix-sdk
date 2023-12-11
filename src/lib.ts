@@ -242,6 +242,18 @@ export class Room {
     return this.roomId
   }
 
+  async get(endpoint: string, params?: Params) {
+    const combinedParams = { ...this.client.params, ...params }
+    return await Client.authenticatedGet(
+      this.client.buildUrl(endpoint + "/rooms/" + this.roomId),
+      this.client.accessToken,
+      {
+        params: combinedParams,
+        fetch: this.client.fetch,
+      }
+    )
+  }
+
   async getName(): Promise<unknown> {
     const name: { name: string } = await this.client.get(
       `rooms/${this.roomId}/state/m.room.name`
@@ -261,10 +273,10 @@ export class Room {
     return this.client.get(`rooms/${this.roomId}/messages`)
   }
 
-  async getMessagesOneShotParams(): Promise<any> {
+  async getMessagesOneShotParams(params: Record<string, any>): Promise<any> {
     return this.client.get(`rooms/${this.roomId}/messages`, {
-      dir: "b",
-      limit: "10",
+      ...this.client.params,
+      ...params,
     })
   }
 

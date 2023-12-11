@@ -59,10 +59,11 @@ export declare class Room {
         name: string;
     } | undefined;
     useID(): string;
+    get(endpoint: string, params?: Params): Promise<any>;
     getName(): Promise<unknown>;
     getState(): Promise<any>;
     getMessagesOneShot(): Promise<any>;
-    getMessagesOneShotParams(): Promise<any>;
+    getMessagesOneShotParams(params: Record<string, any>): Promise<any>;
     getEvent(eventId: string): Promise<Event>;
     getStateEvent(type: string, stateKey?: string): Promise<any>;
     getPowerLevels(): Promise<any>;
