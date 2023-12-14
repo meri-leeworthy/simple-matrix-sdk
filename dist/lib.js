@@ -248,13 +248,13 @@ class Room {
         const accessToken = this.client.accessToken;
         const clientParams = this.client.params;
         const url = this.client.buildUrl(`rooms/${this.roomId}/messages`);
-        function messagesGenerator(end) {
+        function messagesGenerator(from) {
             return __asyncGenerator(this, arguments, function* messagesGenerator_1() {
-                console.log("end", end);
+                console.log("end", from);
                 while (true) {
                     let params = Object.assign(Object.assign({}, clientParams), { dir, limit: `${lim}` });
-                    if (end) {
-                        params["from"] = end;
+                    if (from) {
+                        params["from"] = from;
                     }
                     const response = yield __await(Client.authenticatedGet(url, accessToken, {
                         params,
@@ -264,7 +264,7 @@ class Room {
                         break;
                     }
                     yield yield __await(response);
-                    end = response.end;
+                    from = response.end;
                 }
             });
         }
@@ -315,6 +315,7 @@ class Room {
         return sortedEvents;
     }
     static replaceEditedMessages(messages) {
+        // replaces the body of messages that have been edited with the edited body
         const editMessages = messages.filter(message => (message === null || message === void 0 ? void 0 : message.content) && "m.new_content" in message.content);
         const toBeEditedMessageIds = editMessages.map(message => (message === null || message === void 0 ? void 0 : message.content) &&
             "m.relates_to" in message.content &&
@@ -337,6 +338,13 @@ class Room {
             ...originalMessagesStayingTheSame,
             ...originalMessagesWithEditedBodies,
         ];
+    }
+    static deleteEditedMessages(messages) {
+        const editMessages = messages.filter(message => (message === null || message === void 0 ? void 0 : message.content) && "m.new_content" in message.content);
+        const toBeDeletedMessageIds = editMessages.map(message => (message === null || message === void 0 ? void 0 : message.content) &&
+            "m.relates_to" in message.content &&
+            message.content["m.relates_to"].event_id);
+        return messages.filter(message => !toBeDeletedMessageIds.includes(message.event_id));
     }
 }
 exports.Room = Room;

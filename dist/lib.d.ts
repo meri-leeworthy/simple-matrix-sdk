@@ -94,5 +94,6 @@ export declare class Room {
         origin_server_ts: number;
         unsigned?: any;
     })[];
+    static deleteEditedMessages(messages: Event[]): Event[];
 }
 export {};

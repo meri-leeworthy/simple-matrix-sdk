@@ -1,4 +1,5 @@
 type Params = Record<string, string>
+
 export type Event = Record<string, any> & {
   type: string
   content?: Record<string, any> & { body?: string; msgtype?: string }
@@ -306,13 +307,13 @@ export class Room {
     const clientParams = this.client.params
     const url = this.client.buildUrl(`rooms/${this.roomId}/messages`)
 
-    async function* messagesGenerator(end?: string) {
-      console.log("end", end)
+    async function* messagesGenerator(from?: string) {
+      console.log("end", from)
 
       while (true) {
         let params: Params = { ...clientParams, dir, limit: `${lim}` }
-        if (end) {
-          params["from"] = end
+        if (from) {
+          params["from"] = from
         }
         const response = await Client.authenticatedGet(url, accessToken, {
           params,
@@ -322,7 +323,7 @@ export class Room {
           break
         }
         yield response
-        end = response.end
+        from = response.end
       }
     }
     return messagesGenerator
@@ -384,6 +385,8 @@ export class Room {
   }
 
   static replaceEditedMessages(messages: Event[]) {
+    // replaces the body of messages that have been edited with the edited body
+
     const editMessages = messages.filter(
       message => message?.content && "m.new_content" in message.content
     )
@@ -427,5 +430,22 @@ export class Room {
       ...originalMessagesStayingTheSame,
       ...originalMessagesWithEditedBodies,
     ]
+  }
+
+  static deleteEditedMessages(messages: Event[]) {
+    const editMessages = messages.filter(
+      message => message?.content && "m.new_content" in message.content
+    )
+
+    const toBeDeletedMessageIds = editMessages.map(
+      message =>
+        message?.content &&
+        "m.relates_to" in message.content &&
+        message.content["m.relates_to"].event_id
+    )
+
+    return messages.filter(
+      message => !toBeDeletedMessageIds.includes(message.event_id)
+    )
   }
 }
