@@ -16,34 +16,30 @@ const userId = `@${username}:${baseUrl.split("//")[1]}`
 const rdAccessToken = process.env.RD_ACCESS_TOKEN!
 const rdUserId = process.env.RD_USER_ID!
 
-test("authenticated fetch returns something", async () => {
-  const url = "https://matrix.org/_matrix/client/v3/joined_rooms"
-  const response = await Client.authenticatedGet(url, accessToken)
-  // console.log(response);
-  expect(response).toBeTruthy()
-})
+describe("Test Static Methods", () => {
+  test("authenticated fetch returns something", async () => {
+    const url = "https://matrix.org/_matrix/client/v3/joined_rooms"
+    const response = await Client.authenticatedGet(url, accessToken)
+    // console.log(response);
+    expect(response).toBeTruthy()
+  })
 
-test("authenticated put returns something", async () => {
-  const url = `${baseUrl}/_matrix/client/v3/rooms/${testRoomId}/send/m.room.message/m1594032550.2`
-  const body = {
-    msgtype: "m.text",
-    body: "Hello world",
-  }
-  const response = await Client.authenticatedPut(url, accessToken, body)
-  // console.log(response);
-  expect(response).toBeTruthy()
-})
+  test("authenticated put returns something", async () => {
+    const url = `${baseUrl}/_matrix/client/v3/rooms/${testRoomId}/send/m.room.message/m1594032550.2`
+    const body = {
+      msgtype: "m.text",
+      body: "Hello world",
+    }
+    const response = await Client.authenticatedPut(url, accessToken, body)
+    // console.log(response);
+    expect(response).toBeTruthy()
+  })
 
-test("getJoinedRooms returns something", async () => {
-  const client = new Client(baseUrl, accessToken, { userId })
-  const response = await client.getJoinedRooms()
-  expect(response).toBeTruthy()
-})
-
-test("login returns something", async () => {
-  const response = await Client.login(baseUrl, username, password)
-  console.log(response)
-  expect(response).toBeTruthy()
+  test("login returns something", async () => {
+    const response = await Client.login(baseUrl, username, password)
+    console.log(response)
+    expect(response).toBeTruthy()
+  })
 })
 
 // test ("getRoomType returns something", async () => {
@@ -54,11 +50,23 @@ test("login returns something", async () => {
 //   expect(response).toBeTruthy();
 // })
 
-test("getProfile returns something", async () => {
-  const client = new Client("https://matrix.radical.directory", rdAccessToken, {
-    userId: rdUserId,
+describe("Test Client Getter Methods", () => {
+  test("getJoinedRooms returns something", async () => {
+    const client = new Client(baseUrl, accessToken, { userId })
+    const response = await client.getJoinedRooms()
+    expect(response).toBeTruthy()
   })
-  const response = await client.getProfile(rdUserId)
-  console.log("getProfile", response)
-  expect(response).toBeTruthy()
+
+  test("getProfile returns something", async () => {
+    const client = new Client(
+      "https://matrix.radical.directory",
+      rdAccessToken,
+      {
+        userId: rdUserId,
+      }
+    )
+    const response = await client.getProfile(rdUserId)
+    console.log("getProfile", response)
+    expect(response).toBeTruthy()
+  })
 })

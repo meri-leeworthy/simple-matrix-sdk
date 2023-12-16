@@ -69,12 +69,49 @@ export class Room {
     return this.client.get(`rooms/${this.roomId}/state/m.room.power_levels`)
   }
 
+  async setEventPowerLevel(
+    eventType: string,
+    powerLevel: number
+  ): Promise<any> {
+    if (!this.client.userId) throw new Error("No user ID")
+    if (powerLevel < 0 || powerLevel > 100) {
+      throw new Error("Power level must be between 0 and 100")
+    }
+
+    const powerLevels = await this.getPowerLevels()
+    const events = powerLevels.events
+
+    const newEvents = {
+      ...events,
+      [eventType]: powerLevel,
+    }
+
+    console.log("newEvents", newEvents) // needs checking :)
+
+    const newPowerLevels = {
+      ...powerLevels,
+      events: newEvents,
+    }
+
+    return this.client.put(
+      `rooms/${this.roomId}/state/m.room.power_levels`,
+      newPowerLevels
+    )
+  }
+
+  async getUserPowerLevel(): Promise<number> {
+    const { users } = await this.getPowerLevels()
+    return users[this.client.userId]
+  }
+
   async isUserModerator(): Promise<boolean> {
     const powerLevels = await this.getPowerLevels()
     console.log("powerLevels", powerLevels)
-    // const userPowerLevel = powerLevels.users[this.client.userId]
-    // const modPowerLevel = powerLevels.events["m.room.power_levels"].users_default
-    return true //userPowerLevel >= modPowerLevel
+    if (!this.client.userId) throw new Error("No user ID")
+    const userPowerLevel = powerLevels.users[this.client.userId]
+    const modPowerLevel =
+      powerLevels.events["m.room.power_levels"].state_default
+    return userPowerLevel >= modPowerLevel
   }
 
   // returned async generator function produces an iterator with a provided endpoint parameter
@@ -82,7 +119,7 @@ export class Room {
   getMessagesAsyncGenerator(
     direction?: "f" | "b",
     limit?: number
-  ): (end?: string) => AsyncGenerator<any, void, any> {
+  ): AsyncGenerator<any, void, any> {
     const dir = direction || "b"
     const lim = limit || 100
 
@@ -110,7 +147,7 @@ export class Room {
         from = response.end
       }
     }
-    return messagesGenerator
+    return messagesGenerator()
   }
 
   async sendMessage(body: any): Promise<{ event_id: string }> {

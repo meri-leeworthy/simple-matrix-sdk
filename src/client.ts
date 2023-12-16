@@ -126,14 +126,6 @@ export class Client {
     return data.access_token
   }
 
-  useBaseUrl(): string {
-    return this.baseUrl
-  }
-
-  useUserId(): string {
-    return this.userId
-  }
-
   buildUrl(endpoint: string) {
     return `${this.baseUrl}/_matrix/client/v3/${endpoint}`
   }
