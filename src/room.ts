@@ -1,229 +1,5 @@
-type Params = Record<string, string>
-
-export type Event = Record<string, any> & {
-  type: string
-  content?: Record<string, any> & { body?: string; msgtype?: string }
-  sender?: any
-  room_id: string
-  event_id: string
-  origin_server_ts: number
-  unsigned?: any
-}
-
-type ClientOptions = {
-  userId: string
-  params: Params
-  fetch: any
-}
-
-export class Client {
-  private baseUrl: string
-  accessToken: string
-  userId: string
-  params: Params
-  fetch: any
-
-  constructor(
-    baseUrl: string,
-    accessToken: string,
-    opts?: Partial<ClientOptions>
-  ) {
-    this.baseUrl = baseUrl
-    this.accessToken = accessToken
-    this.params = opts?.params || {}
-    this.userId = opts?.userId || ""
-    this.fetch = opts?.fetch || window?.fetch || undefined
-  }
-
-  static async authenticatedGet(
-    url: string,
-    accessToken: string,
-    opts?: {
-      params?: Params
-      fetch?: any
-    }
-  ) {
-    const params = { ...opts?.params }
-
-    // return async function (url: string) {
-    if (opts?.params) {
-      const paramsString = new URLSearchParams(opts.params).toString()
-      url = `${url}?${paramsString}`
-    }
-
-    const fetch = opts?.fetch || window?.fetch || undefined
-
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    })
-
-    const data = await response.json()
-    return data
-    // }
-  }
-
-  static async authenticatedPut(
-    url: string,
-    accessToken: string,
-    body: any,
-    options?: {
-      params?: Params
-      fetch?: any
-    }
-  ) {
-    const fetch = options?.fetch || window?.fetch || undefined
-    if (options?.params) {
-      const paramsString = new URLSearchParams(options.params).toString()
-      url = `${url}?${paramsString}`
-    }
-    if (!fetch) return
-    const response = await fetch(url, {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(body),
-    })
-    const data = await response.json()
-    return data
-  }
-
-  static async authenticatedPost(
-    url: string,
-    accessToken: string,
-    body: any,
-    options?: {
-      params?: Params
-      fetch?: any
-    }
-  ) {
-    if (options?.params) {
-      const paramsString = new URLSearchParams(options.params).toString()
-      url = `${url}?${paramsString}`
-    }
-    const fetch = options?.fetch || window?.fetch || undefined
-    const response = await fetch(url, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify(body),
-    })
-    const data = await response.json()
-    return data
-  }
-
-  static async login(
-    baseUrl: string,
-    username: string,
-    password: string,
-    fetch?: any
-  ) {
-    const fetcher = fetch || window?.fetch || undefined
-    const response = await fetcher(`${baseUrl}/_matrix/client/v3/login`, {
-      method: "POST",
-      body: JSON.stringify({
-        type: "m.login.password",
-        identifier: {
-          type: "m.id.user",
-          user: username,
-        },
-        password: password,
-      }),
-    })
-    const data = await response.json()
-
-    if (!("access_token" in data)) {
-      throw new Error("No access token in response")
-    }
-
-    return data.access_token
-  }
-
-  useBaseUrl(): string {
-    return this.baseUrl
-  }
-
-  useUserId(): string {
-    return this.userId
-  }
-
-  buildUrl(endpoint: string) {
-    return `${this.baseUrl}/_matrix/client/v3/${endpoint}`
-  }
-
-  async get(endpoint: string, params?: Params) {
-    const combinedParams = { ...this.params, ...params }
-    return await Client.authenticatedGet(
-      this.buildUrl(endpoint),
-      this.accessToken,
-      {
-        params: combinedParams,
-        fetch: this.fetch,
-      }
-    )
-  }
-
-  async put(endpoint: string, body: any, params?: Params) {
-    const combinedParams = { ...this.params, ...params }
-    return await Client.authenticatedPut(
-      this.buildUrl(endpoint),
-      this.accessToken,
-      body,
-      {
-        params: combinedParams,
-        fetch: this.fetch,
-      }
-    )
-  }
-
-  async post(endpoint: string, body: any, params?: Params) {
-    const combinedParams = { ...this.params, ...params }
-    return await Client.authenticatedPost(
-      this.buildUrl(endpoint),
-      this.accessToken,
-      body,
-      {
-        params: combinedParams,
-        fetch: this.fetch,
-      }
-    )
-  }
-
-  async getJoinedRooms(): Promise<{ joined_rooms: string[] }> {
-    return this.get("joined_rooms")
-  }
-
-  async getProfile(userId: string): Promise<{ displayname: string }> {
-    const profile = await this.get(`profile/${userId}/displayname`)
-    return profile
-  }
-
-  // async createMediaId(): Promise<any> {
-  //   return await Client.authenticatedPost(
-  //     `${this.baseUrl}/_matrix/media/r0/createContent`,
-  //     this.accessToken,
-  //     {}
-  //   )
-  // }
-
-  async uploadFile(file: File): Promise<any> {
-    const url = `${this.baseUrl}/_matrix/media/v3/upload`
-
-    const response = await fetch(url, {
-      method: "POST",
-      body: file,
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-        "Content-Type": "application/octet-stream",
-      },
-    })
-    const data = await response.json()
-    return data
-  }
-}
+import { Client } from "./client"
+import { Event, Params } from "./types"
 
 export class Room {
   private roomId: string
@@ -291,6 +67,14 @@ export class Room {
 
   async getPowerLevels(): Promise<any> {
     return this.client.get(`rooms/${this.roomId}/state/m.room.power_levels`)
+  }
+
+  async isUserModerator(): Promise<boolean> {
+    const powerLevels = await this.getPowerLevels()
+    console.log("powerLevels", powerLevels)
+    // const userPowerLevel = powerLevels.users[this.client.userId]
+    // const modPowerLevel = powerLevels.events["m.room.power_levels"].users_default
+    return true //userPowerLevel >= modPowerLevel
   }
 
   // returned async generator function produces an iterator with a provided endpoint parameter
@@ -433,19 +217,26 @@ export class Room {
   }
 
   static deleteEditedMessages(messages: Event[]) {
-    const editMessages = messages.filter(
-      message => message?.content && "m.new_content" in message.content
-    )
+    const rootEvents = new Map<string, Event[]>()
 
-    const toBeDeletedMessageIds = editMessages.map(
-      message =>
-        message?.content &&
-        "m.relates_to" in message.content &&
-        message.content["m.relates_to"].event_id
-    )
+    messages.forEach(message => {
+      if (message?.content && "m.relates_to" in message.content) {
+        const id = message.content["m.relates_to"].event_id
+        const edits = rootEvents.get(id)
+        rootEvents.set(id, [...(edits || []), message])
+      }
+    })
 
-    return messages.filter(
-      message => !toBeDeletedMessageIds.includes(message.event_id)
-    )
+    rootEvents.forEach((edits, id) => {
+      const finalEdit = edits.reduce((acc, edit) => {
+        if (edit.origin_server_ts > acc.origin_server_ts) {
+          return edit
+        }
+        return acc
+      })
+      rootEvents.set(id, [finalEdit])
+    })
+
+    return [...rootEvents.values()].flat()
   }
 }
