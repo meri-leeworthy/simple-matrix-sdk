@@ -46,7 +46,7 @@ describe("Test Room Static Messages Methods", () => {
   })
 
   test("getRoomMessagesAsyncGenerator returns something", async () => {
-    const messagesAsyncIterator = room?.getMessagesAsyncGenerator()()
+    const messagesAsyncIterator = room?.getMessagesAsyncGenerator()
     const response = await messagesAsyncIterator?.next()
     console.log("getRoomMessage chunk: ", response)
 
