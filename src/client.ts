@@ -199,4 +199,20 @@ export class Client {
     const data = await response.json()
     return data
   }
+
+  async createRoom(body: {
+    name?: string
+    topic?: string
+    invite?: string[]
+    room_alias_name?: string
+    initial_state?: {
+      type: string
+      state_key?: string
+      content: {
+        [key: string]: any
+      }
+    }[]
+  }): Promise<{ room_id: string } | { errcode: string; error?: string }> {
+    return await this.post("createRoom", body)
+  }
 }

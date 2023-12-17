@@ -30,4 +30,22 @@ export declare class Client {
         displayname: string;
     }>;
     uploadFile(file: File): Promise<any>;
+    createRoom(body: {
+        name?: string;
+        topic?: string;
+        invite?: string[];
+        room_alias_name?: string;
+        initial_state?: {
+            type: string;
+            state_key?: string;
+            content: {
+                [key: string]: any;
+            };
+        }[];
+    }): Promise<{
+        room_id: string;
+    } | {
+        errcode: string;
+        error?: string;
+    }>;
 }
