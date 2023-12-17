@@ -96,13 +96,15 @@ class Client {
             return data.access_token;
         });
     }
-    buildUrl(endpoint) {
-        return `${this.baseUrl}/_matrix/client/v3/${endpoint}`;
+    buildUrl(endpoint, urlType) {
+        const urlTypeOrDefault = urlType || "client/v3/";
+        return `${this.baseUrl}/_matrix/${urlTypeOrDefault}${endpoint}`;
     }
     get(endpoint, params) {
         return __awaiter(this, void 0, void 0, function* () {
             const combinedParams = Object.assign(Object.assign({}, this.params), params);
-            return yield Client.authenticatedGet(this.buildUrl(endpoint), this.accessToken, {
+            const urlType = combinedParams.urlType || undefined;
+            return yield Client.authenticatedGet(this.buildUrl(endpoint, urlType), this.accessToken, {
                 params: combinedParams,
                 fetch: this.fetch,
             });
@@ -111,7 +113,8 @@ class Client {
     put(endpoint, body, params) {
         return __awaiter(this, void 0, void 0, function* () {
             const combinedParams = Object.assign(Object.assign({}, this.params), params);
-            return yield Client.authenticatedPut(this.buildUrl(endpoint), this.accessToken, body, {
+            const urlType = combinedParams.urlType || undefined;
+            return yield Client.authenticatedPut(this.buildUrl(endpoint, urlType), this.accessToken, body, {
                 params: combinedParams,
                 fetch: this.fetch,
             });
@@ -120,7 +123,8 @@ class Client {
     post(endpoint, body, params) {
         return __awaiter(this, void 0, void 0, function* () {
             const combinedParams = Object.assign(Object.assign({}, this.params), params);
-            return yield Client.authenticatedPost(this.buildUrl(endpoint), this.accessToken, body, {
+            const urlType = combinedParams.urlType || undefined;
+            return yield Client.authenticatedPost(this.buildUrl(endpoint, urlType), this.accessToken, body, {
                 params: combinedParams,
                 fetch: this.fetch,
             });

@@ -1,14 +1,12 @@
 import { Client } from "./client";
 import { Event, Params } from "./types";
 export declare class Room {
-    private roomId;
-    private client;
-    private name?;
-    constructor(roomId: string, client: Client);
-    useName(): {
+    roomId: string;
+    client: Client;
+    name?: {
         name: string;
-    } | undefined;
-    useID(): string;
+    };
+    constructor(roomId: string, client: Client);
     get(endpoint: string, params?: Params): Promise<any>;
     getName(): Promise<unknown>;
     getState(): Promise<any>;
@@ -19,6 +17,7 @@ export declare class Room {
     getPowerLevels(): Promise<any>;
     setEventPowerLevel(eventType: string, powerLevel: number): Promise<any>;
     getUserPowerLevel(): Promise<number>;
+    getHierarchy(): Promise<Room[]>;
     isUserModerator(): Promise<boolean>;
     getMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): AsyncGenerator<any, void, any>;
     sendMessage(body: any): Promise<{

@@ -126,14 +126,17 @@ export class Client {
     return data.access_token
   }
 
-  buildUrl(endpoint: string) {
-    return `${this.baseUrl}/_matrix/client/v3/${endpoint}`
+  buildUrl(endpoint: string, urlType?: string) {
+    const urlTypeOrDefault = urlType || "client/v3/"
+    return `${this.baseUrl}/_matrix/${urlTypeOrDefault}${endpoint}`
   }
 
   async get(endpoint: string, params?: Params) {
     const combinedParams = { ...this.params, ...params }
+    const urlType = combinedParams.urlType || undefined
+
     return await Client.authenticatedGet(
-      this.buildUrl(endpoint),
+      this.buildUrl(endpoint, urlType),
       this.accessToken,
       {
         params: combinedParams,
@@ -144,8 +147,10 @@ export class Client {
 
   async put(endpoint: string, body: any, params?: Params) {
     const combinedParams = { ...this.params, ...params }
+    const urlType = combinedParams.urlType || undefined
+
     return await Client.authenticatedPut(
-      this.buildUrl(endpoint),
+      this.buildUrl(endpoint, urlType),
       this.accessToken,
       body,
       {
@@ -157,8 +162,10 @@ export class Client {
 
   async post(endpoint: string, body: any, params?: Params) {
     const combinedParams = { ...this.params, ...params }
+    const urlType = combinedParams.urlType || undefined
+
     return await Client.authenticatedPost(
-      this.buildUrl(endpoint),
+      this.buildUrl(endpoint, urlType),
       this.accessToken,
       body,
       {

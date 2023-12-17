@@ -28,12 +28,6 @@ class Room {
         this.roomId = roomId;
         this.client = client;
     }
-    useName() {
-        return this.name;
-    }
-    useID() {
-        return this.roomId;
-    }
     get(endpoint, params) {
         return __awaiter(this, void 0, void 0, function* () {
             const combinedParams = Object.assign(Object.assign({}, this.client.params), params);
@@ -102,6 +96,14 @@ class Room {
         return __awaiter(this, void 0, void 0, function* () {
             const { users } = yield this.getPowerLevels();
             return users[this.client.userId];
+        });
+    }
+    getHierarchy() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { rooms } = yield this.client.get(`rooms/${this.roomId}/hierarchy`, {
+                urlType: "client/v1/",
+            });
+            return rooms;
         });
     }
     isUserModerator() {

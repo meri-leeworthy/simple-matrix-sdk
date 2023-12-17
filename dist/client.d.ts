@@ -19,7 +19,7 @@ export declare class Client {
         fetch?: any;
     }): Promise<any>;
     static login(baseUrl: string, username: string, password: string, fetch?: any): Promise<any>;
-    buildUrl(endpoint: string): string;
+    buildUrl(endpoint: string, urlType?: string): string;
     get(endpoint: string, params?: Params): Promise<any>;
     put(endpoint: string, body: any, params?: Params): Promise<any>;
     post(endpoint: string, body: any, params?: Params): Promise<any>;

@@ -2,21 +2,13 @@ import { Client } from "./client"
 import { Event, Params } from "./types"
 
 export class Room {
-  private roomId: string
-  private client: Client
-  private name?: { name: string }
+  roomId: string
+  client: Client
+  name?: { name: string }
 
   constructor(roomId: string, client: Client) {
     this.roomId = roomId
     this.client = client
-  }
-
-  useName(): { name: string } | undefined {
-    return this.name
-  }
-
-  useID(): string {
-    return this.roomId
   }
 
   async get(endpoint: string, params?: Params) {
@@ -102,6 +94,13 @@ export class Room {
   async getUserPowerLevel(): Promise<number> {
     const { users } = await this.getPowerLevels()
     return users[this.client.userId]
+  }
+
+  async getHierarchy(): Promise<Room[]> {
+    const { rooms } = await this.client.get(`rooms/${this.roomId}/hierarchy`, {
+      urlType: "client/v1/",
+    })
+    return rooms
   }
 
   async isUserModerator(): Promise<boolean> {

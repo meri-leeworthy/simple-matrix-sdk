@@ -2,7 +2,8 @@ import { Client, Room } from "../src"
 
 require("dotenv").config()
 
-const { BASE_URL_1, ACCESS_TOKEN_1, TEST_ROOM_1, USER_ID_1 } = process.env
+const { BASE_URL_1, ACCESS_TOKEN_1, TEST_ROOM_1, USER_ID_1, TEST_SPACE_1 } =
+  process.env
 
 test("playground", async () => {
   const client = new Client(BASE_URL_1!, ACCESS_TOKEN_1!, {
@@ -10,8 +11,8 @@ test("playground", async () => {
   })
   const room = new Room(TEST_ROOM_1!, client)
 
-  const response = await room.setEventPowerLevel("test_event", 55)
+  const response = await room.getHierarchy()
 
-  console.log("power level response", response)
+  console.log("get hierarchy response", response)
   expect(response).toBeTruthy()
 })
