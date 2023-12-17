@@ -110,7 +110,7 @@ export class Room {
     if (!this.client.userId) throw new Error("No user ID")
     const userPowerLevel = powerLevels.users[this.client.userId]
     const modPowerLevel =
-      powerLevels.events["m.room.power_levels"].state_default
+      powerLevels.events["m.room.power_levels"] || powerLevels.state_default
     return userPowerLevel >= modPowerLevel
   }
 
