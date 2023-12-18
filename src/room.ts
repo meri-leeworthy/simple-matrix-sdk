@@ -96,7 +96,7 @@ export class Room {
     return users[this.client.userId]
   }
 
-  async getHierarchy(): Promise<Room[]> {
+  async getHierarchy(): Promise<{ [x: string]: any }[]> {
     const { rooms } = await this.client.get(`rooms/${this.roomId}/hierarchy`, {
       urlType: "client/v1/",
     })
