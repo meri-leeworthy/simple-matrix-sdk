@@ -126,6 +126,11 @@ export class Client {
     return data.access_token
   }
 
+  async getRoomIdFromAlias(alias: string): Promise<string> {
+    const response = await this.get(`directory/room/${alias}`)
+    return response.room_id
+  }
+
   buildUrl(endpoint: string, urlType?: string) {
     const urlTypeOrDefault = urlType || "client/v3/"
     return `${this.baseUrl}/_matrix/${urlTypeOrDefault}${endpoint}`
@@ -205,6 +210,14 @@ export class Client {
     })
     const data = await response.json()
     return data
+  }
+
+  async joinRoom(roomIdOrAlias: string): Promise<any> {
+    return await this.post(`join/${roomIdOrAlias}`, {})
+  }
+
+  async leaveRoom(roomId: string): Promise<any> {
+    return await this.post(`rooms/${roomId}/leave`, {})
   }
 
   async createRoom(body: {

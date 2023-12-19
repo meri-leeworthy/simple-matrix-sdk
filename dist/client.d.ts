@@ -19,6 +19,7 @@ export declare class Client {
         fetch?: any;
     }): Promise<any>;
     static login(baseUrl: string, username: string, password: string, fetch?: any): Promise<any>;
+    getRoomIdFromAlias(alias: string): Promise<string>;
     buildUrl(endpoint: string, urlType?: string): string;
     get(endpoint: string, params?: Params): Promise<any>;
     put(endpoint: string, body: any, params?: Params): Promise<any>;
@@ -30,6 +31,8 @@ export declare class Client {
         displayname: string;
     }>;
     uploadFile(file: File): Promise<any>;
+    joinRoom(roomIdOrAlias: string): Promise<any>;
+    leaveRoom(roomId: string): Promise<any>;
     createRoom(body: {
         name?: string;
         topic?: string;

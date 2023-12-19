@@ -96,6 +96,12 @@ class Client {
             return data.access_token;
         });
     }
+    getRoomIdFromAlias(alias) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.get(`directory/room/${alias}`);
+            return response.room_id;
+        });
+    }
     buildUrl(endpoint, urlType) {
         const urlTypeOrDefault = urlType || "client/v3/";
         return `${this.baseUrl}/_matrix/${urlTypeOrDefault}${endpoint}`;
@@ -161,6 +167,16 @@ class Client {
             });
             const data = yield response.json();
             return data;
+        });
+    }
+    joinRoom(roomIdOrAlias) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.post(`join/${roomIdOrAlias}`, {});
+        });
+    }
+    leaveRoom(roomId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return yield this.post(`rooms/${roomId}/leave`, {});
         });
     }
     createRoom(body) {

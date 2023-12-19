@@ -128,7 +128,7 @@ export class Room {
     const url = this.client.buildUrl(`rooms/${this.roomId}/messages`)
 
     async function* messagesGenerator(from?: string) {
-      console.log("end", from)
+      // console.log("end", from)
 
       while (true) {
         let params: Params = { ...clientParams, dir, limit: `${lim}` }
@@ -191,6 +191,21 @@ export class Room {
       `rooms/${this.roomId}/redact/${eventId}/${Date.now()}`,
       {}
     )
+  }
+
+  async getRoomAliases(): Promise<string[]> {
+    const response = await this.get(`directory/room/${this.roomId}`)
+    return response.aliases
+  }
+
+  async setRoomAlias(alias: string): Promise<any> {
+    return this.client.put(`directory/room/${alias}`, {
+      room_id: this.roomId,
+    })
+  }
+
+  async deleteRoomAlias(alias: string): Promise<any> {
+    return this.client.put(`directory/room/${alias}`, {})
   }
 
   static sortEvents(events: Event[]): Record<string, Event[]> {

@@ -17,7 +17,9 @@ export declare class Room {
     getPowerLevels(): Promise<any>;
     setEventPowerLevel(eventType: string, powerLevel: number): Promise<any>;
     getUserPowerLevel(): Promise<number>;
-    getHierarchy(): Promise<Room[]>;
+    getHierarchy(): Promise<{
+        [x: string]: any;
+    }[]>;
     isUserModerator(): Promise<boolean>;
     getMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): AsyncGenerator<any, void, any>;
     sendMessage(body: any): Promise<{
@@ -32,6 +34,9 @@ export declare class Room {
     setName(name: string): Promise<void>;
     setTopic(topic: string): Promise<void>;
     redactEvent(eventId: string): Promise<void>;
+    getRoomAliases(): Promise<string[]>;
+    setRoomAlias(alias: string): Promise<any>;
+    deleteRoomAlias(alias: string): Promise<any>;
     static sortEvents(events: Event[]): Record<string, Event[]>;
     static replaceEditedMessages(messages: Event[]): (Event | {
         content: {

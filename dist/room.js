@@ -128,7 +128,7 @@ class Room {
         const url = this.client.buildUrl(`rooms/${this.roomId}/messages`);
         function messagesGenerator(from) {
             return __asyncGenerator(this, arguments, function* messagesGenerator_1() {
-                console.log("end", from);
+                // console.log("end", from)
                 while (true) {
                     let params = Object.assign(Object.assign({}, clientParams), { dir, limit: `${lim}` });
                     if (from) {
@@ -180,6 +180,24 @@ class Room {
     redactEvent(eventId) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`rooms/${this.roomId}/redact/${eventId}/${Date.now()}`, {});
+        });
+    }
+    getRoomAliases() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.get(`directory/room/${this.roomId}`);
+            return response.aliases;
+        });
+    }
+    setRoomAlias(alias) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.put(`directory/room/${alias}`, {
+                room_id: this.roomId,
+            });
+        });
+    }
+    deleteRoomAlias(alias) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.put(`directory/room/${alias}`, {});
         });
     }
     static sortEvents(events) {
