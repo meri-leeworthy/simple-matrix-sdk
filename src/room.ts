@@ -38,11 +38,7 @@ export class Room {
     return state
   }
 
-  async getMessagesOneShot(): Promise<any> {
-    return this.client.get(`rooms/${this.roomId}/messages`)
-  }
-
-  async getMessagesOneShotParams(params: Record<string, any>): Promise<any> {
+  async getMessages(params: Record<string, any>): Promise<any> {
     return this.client.get(`rooms/${this.roomId}/messages`, {
       ...this.client.params,
       ...params,
@@ -51,6 +47,16 @@ export class Room {
 
   async getEvent(eventId: string): Promise<Event> {
     return this.client.get(`rooms/${this.roomId}/event/$${eventId}`)
+  }
+
+  async getRelations(
+    eventId: string,
+    params: Record<string, any>
+  ): Promise<any> {
+    return this.client.get(`rooms/${this.roomId}/relations/${eventId}`, {
+      ...this.client.params,
+      ...params,
+    })
   }
 
   async getStateEvent(type: string, stateKey?: string): Promise<any> {
