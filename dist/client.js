@@ -96,12 +96,6 @@ class Client {
             return data.access_token;
         });
     }
-    getRoomIdFromAlias(alias) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.get(`directory/room/${alias}`);
-            return response.room_id;
-        });
-    }
     buildUrl(endpoint, urlType) {
         const urlTypeOrDefault = urlType || "client/v3/";
         return `${this.baseUrl}/_matrix/${urlTypeOrDefault}${endpoint}`;
@@ -141,9 +135,15 @@ class Client {
             return this.get("joined_rooms");
         });
     }
+    getRoomIdFromAlias(alias) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.get(`directory/room/${alias}`);
+            return response.room_id;
+        });
+    }
     getProfile(userId) {
         return __awaiter(this, void 0, void 0, function* () {
-            const profile = yield this.get(`profile/${userId}/displayname`);
+            const profile = yield this.get(`profile/${userId || this.userId}/displayname`);
             return profile;
         });
     }

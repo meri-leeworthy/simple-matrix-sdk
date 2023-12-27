@@ -10,9 +10,9 @@ export declare class Room {
     get(endpoint: string, params?: Params): Promise<any>;
     getName(): Promise<unknown>;
     getState(): Promise<any>;
-    getMessagesOneShot(): Promise<any>;
-    getMessagesOneShotParams(params: Record<string, any>): Promise<any>;
+    getMessages(params: Record<string, any>): Promise<any>;
     getEvent(eventId: string): Promise<Event>;
+    getRelations(eventId: string, params: Record<string, any>): Promise<any>;
     getStateEvent(type: string, stateKey?: string): Promise<any>;
     getPowerLevels(): Promise<any>;
     setEventPowerLevel(eventType: string, powerLevel: number): Promise<any>;

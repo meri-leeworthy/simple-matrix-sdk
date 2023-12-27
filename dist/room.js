@@ -52,12 +52,7 @@ class Room {
             return state;
         });
     }
-    getMessagesOneShot() {
-        return __awaiter(this, void 0, void 0, function* () {
-            return this.client.get(`rooms/${this.roomId}/messages`);
-        });
-    }
-    getMessagesOneShotParams(params) {
+    getMessages(params) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.get(`rooms/${this.roomId}/messages`, Object.assign(Object.assign({}, this.client.params), params));
         });
@@ -65,6 +60,11 @@ class Room {
     getEvent(eventId) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.get(`rooms/${this.roomId}/event/$${eventId}`);
+        });
+    }
+    getRelations(eventId, params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.client.get(`rooms/${this.roomId}/relations/${eventId}`, Object.assign(Object.assign({}, this.client.params), params));
         });
     }
     getStateEvent(type, stateKey) {
