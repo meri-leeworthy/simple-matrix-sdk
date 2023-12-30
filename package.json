@@ -10,11 +10,14 @@
   "license": "",
   "devDependencies": {
     "@types/jest": "^29.5.7",
+    "dotenv": "^16.3.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom-global": "^4.0.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2",
-    "whatwg-fetch": "^3.6.19",
-    "dotenv": "^16.3.1"
+    "whatwg-fetch": "^3.6.19"
+  },
+  "dependencies": {
+    "valibot": "^0.25.0"
   }
 }
