@@ -51,12 +51,19 @@ export class Room {
 
   async getRelations(
     eventId: string,
-    params: Record<string, any>
+    params: Record<string, any>,
+    relType?: string,
+    eventType?: string
   ): Promise<any> {
-    return this.client.get(`rooms/${this.roomId}/relations/${eventId}`, {
-      ...this.client.params,
-      ...params,
-    })
+    return this.client.get(
+      `rooms/${this.roomId}/relations/${eventId}${relType && "/" + relType}${
+        eventType && "/" + eventType
+      }}`,
+      {
+        ...this.client.params,
+        ...params,
+      }
+    )
   }
 
   async getStateEvent(type: string, stateKey?: string): Promise<any> {

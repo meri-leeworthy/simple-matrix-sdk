@@ -62,9 +62,9 @@ class Room {
             return this.client.get(`rooms/${this.roomId}/event/$${eventId}`);
         });
     }
-    getRelations(eventId, params) {
+    getRelations(eventId, params, relType, eventType) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.get(`rooms/${this.roomId}/relations/${eventId}`, Object.assign(Object.assign({}, this.client.params), params));
+            return this.client.get(`rooms/${this.roomId}/relations/${eventId}${relType && "/" + relType}${eventType && "/" + eventType}}`, Object.assign(Object.assign({}, this.client.params), params));
         });
     }
     getStateEvent(type, stateKey) {

@@ -12,7 +12,7 @@ export declare class Room {
     getState(): Promise<any>;
     getMessages(params: Record<string, any>): Promise<any>;
     getEvent(eventId: string): Promise<Event>;
-    getRelations(eventId: string, params: Record<string, any>): Promise<any>;
+    getRelations(eventId: string, params: Record<string, any>, relType?: string, eventType?: string): Promise<any>;
     getStateEvent(type: string, stateKey?: string): Promise<any>;
     getPowerLevels(): Promise<any>;
     setEventPowerLevel(eventType: string, powerLevel: number): Promise<any>;
