@@ -12,7 +12,6 @@ export class Room {
   roomId: string
   client: Client
   name?: { name: string }
-  timeline?: Timeline
 
   constructor(roomId: string, client: Client) {
     this.roomId = roomId
