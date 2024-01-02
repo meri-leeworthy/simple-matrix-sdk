@@ -53,7 +53,7 @@ export class Room {
   }
 
   async getEvent(eventId: string): Promise<ClientEventOutput> {
-    return this.client.get(`rooms/${this.roomId}/event/$${eventId}`)
+    return this.client.get(`rooms/${this.roomId}/event/${eventId}`)
   }
 
   async getRelations(
