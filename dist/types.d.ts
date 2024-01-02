@@ -38,40 +38,40 @@ export declare const RoomMessageTypeSchema: import("valibot").EnumSchema<{
 }, string>;
 export type RoomMessageTypeOutput = Output<typeof RoomMessageTypeSchema>;
 export declare const TextMessageContentSchema: import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.text", "m.text">;
+    msgtype: import("valibot").LiteralSchema<"m.text", "m.text">;
     body: import("valibot").StringSchema<string>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.text";
+    msgtype: "m.text";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 }>;
 export declare const EmoteMessageContentSchema: import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.emote", "m.emote">;
+    msgtype: import("valibot").LiteralSchema<"m.emote", "m.emote">;
     body: import("valibot").StringSchema<string>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.emote";
+    msgtype: "m.emote";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 }>;
 export declare const NoticeMessageContentSchema: import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.notice", "m.notice">;
+    msgtype: import("valibot").LiteralSchema<"m.notice", "m.notice">;
     body: import("valibot").StringSchema<string>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.notice";
+    msgtype: "m.notice";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 }>;
 export declare const ImageMessageContentSchema: import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.image", "m.image">;
+    msgtype: import("valibot").LiteralSchema<"m.image", "m.image">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         h: import("valibot").NumberSchema<number>;
@@ -122,7 +122,7 @@ export declare const ImageMessageContentSchema: import("valibot").ObjectSchema<{
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.image";
+    msgtype: "m.image";
     body: string;
     info?: {
         h: number;
@@ -140,7 +140,7 @@ export declare const ImageMessageContentSchema: import("valibot").ObjectSchema<{
     url?: string | undefined;
 }>;
 export declare const FileMessageContentSchema: import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.file", "m.file">;
+    msgtype: import("valibot").LiteralSchema<"m.file", "m.file">;
     body: import("valibot").StringSchema<string>;
     filename: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
@@ -186,7 +186,7 @@ export declare const FileMessageContentSchema: import("valibot").ObjectSchema<{
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.file";
+    msgtype: "m.file";
     body: string;
     filename: string;
     info?: {
@@ -203,7 +203,7 @@ export declare const FileMessageContentSchema: import("valibot").ObjectSchema<{
     url?: string | undefined;
 }>;
 export declare const AudioMessageContentSchema: import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.audio", "m.audio">;
+    msgtype: import("valibot").LiteralSchema<"m.audio", "m.audio">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -220,7 +220,7 @@ export declare const AudioMessageContentSchema: import("valibot").ObjectSchema<{
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.audio";
+    msgtype: "m.audio";
     body: string;
     info?: {
         mimetype?: string | undefined;
@@ -230,7 +230,7 @@ export declare const AudioMessageContentSchema: import("valibot").ObjectSchema<{
     url?: string | undefined;
 }>;
 export declare const LocationMessageContentSchema: import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.location", "m.location">;
+    msgtype: import("valibot").LiteralSchema<"m.location", "m.location">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         thumbnail_info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
@@ -269,7 +269,7 @@ export declare const LocationMessageContentSchema: import("valibot").ObjectSchem
     } | undefined>;
     geo_uri: import("valibot").StringSchema<string>;
 }, undefined, {
-    msgType: "m.location";
+    msgtype: "m.location";
     body: string;
     geo_uri: string;
     info?: {
@@ -283,7 +283,7 @@ export declare const LocationMessageContentSchema: import("valibot").ObjectSchem
     } | undefined;
 }>;
 export declare const VideoMessageContentSchema: import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.video", "m.video">;
+    msgtype: import("valibot").LiteralSchema<"m.video", "m.video">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -337,7 +337,7 @@ export declare const VideoMessageContentSchema: import("valibot").ObjectSchema<{
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.video";
+    msgtype: "m.video";
     body: string;
     info?: {
         h?: number | undefined;
@@ -356,7 +356,7 @@ export declare const VideoMessageContentSchema: import("valibot").ObjectSchema<{
     url?: string | undefined;
 }>;
 export declare const KeyVerificationRequestMessageContentSchema: import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
+    msgtype: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
     body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
@@ -365,7 +365,7 @@ export declare const KeyVerificationRequestMessageContentSchema: import("valibot
     timestamp: import("valibot").NumberSchema<number>;
     transaction_id: import("valibot").StringSchema<string>;
 }, undefined, {
-    msgType: "m.key.verification.request";
+    msgtype: "m.key.verification.request";
     from_device: string;
     methods: string[];
     timestamp: number;
@@ -375,37 +375,37 @@ export declare const KeyVerificationRequestMessageContentSchema: import("valibot
     formatted_body?: string | undefined;
 }>;
 export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.text", "m.text">;
+    msgtype: import("valibot").LiteralSchema<"m.text", "m.text">;
     body: import("valibot").StringSchema<string>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.text";
+    msgtype: "m.text";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.emote", "m.emote">;
+    msgtype: import("valibot").LiteralSchema<"m.emote", "m.emote">;
     body: import("valibot").StringSchema<string>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.emote";
+    msgtype: "m.emote";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.notice", "m.notice">;
+    msgtype: import("valibot").LiteralSchema<"m.notice", "m.notice">;
     body: import("valibot").StringSchema<string>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.notice";
+    msgtype: "m.notice";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.image", "m.image">;
+    msgtype: import("valibot").LiteralSchema<"m.image", "m.image">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         h: import("valibot").NumberSchema<number>;
@@ -456,7 +456,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.image";
+    msgtype: "m.image";
     body: string;
     info?: {
         h: number;
@@ -473,7 +473,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined;
     url?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.file", "m.file">;
+    msgtype: import("valibot").LiteralSchema<"m.file", "m.file">;
     body: import("valibot").StringSchema<string>;
     filename: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
@@ -519,7 +519,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.file";
+    msgtype: "m.file";
     body: string;
     filename: string;
     info?: {
@@ -535,7 +535,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined;
     url?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.audio", "m.audio">;
+    msgtype: import("valibot").LiteralSchema<"m.audio", "m.audio">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -552,7 +552,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.audio";
+    msgtype: "m.audio";
     body: string;
     info?: {
         mimetype?: string | undefined;
@@ -561,7 +561,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined;
     url?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.location", "m.location">;
+    msgtype: import("valibot").LiteralSchema<"m.location", "m.location">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         thumbnail_info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
@@ -600,7 +600,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined>;
     geo_uri: import("valibot").StringSchema<string>;
 }, undefined, {
-    msgType: "m.location";
+    msgtype: "m.location";
     body: string;
     geo_uri: string;
     info?: {
@@ -613,7 +613,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
         thumbnail_url?: string | undefined;
     } | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.video", "m.video">;
+    msgtype: import("valibot").LiteralSchema<"m.video", "m.video">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -667,7 +667,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.video";
+    msgtype: "m.video";
     body: string;
     info?: {
         h?: number | undefined;
@@ -685,7 +685,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined;
     url?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
+    msgtype: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
     body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
@@ -694,7 +694,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     timestamp: import("valibot").NumberSchema<number>;
     transaction_id: import("valibot").StringSchema<string>;
 }, undefined, {
-    msgType: "m.key.verification.request";
+    msgtype: "m.key.verification.request";
     from_device: string;
     methods: string[];
     timestamp: number;
@@ -702,23 +702,27 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     body?: string | undefined;
     format?: string | undefined;
     formatted_body?: string | undefined;
+}> | import("valibot").ObjectSchema<{
+    msgtype: import("valibot").StringSchema<string>;
+}, undefined, {
+    msgtype: string;
 }>)[], {
-    msgType: "m.text";
+    msgtype: "m.text";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 } | {
-    msgType: "m.emote";
+    msgtype: "m.emote";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 } | {
-    msgType: "m.notice";
+    msgtype: "m.notice";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 } | {
-    msgType: "m.image";
+    msgtype: "m.image";
     body: string;
     info?: {
         h: number;
@@ -735,7 +739,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.file";
+    msgtype: "m.file";
     body: string;
     filename: string;
     info?: {
@@ -751,7 +755,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.audio";
+    msgtype: "m.audio";
     body: string;
     info?: {
         mimetype?: string | undefined;
@@ -760,7 +764,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.location";
+    msgtype: "m.location";
     body: string;
     geo_uri: string;
     info?: {
@@ -773,7 +777,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
         thumbnail_url?: string | undefined;
     } | undefined;
 } | {
-    msgType: "m.video";
+    msgtype: "m.video";
     body: string;
     info?: {
         h?: number | undefined;
@@ -791,7 +795,7 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.key.verification.request";
+    msgtype: "m.key.verification.request";
     from_device: string;
     methods: string[];
     timestamp: number;
@@ -799,6 +803,8 @@ export declare const RoomMessageContentSchema: import("valibot").UnionSchema<(im
     body?: string | undefined;
     format?: string | undefined;
     formatted_body?: string | undefined;
+} | {
+    msgtype: string;
 }>;
 export type RoomMessageContentOutput = Output<typeof RoomMessageContentSchema>;
 export declare const SpecRoomEventTypeSchema: import("valibot").UnionSchema<(import("valibot").LiteralSchema<"m.room.message", "m.room.message"> | import("valibot").LiteralSchema<"m.room.member", "m.room.member"> | import("valibot").LiteralSchema<"m.room.create", "m.room.create"> | import("valibot").LiteralSchema<"m.room.join_rules", "m.room.join_rules"> | import("valibot").LiteralSchema<"m.room.power_levels", "m.room.power_levels"> | import("valibot").LiteralSchema<"m.room.name", "m.room.name"> | import("valibot").LiteralSchema<"m.room.topic", "m.room.topic"> | import("valibot").LiteralSchema<"m.room.avatar", "m.room.avatar"> | import("valibot").LiteralSchema<"m.room.canonical_alias", "m.room.canonical_alias"> | import("valibot").LiteralSchema<"m.room.aliases", "m.room.aliases"> | import("valibot").LiteralSchema<"m.room.redaction", "m.room.redaction"> | import("valibot").LiteralSchema<"m.room.history_visibility", "m.room.history_visibility"> | import("valibot").LiteralSchema<"m.room.encryption", "m.room.encryption"> | import("valibot").LiteralSchema<"m.room.third_party_invite", "m.room.third_party_invite"> | import("valibot").LiteralSchema<"m.room.related_groups", "m.room.related_groups"> | import("valibot").LiteralSchema<"m.room.pinned_events", "m.room.pinned_events"> | import("valibot").LiteralSchema<"m.room.server_acl", "m.room.server_acl"> | import("valibot").LiteralSchema<"m.room.tombstone", "m.room.tombstone"> | import("valibot").LiteralSchema<"m.room.key", "m.room.key"> | import("valibot").LiteralSchema<"m.room.forwarded_room_key", "m.room.forwarded_room_key"> | import("valibot").LiteralSchema<"m.room.encrypted", "m.room.encrypted"> | import("valibot").LiteralSchema<"m.room.message.feedback", "m.room.message.feedback"> | import("valibot").LiteralSchema<"m.room.message.receipt", "m.room.message.receipt"> | import("valibot").LiteralSchema<"m.room.message.relation", "m.room.message.relation"> | import("valibot").LiteralSchema<"m.room.message.encrypted", "m.room.message.encrypted"> | import("valibot").LiteralSchema<"m.room.tag", "m.room.tag"> | import("valibot").LiteralSchema<"m.room.sticker", "m.room.sticker"> | import("valibot").LiteralSchema<"m.room.space", "m.room.space"> | import("valibot").LiteralSchema<"m.room.guest_access", "m.room.guest_access">)[], "m.room.message" | "m.room.member" | "m.room.create" | "m.room.join_rules" | "m.room.power_levels" | "m.room.name" | "m.room.topic" | "m.room.avatar" | "m.room.canonical_alias" | "m.room.aliases" | "m.room.redaction" | "m.room.history_visibility" | "m.room.encryption" | "m.room.third_party_invite" | "m.room.related_groups" | "m.room.pinned_events" | "m.room.server_acl" | "m.room.tombstone" | "m.room.key" | "m.room.forwarded_room_key" | "m.room.encrypted" | "m.room.message.feedback" | "m.room.message.receipt" | "m.room.message.relation" | "m.room.message.encrypted" | "m.room.tag" | "m.room.sticker" | "m.room.space" | "m.room.guest_access">;
@@ -854,8 +860,8 @@ export declare const EventContentSchema: import("valibot").ObjectSchema<{
         rel_type: string;
     } | undefined>;
 }, undefined, {
-    body: string;
     msgtype: string;
+    body: string;
     "m.relates_to"?: {
         event_id: string;
         rel_type: string;
@@ -863,37 +869,37 @@ export declare const EventContentSchema: import("valibot").ObjectSchema<{
 }>;
 export type EventContentOutput = Output<typeof EventContentSchema>;
 export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("valibot").UnionSchema<(import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.text", "m.text">;
+    msgtype: import("valibot").LiteralSchema<"m.text", "m.text">;
     body: import("valibot").StringSchema<string>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.text";
+    msgtype: "m.text";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.emote", "m.emote">;
+    msgtype: import("valibot").LiteralSchema<"m.emote", "m.emote">;
     body: import("valibot").StringSchema<string>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.emote";
+    msgtype: "m.emote";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.notice", "m.notice">;
+    msgtype: import("valibot").LiteralSchema<"m.notice", "m.notice">;
     body: import("valibot").StringSchema<string>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.notice";
+    msgtype: "m.notice";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.image", "m.image">;
+    msgtype: import("valibot").LiteralSchema<"m.image", "m.image">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         h: import("valibot").NumberSchema<number>;
@@ -944,7 +950,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.image";
+    msgtype: "m.image";
     body: string;
     info?: {
         h: number;
@@ -961,7 +967,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.file", "m.file">;
+    msgtype: import("valibot").LiteralSchema<"m.file", "m.file">;
     body: import("valibot").StringSchema<string>;
     filename: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
@@ -1007,7 +1013,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.file";
+    msgtype: "m.file";
     body: string;
     filename: string;
     info?: {
@@ -1023,7 +1029,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.audio", "m.audio">;
+    msgtype: import("valibot").LiteralSchema<"m.audio", "m.audio">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -1040,7 +1046,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.audio";
+    msgtype: "m.audio";
     body: string;
     info?: {
         mimetype?: string | undefined;
@@ -1049,7 +1055,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.location", "m.location">;
+    msgtype: import("valibot").LiteralSchema<"m.location", "m.location">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         thumbnail_info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
@@ -1088,7 +1094,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined>;
     geo_uri: import("valibot").StringSchema<string>;
 }, undefined, {
-    msgType: "m.location";
+    msgtype: "m.location";
     body: string;
     geo_uri: string;
     info?: {
@@ -1101,7 +1107,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
         thumbnail_url?: string | undefined;
     } | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.video", "m.video">;
+    msgtype: import("valibot").LiteralSchema<"m.video", "m.video">;
     body: import("valibot").StringSchema<string>;
     info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
         duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -1155,7 +1161,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined>;
     url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
 }, undefined, {
-    msgType: "m.video";
+    msgtype: "m.video";
     body: string;
     info?: {
         h?: number | undefined;
@@ -1173,7 +1179,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 }> | import("valibot").ObjectSchema<{
-    msgType: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
+    msgtype: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
     body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
@@ -1182,7 +1188,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     timestamp: import("valibot").NumberSchema<number>;
     transaction_id: import("valibot").StringSchema<string>;
 }, undefined, {
-    msgType: "m.key.verification.request";
+    msgtype: "m.key.verification.request";
     from_device: string;
     methods: string[];
     timestamp: number;
@@ -1190,23 +1196,27 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     body?: string | undefined;
     format?: string | undefined;
     formatted_body?: string | undefined;
+}> | import("valibot").ObjectSchema<{
+    msgtype: import("valibot").StringSchema<string>;
+}, undefined, {
+    msgtype: string;
 }>)[], {
-    msgType: "m.text";
+    msgtype: "m.text";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 } | {
-    msgType: "m.emote";
+    msgtype: "m.emote";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 } | {
-    msgType: "m.notice";
+    msgtype: "m.notice";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 } | {
-    msgType: "m.image";
+    msgtype: "m.image";
     body: string;
     info?: {
         h: number;
@@ -1223,7 +1233,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.file";
+    msgtype: "m.file";
     body: string;
     filename: string;
     info?: {
@@ -1239,7 +1249,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.audio";
+    msgtype: "m.audio";
     body: string;
     info?: {
         mimetype?: string | undefined;
@@ -1248,7 +1258,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.location";
+    msgtype: "m.location";
     body: string;
     geo_uri: string;
     info?: {
@@ -1261,7 +1271,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
         thumbnail_url?: string | undefined;
     } | undefined;
 } | {
-    msgType: "m.video";
+    msgtype: "m.video";
     body: string;
     info?: {
         h?: number | undefined;
@@ -1279,7 +1289,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.key.verification.request";
+    msgtype: "m.key.verification.request";
     from_device: string;
     methods: string[];
     timestamp: number;
@@ -1287,6 +1297,8 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     body?: string | undefined;
     format?: string | undefined;
     formatted_body?: string | undefined;
+} | {
+    msgtype: string;
 }> | import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
     ban: import("valibot").NumberSchema<number>;
     events: import("valibot").RecordSchema<import("valibot").StringSchema<string>, import("valibot").NumberSchema<number>, {
@@ -1337,29 +1349,29 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
         rel_type: string;
     } | undefined>;
 }, undefined, {
-    body: string;
     msgtype: string;
+    body: string;
     "m.relates_to"?: {
         event_id: string;
         rel_type: string;
     } | undefined;
 }>)[], {
-    msgType: "m.text";
+    msgtype: "m.text";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 } | {
-    msgType: "m.emote";
+    msgtype: "m.emote";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 } | {
-    msgType: "m.notice";
+    msgtype: "m.notice";
     body: string;
     format?: string | undefined;
     formatted_body?: string | undefined;
 } | {
-    msgType: "m.image";
+    msgtype: "m.image";
     body: string;
     info?: {
         h: number;
@@ -1376,7 +1388,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.file";
+    msgtype: "m.file";
     body: string;
     filename: string;
     info?: {
@@ -1392,7 +1404,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.audio";
+    msgtype: "m.audio";
     body: string;
     info?: {
         mimetype?: string | undefined;
@@ -1401,7 +1413,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.location";
+    msgtype: "m.location";
     body: string;
     geo_uri: string;
     info?: {
@@ -1414,7 +1426,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
         thumbnail_url?: string | undefined;
     } | undefined;
 } | {
-    msgType: "m.video";
+    msgtype: "m.video";
     body: string;
     info?: {
         h?: number | undefined;
@@ -1432,7 +1444,7 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     } | undefined;
     url?: string | undefined;
 } | {
-    msgType: "m.key.verification.request";
+    msgtype: "m.key.verification.request";
     from_device: string;
     methods: string[];
     timestamp: number;
@@ -1440,6 +1452,8 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
     body?: string | undefined;
     format?: string | undefined;
     formatted_body?: string | undefined;
+} | {
+    msgtype: string;
 } | {
     ban?: number | undefined;
     events?: {
@@ -1458,8 +1472,8 @@ export declare const ContentUnionSchema: import("valibot").UnionSchema<(import("
         room: number;
     } | undefined;
 } | {
-    body: string;
     msgtype: string;
+    body: string;
     "m.relates_to"?: {
         event_id: string;
         rel_type: string;
@@ -1474,37 +1488,37 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
     age: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
     replaces_state: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     prev_content: import("valibot").OptionalSchema<import("valibot").UnionSchema<(import("valibot").UnionSchema<(import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.text", "m.text">;
+        msgtype: import("valibot").LiteralSchema<"m.text", "m.text">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.emote", "m.emote">;
+        msgtype: import("valibot").LiteralSchema<"m.emote", "m.emote">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.notice", "m.notice">;
+        msgtype: import("valibot").LiteralSchema<"m.notice", "m.notice">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.image", "m.image">;
+        msgtype: import("valibot").LiteralSchema<"m.image", "m.image">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             h: import("valibot").NumberSchema<number>;
@@ -1555,7 +1569,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -1572,7 +1586,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.file", "m.file">;
+        msgtype: import("valibot").LiteralSchema<"m.file", "m.file">;
         body: import("valibot").StringSchema<string>;
         filename: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
@@ -1618,7 +1632,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -1634,7 +1648,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.audio", "m.audio">;
+        msgtype: import("valibot").LiteralSchema<"m.audio", "m.audio">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -1651,7 +1665,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -1660,7 +1674,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.location", "m.location">;
+        msgtype: import("valibot").LiteralSchema<"m.location", "m.location">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             thumbnail_info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
@@ -1699,7 +1713,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined>;
         geo_uri: import("valibot").StringSchema<string>;
     }, undefined, {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -1712,7 +1726,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
             thumbnail_url?: string | undefined;
         } | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.video", "m.video">;
+        msgtype: import("valibot").LiteralSchema<"m.video", "m.video">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -1766,7 +1780,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -1784,7 +1798,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
+        msgtype: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
         body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
@@ -1793,7 +1807,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         timestamp: import("valibot").NumberSchema<number>;
         transaction_id: import("valibot").StringSchema<string>;
     }, undefined, {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -1801,23 +1815,27 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    }> | import("valibot").ObjectSchema<{
+        msgtype: import("valibot").StringSchema<string>;
+    }, undefined, {
+        msgtype: string;
     }>)[], {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -1834,7 +1852,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -1850,7 +1868,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -1859,7 +1877,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -1872,7 +1890,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -1890,7 +1908,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -1898,6 +1916,8 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     }> | import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
         ban: import("valibot").NumberSchema<number>;
         events: import("valibot").RecordSchema<import("valibot").StringSchema<string>, import("valibot").NumberSchema<number>, {
@@ -1948,29 +1968,29 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
             rel_type: string;
         } | undefined>;
     }, undefined, {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
         } | undefined;
     }>)[], {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -1987,7 +2007,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -2003,7 +2023,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -2012,7 +2032,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -2025,7 +2045,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -2043,7 +2063,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -2051,6 +2071,8 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     } | {
         ban?: number | undefined;
         events?: {
@@ -2069,29 +2091,29 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
             room: number;
         } | undefined;
     } | {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
         } | undefined;
     }>, undefined, {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -2108,7 +2130,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -2124,7 +2146,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -2133,7 +2155,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -2146,7 +2168,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -2164,7 +2186,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -2172,6 +2194,8 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     } | {
         ban?: number | undefined;
         events?: {
@@ -2190,8 +2214,8 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
             room: number;
         } | undefined;
     } | {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -2207,22 +2231,22 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
     age?: number | undefined;
     replaces_state?: string | undefined;
     prev_content?: {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -2239,7 +2263,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -2255,7 +2279,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -2264,7 +2288,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -2277,7 +2301,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -2295,7 +2319,7 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -2303,6 +2327,8 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     } | {
         ban?: number | undefined;
         events?: {
@@ -2321,8 +2347,8 @@ export declare const ClientEventBaseSchema: import("valibot").ObjectSchema<{
             room: number;
         } | undefined;
     } | {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -2346,8 +2372,8 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
             rel_type: string;
         } | undefined>;
     }, undefined, {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -2356,8 +2382,8 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
 }, undefined, {
     type: string;
     content: {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -2372,37 +2398,37 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
 }> | import("valibot").ObjectSchema<{
     type: import("valibot").LiteralSchema<"m.room.message", "m.room.message">;
     content: import("valibot").UnionSchema<(import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.text", "m.text">;
+        msgtype: import("valibot").LiteralSchema<"m.text", "m.text">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.emote", "m.emote">;
+        msgtype: import("valibot").LiteralSchema<"m.emote", "m.emote">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.notice", "m.notice">;
+        msgtype: import("valibot").LiteralSchema<"m.notice", "m.notice">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.image", "m.image">;
+        msgtype: import("valibot").LiteralSchema<"m.image", "m.image">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             h: import("valibot").NumberSchema<number>;
@@ -2453,7 +2479,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -2470,7 +2496,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.file", "m.file">;
+        msgtype: import("valibot").LiteralSchema<"m.file", "m.file">;
         body: import("valibot").StringSchema<string>;
         filename: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
@@ -2516,7 +2542,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -2532,7 +2558,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.audio", "m.audio">;
+        msgtype: import("valibot").LiteralSchema<"m.audio", "m.audio">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -2549,7 +2575,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -2558,7 +2584,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.location", "m.location">;
+        msgtype: import("valibot").LiteralSchema<"m.location", "m.location">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             thumbnail_info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
@@ -2597,7 +2623,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined>;
         geo_uri: import("valibot").StringSchema<string>;
     }, undefined, {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -2610,7 +2636,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
             thumbnail_url?: string | undefined;
         } | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.video", "m.video">;
+        msgtype: import("valibot").LiteralSchema<"m.video", "m.video">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -2664,7 +2690,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -2682,7 +2708,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
+        msgtype: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
         body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
@@ -2691,7 +2717,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         timestamp: import("valibot").NumberSchema<number>;
         transaction_id: import("valibot").StringSchema<string>;
     }, undefined, {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -2699,23 +2725,27 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    }> | import("valibot").ObjectSchema<{
+        msgtype: import("valibot").StringSchema<string>;
+    }, undefined, {
+        msgtype: string;
     }>)[], {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -2732,7 +2762,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -2748,7 +2778,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -2757,7 +2787,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -2770,7 +2800,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -2788,7 +2818,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -2796,26 +2826,28 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     }>;
 }, undefined, {
     type: "m.room.message";
     content: {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -2832,7 +2864,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -2848,7 +2880,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -2857,7 +2889,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -2870,7 +2902,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -2888,7 +2920,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -2896,6 +2928,8 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     };
 }> | import("valibot").ObjectSchema<{
     type: import("valibot").LiteralSchema<"m.room.power_levels", "m.room.power_levels">;
@@ -2956,11 +2990,205 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
             room: number;
         } | undefined;
     };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.member", "m.room.member">;
+    content: import("valibot").ObjectSchema<{
+        membership: import("valibot").StringSchema<string>;
+        displayname: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
+        avatar_url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
+        is_direct: import("valibot").OptionalSchema<import("valibot").BooleanSchema<boolean>, undefined, boolean | undefined>;
+        third_party_invite: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
+            display_name: import("valibot").StringSchema<string>;
+            signed: import("valibot").ObjectSchema<{
+                mxid: import("valibot").StringSchema<string>;
+                signatures: import("valibot").ObjectSchema<{
+                    "ed25519:": import("valibot").StringSchema<string>;
+                }, undefined, {
+                    "ed25519:": string;
+                }>;
+                token: import("valibot").StringSchema<string>;
+            }, undefined, {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            }>;
+        }, undefined, {
+            display_name: string;
+            signed: {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            };
+        }>, undefined, {
+            display_name: string;
+            signed: {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            };
+        } | undefined>;
+    }, undefined, {
+        membership: string;
+        displayname?: string | undefined;
+        avatar_url?: string | undefined;
+        is_direct?: boolean | undefined;
+        third_party_invite?: {
+            display_name: string;
+            signed: {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            };
+        } | undefined;
+    }>;
+}, undefined, {
+    type: "m.room.member";
+    content: {
+        membership: string;
+        displayname?: string | undefined;
+        avatar_url?: string | undefined;
+        is_direct?: boolean | undefined;
+        third_party_invite?: {
+            display_name: string;
+            signed: {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            };
+        } | undefined;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.create", "m.room.create">;
+    content: import("valibot").ObjectSchema<{
+        creator: import("valibot").StringSchema<string>;
+        room_version: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
+        predecessor: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
+            event_id: import("valibot").StringSchema<string>;
+            room_id: import("valibot").StringSchema<string>;
+        }, undefined, {
+            event_id: string;
+            room_id: string;
+        }>, undefined, {
+            event_id: string;
+            room_id: string;
+        } | undefined>;
+    }, undefined, {
+        creator: string;
+        room_version?: string | undefined;
+        predecessor?: {
+            event_id: string;
+            room_id: string;
+        } | undefined;
+    }>;
+}, undefined, {
+    type: "m.room.create";
+    content: {
+        creator: string;
+        room_version?: string | undefined;
+        predecessor?: {
+            event_id: string;
+            room_id: string;
+        } | undefined;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.join_rules", "m.room.join_rules">;
+    content: import("valibot").ObjectSchema<{
+        join_rule: import("valibot").StringSchema<string>;
+    }, undefined, {
+        join_rule: string;
+    }>;
+}, undefined, {
+    type: "m.room.join_rules";
+    content: {
+        join_rule: string;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.name", "m.room.name">;
+    content: import("valibot").ObjectSchema<{
+        name: import("valibot").StringSchema<string>;
+    }, undefined, {
+        name: string;
+    }>;
+}, undefined, {
+    type: "m.room.name";
+    content: {
+        name: string;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.topic", "m.room.topic">;
+    content: import("valibot").ObjectSchema<{
+        topic: import("valibot").StringSchema<string>;
+    }, undefined, {
+        topic: string;
+    }>;
+}, undefined, {
+    type: "m.room.topic";
+    content: {
+        topic: string;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.avatar", "m.room.avatar">;
+    content: import("valibot").ObjectSchema<{
+        url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
+    }, undefined, {
+        url?: string | undefined;
+    }>;
+}, undefined, {
+    type: "m.room.avatar";
+    content: {
+        url?: string | undefined;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.canonical_alias", "m.room.canonical_alias">;
+    content: import("valibot").ObjectSchema<{
+        alias: import("valibot").StringSchema<string>;
+    }, undefined, {
+        alias: string;
+    }>;
+}, undefined, {
+    type: "m.room.canonical_alias";
+    content: {
+        alias: string;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.aliases", "m.room.aliases">;
+    content: import("valibot").ObjectSchema<{
+        aliases: import("valibot").ArraySchema<import("valibot").StringSchema<string>, string[]>;
+    }, undefined, {
+        aliases: string[];
+    }>;
+}, undefined, {
+    type: "m.room.aliases";
+    content: {
+        aliases: string[];
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.redaction", "m.room.redaction">;
+    content: import("valibot").ObjectSchema<{
+        reason: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
+    }, undefined, {
+        reason?: string | undefined;
+    }>;
+}, undefined, {
+    type: "m.room.redaction";
+    content: {
+        reason?: string | undefined;
+    };
 }>)[], {
     type: string;
     content: {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -2972,22 +3200,22 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
 } | {
     type: "m.room.message";
     content: {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -3004,7 +3232,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -3020,7 +3248,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -3029,7 +3257,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -3042,7 +3270,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -3060,7 +3288,7 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -3068,6 +3296,8 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     };
 } | {
     type: "m.room.power_levels";
@@ -3089,43 +3319,106 @@ export declare const ClientEventTypeAndContentSchema: import("valibot").UnionSch
             room: number;
         } | undefined;
     };
+} | {
+    type: "m.room.member";
+    content: {
+        membership: string;
+        displayname?: string | undefined;
+        avatar_url?: string | undefined;
+        is_direct?: boolean | undefined;
+        third_party_invite?: {
+            display_name: string;
+            signed: {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            };
+        } | undefined;
+    };
+} | {
+    type: "m.room.create";
+    content: {
+        creator: string;
+        room_version?: string | undefined;
+        predecessor?: {
+            event_id: string;
+            room_id: string;
+        } | undefined;
+    };
+} | {
+    type: "m.room.join_rules";
+    content: {
+        join_rule: string;
+    };
+} | {
+    type: "m.room.name";
+    content: {
+        name: string;
+    };
+} | {
+    type: "m.room.topic";
+    content: {
+        topic: string;
+    };
+} | {
+    type: "m.room.avatar";
+    content: {
+        url?: string | undefined;
+    };
+} | {
+    type: "m.room.canonical_alias";
+    content: {
+        alias: string;
+    };
+} | {
+    type: "m.room.aliases";
+    content: {
+        aliases: string[];
+    };
+} | {
+    type: "m.room.redaction";
+    content: {
+        reason?: string | undefined;
+    };
 }>;
 export type ContentUnionOutput = Output<typeof ContentUnionSchema>;
 export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
     age: import("valibot").NumberSchema<number>;
     transaction_id: import("valibot").StringSchema<string>;
     prev_content: import("valibot").UnionSchema<(import("valibot").UnionSchema<(import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.text", "m.text">;
+        msgtype: import("valibot").LiteralSchema<"m.text", "m.text">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.emote", "m.emote">;
+        msgtype: import("valibot").LiteralSchema<"m.emote", "m.emote">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.notice", "m.notice">;
+        msgtype: import("valibot").LiteralSchema<"m.notice", "m.notice">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.image", "m.image">;
+        msgtype: import("valibot").LiteralSchema<"m.image", "m.image">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             h: import("valibot").NumberSchema<number>;
@@ -3176,7 +3469,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -3193,7 +3486,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.file", "m.file">;
+        msgtype: import("valibot").LiteralSchema<"m.file", "m.file">;
         body: import("valibot").StringSchema<string>;
         filename: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
@@ -3239,7 +3532,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -3255,7 +3548,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.audio", "m.audio">;
+        msgtype: import("valibot").LiteralSchema<"m.audio", "m.audio">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -3272,7 +3565,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -3281,7 +3574,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.location", "m.location">;
+        msgtype: import("valibot").LiteralSchema<"m.location", "m.location">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             thumbnail_info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
@@ -3320,7 +3613,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined>;
         geo_uri: import("valibot").StringSchema<string>;
     }, undefined, {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -3333,7 +3626,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             thumbnail_url?: string | undefined;
         } | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.video", "m.video">;
+        msgtype: import("valibot").LiteralSchema<"m.video", "m.video">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -3387,7 +3680,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -3405,7 +3698,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
+        msgtype: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
         body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
@@ -3414,7 +3707,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         timestamp: import("valibot").NumberSchema<number>;
         transaction_id: import("valibot").StringSchema<string>;
     }, undefined, {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -3422,23 +3715,27 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    }> | import("valibot").ObjectSchema<{
+        msgtype: import("valibot").StringSchema<string>;
+    }, undefined, {
+        msgtype: string;
     }>)[], {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -3455,7 +3752,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -3471,7 +3768,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -3480,7 +3777,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -3493,7 +3790,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -3511,7 +3808,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -3519,6 +3816,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     }> | import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
         ban: import("valibot").NumberSchema<number>;
         events: import("valibot").RecordSchema<import("valibot").StringSchema<string>, import("valibot").NumberSchema<number>, {
@@ -3569,29 +3868,29 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             rel_type: string;
         } | undefined>;
     }, undefined, {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
         } | undefined;
     }>)[], {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -3608,7 +3907,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -3624,7 +3923,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -3633,7 +3932,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -3646,7 +3945,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -3664,7 +3963,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -3672,6 +3971,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     } | {
         ban?: number | undefined;
         events?: {
@@ -3690,8 +3991,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             room: number;
         } | undefined;
     } | {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -3706,37 +4007,37 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         age: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
         replaces_state: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         prev_content: import("valibot").OptionalSchema<import("valibot").UnionSchema<(import("valibot").UnionSchema<(import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.text", "m.text">;
+            msgtype: import("valibot").LiteralSchema<"m.text", "m.text">;
             body: import("valibot").StringSchema<string>;
             format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.emote", "m.emote">;
+            msgtype: import("valibot").LiteralSchema<"m.emote", "m.emote">;
             body: import("valibot").StringSchema<string>;
             format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.notice", "m.notice">;
+            msgtype: import("valibot").LiteralSchema<"m.notice", "m.notice">;
             body: import("valibot").StringSchema<string>;
             format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.image", "m.image">;
+            msgtype: import("valibot").LiteralSchema<"m.image", "m.image">;
             body: import("valibot").StringSchema<string>;
             info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                 h: import("valibot").NumberSchema<number>;
@@ -3787,7 +4088,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined>;
             url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -3804,7 +4105,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.file", "m.file">;
+            msgtype: import("valibot").LiteralSchema<"m.file", "m.file">;
             body: import("valibot").StringSchema<string>;
             filename: import("valibot").StringSchema<string>;
             info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
@@ -3850,7 +4151,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined>;
             url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -3866,7 +4167,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.audio", "m.audio">;
+            msgtype: import("valibot").LiteralSchema<"m.audio", "m.audio">;
             body: import("valibot").StringSchema<string>;
             info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                 duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -3883,7 +4184,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined>;
             url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -3892,7 +4193,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.location", "m.location">;
+            msgtype: import("valibot").LiteralSchema<"m.location", "m.location">;
             body: import("valibot").StringSchema<string>;
             info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                 thumbnail_info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
@@ -3931,7 +4232,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined>;
             geo_uri: import("valibot").StringSchema<string>;
         }, undefined, {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -3944,7 +4245,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 thumbnail_url?: string | undefined;
             } | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.video", "m.video">;
+            msgtype: import("valibot").LiteralSchema<"m.video", "m.video">;
             body: import("valibot").StringSchema<string>;
             info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                 duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -3998,7 +4299,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined>;
             url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -4016,7 +4317,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
+            msgtype: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
             body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
@@ -4025,7 +4326,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             timestamp: import("valibot").NumberSchema<number>;
             transaction_id: import("valibot").StringSchema<string>;
         }, undefined, {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -4033,23 +4334,27 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        }> | import("valibot").ObjectSchema<{
+            msgtype: import("valibot").StringSchema<string>;
+        }, undefined, {
+            msgtype: string;
         }>)[], {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -4066,7 +4371,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -4082,7 +4387,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -4091,7 +4396,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -4104,7 +4409,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -4122,7 +4427,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -4130,6 +4435,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         }> | import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
             ban: import("valibot").NumberSchema<number>;
             events: import("valibot").RecordSchema<import("valibot").StringSchema<string>, import("valibot").NumberSchema<number>, {
@@ -4180,29 +4487,29 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 rel_type: string;
             } | undefined>;
         }, undefined, {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
             } | undefined;
         }>)[], {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -4219,7 +4526,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -4235,7 +4542,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -4244,7 +4551,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -4257,7 +4564,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -4275,7 +4582,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -4283,6 +4590,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         } | {
             ban?: number | undefined;
             events?: {
@@ -4301,29 +4610,29 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 room: number;
             } | undefined;
         } | {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
             } | undefined;
         }>, undefined, {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -4340,7 +4649,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -4356,7 +4665,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -4365,7 +4674,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -4378,7 +4687,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -4396,7 +4705,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -4404,6 +4713,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         } | {
             ban?: number | undefined;
             events?: {
@@ -4422,8 +4733,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 room: number;
             } | undefined;
         } | {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -4439,22 +4750,22 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -4471,7 +4782,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -4487,7 +4798,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -4496,7 +4807,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -4509,7 +4820,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -4527,7 +4838,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -4535,6 +4846,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         } | {
             ban?: number | undefined;
             events?: {
@@ -4553,8 +4866,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 room: number;
             } | undefined;
         } | {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -4570,22 +4883,22 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -4602,7 +4915,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -4618,7 +4931,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -4627,7 +4940,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -4640,7 +4953,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -4658,7 +4971,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -4666,6 +4979,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         } | {
             ban?: number | undefined;
             events?: {
@@ -4684,8 +4999,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 room: number;
             } | undefined;
         } | {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -4700,22 +5015,22 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
     transaction_id?: string | undefined;
     age?: number | undefined;
     prev_content?: {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -4732,7 +5047,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -4748,7 +5063,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -4757,7 +5072,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -4770,7 +5085,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -4788,7 +5103,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -4796,6 +5111,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     } | {
         ban?: number | undefined;
         events?: {
@@ -4814,8 +5131,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             room: number;
         } | undefined;
     } | {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -4830,22 +5147,22 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -4862,7 +5179,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -4878,7 +5195,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -4887,7 +5204,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -4900,7 +5217,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -4918,7 +5235,7 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -4926,6 +5243,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         } | {
             ban?: number | undefined;
             events?: {
@@ -4944,8 +5263,8 @@ export declare const UnsignedDataSchema: import("valibot").ObjectSchema<import("
                 room: number;
             } | undefined;
         } | {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -4967,37 +5286,37 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
     age: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
     replaces_state: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     prev_content: import("valibot").OptionalSchema<import("valibot").UnionSchema<(import("valibot").UnionSchema<(import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.text", "m.text">;
+        msgtype: import("valibot").LiteralSchema<"m.text", "m.text">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.emote", "m.emote">;
+        msgtype: import("valibot").LiteralSchema<"m.emote", "m.emote">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.notice", "m.notice">;
+        msgtype: import("valibot").LiteralSchema<"m.notice", "m.notice">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.image", "m.image">;
+        msgtype: import("valibot").LiteralSchema<"m.image", "m.image">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             h: import("valibot").NumberSchema<number>;
@@ -5048,7 +5367,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -5065,7 +5384,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.file", "m.file">;
+        msgtype: import("valibot").LiteralSchema<"m.file", "m.file">;
         body: import("valibot").StringSchema<string>;
         filename: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
@@ -5111,7 +5430,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -5127,7 +5446,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.audio", "m.audio">;
+        msgtype: import("valibot").LiteralSchema<"m.audio", "m.audio">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -5144,7 +5463,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -5153,7 +5472,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.location", "m.location">;
+        msgtype: import("valibot").LiteralSchema<"m.location", "m.location">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             thumbnail_info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
@@ -5192,7 +5511,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined>;
         geo_uri: import("valibot").StringSchema<string>;
     }, undefined, {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -5205,7 +5524,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             thumbnail_url?: string | undefined;
         } | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.video", "m.video">;
+        msgtype: import("valibot").LiteralSchema<"m.video", "m.video">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -5259,7 +5578,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -5277,7 +5596,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
+        msgtype: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
         body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
@@ -5286,7 +5605,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         timestamp: import("valibot").NumberSchema<number>;
         transaction_id: import("valibot").StringSchema<string>;
     }, undefined, {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -5294,23 +5613,27 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    }> | import("valibot").ObjectSchema<{
+        msgtype: import("valibot").StringSchema<string>;
+    }, undefined, {
+        msgtype: string;
     }>)[], {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -5327,7 +5650,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -5343,7 +5666,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -5352,7 +5675,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -5365,7 +5688,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -5383,7 +5706,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -5391,6 +5714,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     }> | import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
         ban: import("valibot").NumberSchema<number>;
         events: import("valibot").RecordSchema<import("valibot").StringSchema<string>, import("valibot").NumberSchema<number>, {
@@ -5441,29 +5766,29 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             rel_type: string;
         } | undefined>;
     }, undefined, {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
         } | undefined;
     }>)[], {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -5480,7 +5805,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -5496,7 +5821,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -5505,7 +5830,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -5518,7 +5843,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -5536,7 +5861,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -5544,6 +5869,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     } | {
         ban?: number | undefined;
         events?: {
@@ -5562,29 +5889,29 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             room: number;
         } | undefined;
     } | {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
         } | undefined;
     }>, undefined, {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -5601,7 +5928,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -5617,7 +5944,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -5626,7 +5953,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -5639,7 +5966,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -5657,7 +5984,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -5665,6 +5992,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     } | {
         ban?: number | undefined;
         events?: {
@@ -5683,8 +6012,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             room: number;
         } | undefined;
     } | {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -5700,22 +6029,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
     age?: number | undefined;
     replaces_state?: string | undefined;
     prev_content?: {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -5732,7 +6061,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -5748,7 +6077,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -5757,7 +6086,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -5770,7 +6099,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -5788,7 +6117,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -5796,6 +6125,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     } | {
         ban?: number | undefined;
         events?: {
@@ -5814,8 +6145,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             room: number;
         } | undefined;
     } | {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -5838,8 +6169,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             rel_type: string;
         } | undefined>;
     }, undefined, {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -5848,8 +6179,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
 }, undefined, {
     type: string;
     content: {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -5864,37 +6195,37 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
 }> | import("valibot").ObjectSchema<{
     type: import("valibot").LiteralSchema<"m.room.message", "m.room.message">;
     content: import("valibot").UnionSchema<(import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.text", "m.text">;
+        msgtype: import("valibot").LiteralSchema<"m.text", "m.text">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.emote", "m.emote">;
+        msgtype: import("valibot").LiteralSchema<"m.emote", "m.emote">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.notice", "m.notice">;
+        msgtype: import("valibot").LiteralSchema<"m.notice", "m.notice">;
         body: import("valibot").StringSchema<string>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.image", "m.image">;
+        msgtype: import("valibot").LiteralSchema<"m.image", "m.image">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             h: import("valibot").NumberSchema<number>;
@@ -5945,7 +6276,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -5962,7 +6293,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.file", "m.file">;
+        msgtype: import("valibot").LiteralSchema<"m.file", "m.file">;
         body: import("valibot").StringSchema<string>;
         filename: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
@@ -6008,7 +6339,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -6024,7 +6355,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.audio", "m.audio">;
+        msgtype: import("valibot").LiteralSchema<"m.audio", "m.audio">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -6041,7 +6372,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -6050,7 +6381,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.location", "m.location">;
+        msgtype: import("valibot").LiteralSchema<"m.location", "m.location">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             thumbnail_info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
@@ -6089,7 +6420,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined>;
         geo_uri: import("valibot").StringSchema<string>;
     }, undefined, {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -6102,7 +6433,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             thumbnail_url?: string | undefined;
         } | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.video", "m.video">;
+        msgtype: import("valibot").LiteralSchema<"m.video", "m.video">;
         body: import("valibot").StringSchema<string>;
         info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
             duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -6156,7 +6487,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined>;
         url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
     }, undefined, {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -6174,7 +6505,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     }> | import("valibot").ObjectSchema<{
-        msgType: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
+        msgtype: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
         body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
@@ -6183,7 +6514,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         timestamp: import("valibot").NumberSchema<number>;
         transaction_id: import("valibot").StringSchema<string>;
     }, undefined, {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -6191,23 +6522,27 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    }> | import("valibot").ObjectSchema<{
+        msgtype: import("valibot").StringSchema<string>;
+    }, undefined, {
+        msgtype: string;
     }>)[], {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -6224,7 +6559,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -6240,7 +6575,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -6249,7 +6584,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -6262,7 +6597,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -6280,7 +6615,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -6288,26 +6623,28 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     }>;
 }, undefined, {
     type: "m.room.message";
     content: {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -6324,7 +6661,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -6340,7 +6677,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -6349,7 +6686,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -6362,7 +6699,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -6380,7 +6717,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -6388,6 +6725,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     };
 }> | import("valibot").ObjectSchema<{
     type: import("valibot").LiteralSchema<"m.room.power_levels", "m.room.power_levels">;
@@ -6448,11 +6787,205 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             room: number;
         } | undefined;
     };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.member", "m.room.member">;
+    content: import("valibot").ObjectSchema<{
+        membership: import("valibot").StringSchema<string>;
+        displayname: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
+        avatar_url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
+        is_direct: import("valibot").OptionalSchema<import("valibot").BooleanSchema<boolean>, undefined, boolean | undefined>;
+        third_party_invite: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
+            display_name: import("valibot").StringSchema<string>;
+            signed: import("valibot").ObjectSchema<{
+                mxid: import("valibot").StringSchema<string>;
+                signatures: import("valibot").ObjectSchema<{
+                    "ed25519:": import("valibot").StringSchema<string>;
+                }, undefined, {
+                    "ed25519:": string;
+                }>;
+                token: import("valibot").StringSchema<string>;
+            }, undefined, {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            }>;
+        }, undefined, {
+            display_name: string;
+            signed: {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            };
+        }>, undefined, {
+            display_name: string;
+            signed: {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            };
+        } | undefined>;
+    }, undefined, {
+        membership: string;
+        displayname?: string | undefined;
+        avatar_url?: string | undefined;
+        is_direct?: boolean | undefined;
+        third_party_invite?: {
+            display_name: string;
+            signed: {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            };
+        } | undefined;
+    }>;
+}, undefined, {
+    type: "m.room.member";
+    content: {
+        membership: string;
+        displayname?: string | undefined;
+        avatar_url?: string | undefined;
+        is_direct?: boolean | undefined;
+        third_party_invite?: {
+            display_name: string;
+            signed: {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            };
+        } | undefined;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.create", "m.room.create">;
+    content: import("valibot").ObjectSchema<{
+        creator: import("valibot").StringSchema<string>;
+        room_version: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
+        predecessor: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
+            event_id: import("valibot").StringSchema<string>;
+            room_id: import("valibot").StringSchema<string>;
+        }, undefined, {
+            event_id: string;
+            room_id: string;
+        }>, undefined, {
+            event_id: string;
+            room_id: string;
+        } | undefined>;
+    }, undefined, {
+        creator: string;
+        room_version?: string | undefined;
+        predecessor?: {
+            event_id: string;
+            room_id: string;
+        } | undefined;
+    }>;
+}, undefined, {
+    type: "m.room.create";
+    content: {
+        creator: string;
+        room_version?: string | undefined;
+        predecessor?: {
+            event_id: string;
+            room_id: string;
+        } | undefined;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.join_rules", "m.room.join_rules">;
+    content: import("valibot").ObjectSchema<{
+        join_rule: import("valibot").StringSchema<string>;
+    }, undefined, {
+        join_rule: string;
+    }>;
+}, undefined, {
+    type: "m.room.join_rules";
+    content: {
+        join_rule: string;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.name", "m.room.name">;
+    content: import("valibot").ObjectSchema<{
+        name: import("valibot").StringSchema<string>;
+    }, undefined, {
+        name: string;
+    }>;
+}, undefined, {
+    type: "m.room.name";
+    content: {
+        name: string;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.topic", "m.room.topic">;
+    content: import("valibot").ObjectSchema<{
+        topic: import("valibot").StringSchema<string>;
+    }, undefined, {
+        topic: string;
+    }>;
+}, undefined, {
+    type: "m.room.topic";
+    content: {
+        topic: string;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.avatar", "m.room.avatar">;
+    content: import("valibot").ObjectSchema<{
+        url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
+    }, undefined, {
+        url?: string | undefined;
+    }>;
+}, undefined, {
+    type: "m.room.avatar";
+    content: {
+        url?: string | undefined;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.canonical_alias", "m.room.canonical_alias">;
+    content: import("valibot").ObjectSchema<{
+        alias: import("valibot").StringSchema<string>;
+    }, undefined, {
+        alias: string;
+    }>;
+}, undefined, {
+    type: "m.room.canonical_alias";
+    content: {
+        alias: string;
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.aliases", "m.room.aliases">;
+    content: import("valibot").ObjectSchema<{
+        aliases: import("valibot").ArraySchema<import("valibot").StringSchema<string>, string[]>;
+    }, undefined, {
+        aliases: string[];
+    }>;
+}, undefined, {
+    type: "m.room.aliases";
+    content: {
+        aliases: string[];
+    };
+}> | import("valibot").ObjectSchema<{
+    type: import("valibot").LiteralSchema<"m.room.redaction", "m.room.redaction">;
+    content: import("valibot").ObjectSchema<{
+        reason: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
+    }, undefined, {
+        reason?: string | undefined;
+    }>;
+}, undefined, {
+    type: "m.room.redaction";
+    content: {
+        reason?: string | undefined;
+    };
 }>)[], {
     type: string;
     content: {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -6464,22 +6997,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
 } | {
     type: "m.room.message";
     content: {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -6496,7 +7029,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -6512,7 +7045,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -6521,7 +7054,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -6534,7 +7067,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -6552,7 +7085,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -6560,6 +7093,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     };
 } | {
     type: "m.room.power_levels";
@@ -6581,42 +7116,105 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             room: number;
         } | undefined;
     };
+} | {
+    type: "m.room.member";
+    content: {
+        membership: string;
+        displayname?: string | undefined;
+        avatar_url?: string | undefined;
+        is_direct?: boolean | undefined;
+        third_party_invite?: {
+            display_name: string;
+            signed: {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            };
+        } | undefined;
+    };
+} | {
+    type: "m.room.create";
+    content: {
+        creator: string;
+        room_version?: string | undefined;
+        predecessor?: {
+            event_id: string;
+            room_id: string;
+        } | undefined;
+    };
+} | {
+    type: "m.room.join_rules";
+    content: {
+        join_rule: string;
+    };
+} | {
+    type: "m.room.name";
+    content: {
+        name: string;
+    };
+} | {
+    type: "m.room.topic";
+    content: {
+        topic: string;
+    };
+} | {
+    type: "m.room.avatar";
+    content: {
+        url?: string | undefined;
+    };
+} | {
+    type: "m.room.canonical_alias";
+    content: {
+        alias: string;
+    };
+} | {
+    type: "m.room.aliases";
+    content: {
+        aliases: string[];
+    };
+} | {
+    type: "m.room.redaction";
+    content: {
+        reason?: string | undefined;
+    };
 }>, import("valibot").ObjectSchema<{
     unsigned: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
         age: import("valibot").NumberSchema<number>;
         transaction_id: import("valibot").StringSchema<string>;
         prev_content: import("valibot").UnionSchema<(import("valibot").UnionSchema<(import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.text", "m.text">;
+            msgtype: import("valibot").LiteralSchema<"m.text", "m.text">;
             body: import("valibot").StringSchema<string>;
             format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.emote", "m.emote">;
+            msgtype: import("valibot").LiteralSchema<"m.emote", "m.emote">;
             body: import("valibot").StringSchema<string>;
             format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.notice", "m.notice">;
+            msgtype: import("valibot").LiteralSchema<"m.notice", "m.notice">;
             body: import("valibot").StringSchema<string>;
             format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.image", "m.image">;
+            msgtype: import("valibot").LiteralSchema<"m.image", "m.image">;
             body: import("valibot").StringSchema<string>;
             info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                 h: import("valibot").NumberSchema<number>;
@@ -6667,7 +7265,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined>;
             url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -6684,7 +7282,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.file", "m.file">;
+            msgtype: import("valibot").LiteralSchema<"m.file", "m.file">;
             body: import("valibot").StringSchema<string>;
             filename: import("valibot").StringSchema<string>;
             info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
@@ -6730,7 +7328,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined>;
             url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -6746,7 +7344,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.audio", "m.audio">;
+            msgtype: import("valibot").LiteralSchema<"m.audio", "m.audio">;
             body: import("valibot").StringSchema<string>;
             info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                 duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -6763,7 +7361,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined>;
             url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -6772,7 +7370,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.location", "m.location">;
+            msgtype: import("valibot").LiteralSchema<"m.location", "m.location">;
             body: import("valibot").StringSchema<string>;
             info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                 thumbnail_info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
@@ -6811,7 +7409,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined>;
             geo_uri: import("valibot").StringSchema<string>;
         }, undefined, {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -6824,7 +7422,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 thumbnail_url?: string | undefined;
             } | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.video", "m.video">;
+            msgtype: import("valibot").LiteralSchema<"m.video", "m.video">;
             body: import("valibot").StringSchema<string>;
             info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                 duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -6878,7 +7476,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined>;
             url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
         }, undefined, {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -6896,7 +7494,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         }> | import("valibot").ObjectSchema<{
-            msgType: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
+            msgtype: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
             body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
@@ -6905,7 +7503,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             timestamp: import("valibot").NumberSchema<number>;
             transaction_id: import("valibot").StringSchema<string>;
         }, undefined, {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -6913,23 +7511,27 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        }> | import("valibot").ObjectSchema<{
+            msgtype: import("valibot").StringSchema<string>;
+        }, undefined, {
+            msgtype: string;
         }>)[], {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -6946,7 +7548,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -6962,7 +7564,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -6971,7 +7573,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -6984,7 +7586,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -7002,7 +7604,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -7010,6 +7612,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         }> | import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
             ban: import("valibot").NumberSchema<number>;
             events: import("valibot").RecordSchema<import("valibot").StringSchema<string>, import("valibot").NumberSchema<number>, {
@@ -7060,29 +7664,29 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 rel_type: string;
             } | undefined>;
         }, undefined, {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
             } | undefined;
         }>)[], {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -7099,7 +7703,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -7115,7 +7719,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -7124,7 +7728,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -7137,7 +7741,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -7155,7 +7759,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -7163,6 +7767,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         } | {
             ban?: number | undefined;
             events?: {
@@ -7181,8 +7787,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 room: number;
             } | undefined;
         } | {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -7197,37 +7803,37 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             age: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
             replaces_state: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             prev_content: import("valibot").OptionalSchema<import("valibot").UnionSchema<(import("valibot").UnionSchema<(import("valibot").ObjectSchema<{
-                msgType: import("valibot").LiteralSchema<"m.text", "m.text">;
+                msgtype: import("valibot").LiteralSchema<"m.text", "m.text">;
                 body: import("valibot").StringSchema<string>;
                 format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
                 formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             }, undefined, {
-                msgType: "m.text";
+                msgtype: "m.text";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             }> | import("valibot").ObjectSchema<{
-                msgType: import("valibot").LiteralSchema<"m.emote", "m.emote">;
+                msgtype: import("valibot").LiteralSchema<"m.emote", "m.emote">;
                 body: import("valibot").StringSchema<string>;
                 format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
                 formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             }, undefined, {
-                msgType: "m.emote";
+                msgtype: "m.emote";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             }> | import("valibot").ObjectSchema<{
-                msgType: import("valibot").LiteralSchema<"m.notice", "m.notice">;
+                msgtype: import("valibot").LiteralSchema<"m.notice", "m.notice">;
                 body: import("valibot").StringSchema<string>;
                 format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
                 formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             }, undefined, {
-                msgType: "m.notice";
+                msgtype: "m.notice";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             }> | import("valibot").ObjectSchema<{
-                msgType: import("valibot").LiteralSchema<"m.image", "m.image">;
+                msgtype: import("valibot").LiteralSchema<"m.image", "m.image">;
                 body: import("valibot").StringSchema<string>;
                 info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                     h: import("valibot").NumberSchema<number>;
@@ -7278,7 +7884,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined>;
                 url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             }, undefined, {
-                msgType: "m.image";
+                msgtype: "m.image";
                 body: string;
                 info?: {
                     h: number;
@@ -7295,7 +7901,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             }> | import("valibot").ObjectSchema<{
-                msgType: import("valibot").LiteralSchema<"m.file", "m.file">;
+                msgtype: import("valibot").LiteralSchema<"m.file", "m.file">;
                 body: import("valibot").StringSchema<string>;
                 filename: import("valibot").StringSchema<string>;
                 info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
@@ -7341,7 +7947,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined>;
                 url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             }, undefined, {
-                msgType: "m.file";
+                msgtype: "m.file";
                 body: string;
                 filename: string;
                 info?: {
@@ -7357,7 +7963,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             }> | import("valibot").ObjectSchema<{
-                msgType: import("valibot").LiteralSchema<"m.audio", "m.audio">;
+                msgtype: import("valibot").LiteralSchema<"m.audio", "m.audio">;
                 body: import("valibot").StringSchema<string>;
                 info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                     duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -7374,7 +7980,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined>;
                 url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             }, undefined, {
-                msgType: "m.audio";
+                msgtype: "m.audio";
                 body: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -7383,7 +7989,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             }> | import("valibot").ObjectSchema<{
-                msgType: import("valibot").LiteralSchema<"m.location", "m.location">;
+                msgtype: import("valibot").LiteralSchema<"m.location", "m.location">;
                 body: import("valibot").StringSchema<string>;
                 info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                     thumbnail_info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
@@ -7422,7 +8028,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined>;
                 geo_uri: import("valibot").StringSchema<string>;
             }, undefined, {
-                msgType: "m.location";
+                msgtype: "m.location";
                 body: string;
                 geo_uri: string;
                 info?: {
@@ -7435,7 +8041,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     thumbnail_url?: string | undefined;
                 } | undefined;
             }> | import("valibot").ObjectSchema<{
-                msgType: import("valibot").LiteralSchema<"m.video", "m.video">;
+                msgtype: import("valibot").LiteralSchema<"m.video", "m.video">;
                 body: import("valibot").StringSchema<string>;
                 info: import("valibot").OptionalSchema<import("valibot").ObjectSchema<{
                     duration: import("valibot").OptionalSchema<import("valibot").NumberSchema<number>, undefined, number | undefined>;
@@ -7489,7 +8095,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined>;
                 url: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
             }, undefined, {
-                msgType: "m.video";
+                msgtype: "m.video";
                 body: string;
                 info?: {
                     h?: number | undefined;
@@ -7507,7 +8113,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             }> | import("valibot").ObjectSchema<{
-                msgType: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
+                msgtype: import("valibot").LiteralSchema<"m.key.verification.request", "m.key.verification.request">;
                 body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
                 format: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
                 formatted_body: import("valibot").OptionalSchema<import("valibot").StringSchema<string>, undefined, string | undefined>;
@@ -7516,7 +8122,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 timestamp: import("valibot").NumberSchema<number>;
                 transaction_id: import("valibot").StringSchema<string>;
             }, undefined, {
-                msgType: "m.key.verification.request";
+                msgtype: "m.key.verification.request";
                 from_device: string;
                 methods: string[];
                 timestamp: number;
@@ -7524,23 +8130,27 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 body?: string | undefined;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
+            }> | import("valibot").ObjectSchema<{
+                msgtype: import("valibot").StringSchema<string>;
+            }, undefined, {
+                msgtype: string;
             }>)[], {
-                msgType: "m.text";
+                msgtype: "m.text";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.emote";
+                msgtype: "m.emote";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.notice";
+                msgtype: "m.notice";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.image";
+                msgtype: "m.image";
                 body: string;
                 info?: {
                     h: number;
@@ -7557,7 +8167,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.file";
+                msgtype: "m.file";
                 body: string;
                 filename: string;
                 info?: {
@@ -7573,7 +8183,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.audio";
+                msgtype: "m.audio";
                 body: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -7582,7 +8192,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.location";
+                msgtype: "m.location";
                 body: string;
                 geo_uri: string;
                 info?: {
@@ -7595,7 +8205,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                msgType: "m.video";
+                msgtype: "m.video";
                 body: string;
                 info?: {
                     h?: number | undefined;
@@ -7613,7 +8223,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.key.verification.request";
+                msgtype: "m.key.verification.request";
                 from_device: string;
                 methods: string[];
                 timestamp: number;
@@ -7621,6 +8231,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 body?: string | undefined;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
+            } | {
+                msgtype: string;
             }> | import("valibot").ObjectSchema<import("valibot").PartialObjectEntries<{
                 ban: import("valibot").NumberSchema<number>;
                 events: import("valibot").RecordSchema<import("valibot").StringSchema<string>, import("valibot").NumberSchema<number>, {
@@ -7671,29 +8283,29 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     rel_type: string;
                 } | undefined>;
             }, undefined, {
-                body: string;
                 msgtype: string;
+                body: string;
                 "m.relates_to"?: {
                     event_id: string;
                     rel_type: string;
                 } | undefined;
             }>)[], {
-                msgType: "m.text";
+                msgtype: "m.text";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.emote";
+                msgtype: "m.emote";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.notice";
+                msgtype: "m.notice";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.image";
+                msgtype: "m.image";
                 body: string;
                 info?: {
                     h: number;
@@ -7710,7 +8322,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.file";
+                msgtype: "m.file";
                 body: string;
                 filename: string;
                 info?: {
@@ -7726,7 +8338,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.audio";
+                msgtype: "m.audio";
                 body: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -7735,7 +8347,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.location";
+                msgtype: "m.location";
                 body: string;
                 geo_uri: string;
                 info?: {
@@ -7748,7 +8360,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                msgType: "m.video";
+                msgtype: "m.video";
                 body: string;
                 info?: {
                     h?: number | undefined;
@@ -7766,7 +8378,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.key.verification.request";
+                msgtype: "m.key.verification.request";
                 from_device: string;
                 methods: string[];
                 timestamp: number;
@@ -7774,6 +8386,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 body?: string | undefined;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
+            } | {
+                msgtype: string;
             } | {
                 ban?: number | undefined;
                 events?: {
@@ -7792,29 +8406,29 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     room: number;
                 } | undefined;
             } | {
-                body: string;
                 msgtype: string;
+                body: string;
                 "m.relates_to"?: {
                     event_id: string;
                     rel_type: string;
                 } | undefined;
             }>, undefined, {
-                msgType: "m.text";
+                msgtype: "m.text";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.emote";
+                msgtype: "m.emote";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.notice";
+                msgtype: "m.notice";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.image";
+                msgtype: "m.image";
                 body: string;
                 info?: {
                     h: number;
@@ -7831,7 +8445,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.file";
+                msgtype: "m.file";
                 body: string;
                 filename: string;
                 info?: {
@@ -7847,7 +8461,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.audio";
+                msgtype: "m.audio";
                 body: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -7856,7 +8470,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.location";
+                msgtype: "m.location";
                 body: string;
                 geo_uri: string;
                 info?: {
@@ -7869,7 +8483,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                msgType: "m.video";
+                msgtype: "m.video";
                 body: string;
                 info?: {
                     h?: number | undefined;
@@ -7887,7 +8501,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.key.verification.request";
+                msgtype: "m.key.verification.request";
                 from_device: string;
                 methods: string[];
                 timestamp: number;
@@ -7895,6 +8509,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 body?: string | undefined;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
+            } | {
+                msgtype: string;
             } | {
                 ban?: number | undefined;
                 events?: {
@@ -7913,8 +8529,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     room: number;
                 } | undefined;
             } | {
-                body: string;
                 msgtype: string;
+                body: string;
                 "m.relates_to"?: {
                     event_id: string;
                     rel_type: string;
@@ -7930,22 +8546,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
-                msgType: "m.text";
+                msgtype: "m.text";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.emote";
+                msgtype: "m.emote";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.notice";
+                msgtype: "m.notice";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.image";
+                msgtype: "m.image";
                 body: string;
                 info?: {
                     h: number;
@@ -7962,7 +8578,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.file";
+                msgtype: "m.file";
                 body: string;
                 filename: string;
                 info?: {
@@ -7978,7 +8594,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.audio";
+                msgtype: "m.audio";
                 body: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -7987,7 +8603,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.location";
+                msgtype: "m.location";
                 body: string;
                 geo_uri: string;
                 info?: {
@@ -8000,7 +8616,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                msgType: "m.video";
+                msgtype: "m.video";
                 body: string;
                 info?: {
                     h?: number | undefined;
@@ -8018,7 +8634,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.key.verification.request";
+                msgtype: "m.key.verification.request";
                 from_device: string;
                 methods: string[];
                 timestamp: number;
@@ -8026,6 +8642,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 body?: string | undefined;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
+            } | {
+                msgtype: string;
             } | {
                 ban?: number | undefined;
                 events?: {
@@ -8044,8 +8662,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     room: number;
                 } | undefined;
             } | {
-                body: string;
                 msgtype: string;
+                body: string;
                 "m.relates_to"?: {
                     event_id: string;
                     rel_type: string;
@@ -8061,22 +8679,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
-                msgType: "m.text";
+                msgtype: "m.text";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.emote";
+                msgtype: "m.emote";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.notice";
+                msgtype: "m.notice";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.image";
+                msgtype: "m.image";
                 body: string;
                 info?: {
                     h: number;
@@ -8093,7 +8711,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.file";
+                msgtype: "m.file";
                 body: string;
                 filename: string;
                 info?: {
@@ -8109,7 +8727,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.audio";
+                msgtype: "m.audio";
                 body: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -8118,7 +8736,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.location";
+                msgtype: "m.location";
                 body: string;
                 geo_uri: string;
                 info?: {
@@ -8131,7 +8749,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                msgType: "m.video";
+                msgtype: "m.video";
                 body: string;
                 info?: {
                     h?: number | undefined;
@@ -8149,7 +8767,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.key.verification.request";
+                msgtype: "m.key.verification.request";
                 from_device: string;
                 methods: string[];
                 timestamp: number;
@@ -8157,6 +8775,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 body?: string | undefined;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
+            } | {
+                msgtype: string;
             } | {
                 ban?: number | undefined;
                 events?: {
@@ -8175,8 +8795,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     room: number;
                 } | undefined;
             } | {
-                body: string;
                 msgtype: string;
+                body: string;
                 "m.relates_to"?: {
                     event_id: string;
                     rel_type: string;
@@ -8191,22 +8811,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         transaction_id?: string | undefined;
         age?: number | undefined;
         prev_content?: {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -8223,7 +8843,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -8239,7 +8859,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -8248,7 +8868,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -8261,7 +8881,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -8279,7 +8899,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -8287,6 +8907,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         } | {
             ban?: number | undefined;
             events?: {
@@ -8305,8 +8927,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 room: number;
             } | undefined;
         } | {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -8321,22 +8943,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
-                msgType: "m.text";
+                msgtype: "m.text";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.emote";
+                msgtype: "m.emote";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.notice";
+                msgtype: "m.notice";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.image";
+                msgtype: "m.image";
                 body: string;
                 info?: {
                     h: number;
@@ -8353,7 +8975,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.file";
+                msgtype: "m.file";
                 body: string;
                 filename: string;
                 info?: {
@@ -8369,7 +8991,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.audio";
+                msgtype: "m.audio";
                 body: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -8378,7 +9000,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.location";
+                msgtype: "m.location";
                 body: string;
                 geo_uri: string;
                 info?: {
@@ -8391,7 +9013,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                msgType: "m.video";
+                msgtype: "m.video";
                 body: string;
                 info?: {
                     h?: number | undefined;
@@ -8409,7 +9031,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.key.verification.request";
+                msgtype: "m.key.verification.request";
                 from_device: string;
                 methods: string[];
                 timestamp: number;
@@ -8417,6 +9039,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 body?: string | undefined;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
+            } | {
+                msgtype: string;
             } | {
                 ban?: number | undefined;
                 events?: {
@@ -8435,8 +9059,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     room: number;
                 } | undefined;
             } | {
-                body: string;
                 msgtype: string;
+                body: string;
                 "m.relates_to"?: {
                     event_id: string;
                     rel_type: string;
@@ -8451,22 +9075,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         transaction_id?: string | undefined;
         age?: number | undefined;
         prev_content?: {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -8483,7 +9107,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -8499,7 +9123,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -8508,7 +9132,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -8521,7 +9145,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -8539,7 +9163,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -8547,6 +9171,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         } | {
             ban?: number | undefined;
             events?: {
@@ -8565,8 +9191,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 room: number;
             } | undefined;
         } | {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -8581,22 +9207,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
-                msgType: "m.text";
+                msgtype: "m.text";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.emote";
+                msgtype: "m.emote";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.notice";
+                msgtype: "m.notice";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.image";
+                msgtype: "m.image";
                 body: string;
                 info?: {
                     h: number;
@@ -8613,7 +9239,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.file";
+                msgtype: "m.file";
                 body: string;
                 filename: string;
                 info?: {
@@ -8629,7 +9255,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.audio";
+                msgtype: "m.audio";
                 body: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -8638,7 +9264,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.location";
+                msgtype: "m.location";
                 body: string;
                 geo_uri: string;
                 info?: {
@@ -8651,7 +9277,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                msgType: "m.video";
+                msgtype: "m.video";
                 body: string;
                 info?: {
                     h?: number | undefined;
@@ -8669,7 +9295,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.key.verification.request";
+                msgtype: "m.key.verification.request";
                 from_device: string;
                 methods: string[];
                 timestamp: number;
@@ -8677,6 +9303,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 body?: string | undefined;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
+            } | {
+                msgtype: string;
             } | {
                 ban?: number | undefined;
                 events?: {
@@ -8695,8 +9323,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     room: number;
                 } | undefined;
             } | {
-                body: string;
                 msgtype: string;
+                body: string;
                 "m.relates_to"?: {
                     event_id: string;
                     rel_type: string;
@@ -8713,22 +9341,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         transaction_id?: string | undefined;
         age?: number | undefined;
         prev_content?: {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -8745,7 +9373,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -8761,7 +9389,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -8770,7 +9398,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -8783,7 +9411,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -8801,7 +9429,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -8809,6 +9437,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         } | {
             ban?: number | undefined;
             events?: {
@@ -8827,8 +9457,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 room: number;
             } | undefined;
         } | {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -8843,22 +9473,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
-                msgType: "m.text";
+                msgtype: "m.text";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.emote";
+                msgtype: "m.emote";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.notice";
+                msgtype: "m.notice";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.image";
+                msgtype: "m.image";
                 body: string;
                 info?: {
                     h: number;
@@ -8875,7 +9505,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.file";
+                msgtype: "m.file";
                 body: string;
                 filename: string;
                 info?: {
@@ -8891,7 +9521,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.audio";
+                msgtype: "m.audio";
                 body: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -8900,7 +9530,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.location";
+                msgtype: "m.location";
                 body: string;
                 geo_uri: string;
                 info?: {
@@ -8913,7 +9543,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                msgType: "m.video";
+                msgtype: "m.video";
                 body: string;
                 info?: {
                     h?: number | undefined;
@@ -8931,7 +9561,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.key.verification.request";
+                msgtype: "m.key.verification.request";
                 from_device: string;
                 methods: string[];
                 timestamp: number;
@@ -8939,6 +9569,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 body?: string | undefined;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
+            } | {
+                msgtype: string;
             } | {
                 ban?: number | undefined;
                 events?: {
@@ -8957,8 +9589,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     room: number;
                 } | undefined;
             } | {
-                body: string;
                 msgtype: string;
+                body: string;
                 "m.relates_to"?: {
                     event_id: string;
                     rel_type: string;
@@ -8979,22 +9611,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
     age?: number | undefined;
     replaces_state?: string | undefined;
     prev_content?: {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -9011,7 +9643,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -9027,7 +9659,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -9036,7 +9668,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -9049,7 +9681,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -9067,7 +9699,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -9075,6 +9707,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     } | {
         ban?: number | undefined;
         events?: {
@@ -9093,8 +9727,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             room: number;
         } | undefined;
     } | {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -9104,8 +9738,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
 } & (({
     type: string;
     content: {
-        body: string;
         msgtype: string;
+        body: string;
         "m.relates_to"?: {
             event_id: string;
             rel_type: string;
@@ -9117,22 +9751,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
 } | {
     type: "m.room.message";
     content: {
-        msgType: "m.text";
+        msgtype: "m.text";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.emote";
+        msgtype: "m.emote";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.notice";
+        msgtype: "m.notice";
         body: string;
         format?: string | undefined;
         formatted_body?: string | undefined;
     } | {
-        msgType: "m.image";
+        msgtype: "m.image";
         body: string;
         info?: {
             h: number;
@@ -9149,7 +9783,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.file";
+        msgtype: "m.file";
         body: string;
         filename: string;
         info?: {
@@ -9165,7 +9799,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.audio";
+        msgtype: "m.audio";
         body: string;
         info?: {
             mimetype?: string | undefined;
@@ -9174,7 +9808,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.location";
+        msgtype: "m.location";
         body: string;
         geo_uri: string;
         info?: {
@@ -9187,7 +9821,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             thumbnail_url?: string | undefined;
         } | undefined;
     } | {
-        msgType: "m.video";
+        msgtype: "m.video";
         body: string;
         info?: {
             h?: number | undefined;
@@ -9205,7 +9839,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         } | undefined;
         url?: string | undefined;
     } | {
-        msgType: "m.key.verification.request";
+        msgtype: "m.key.verification.request";
         from_device: string;
         methods: string[];
         timestamp: number;
@@ -9213,6 +9847,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
         body?: string | undefined;
         format?: string | undefined;
         formatted_body?: string | undefined;
+    } | {
+        msgtype: string;
     };
 } | {
     type: "m.room.power_levels";
@@ -9234,27 +9870,90 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             room: number;
         } | undefined;
     };
+} | {
+    type: "m.room.member";
+    content: {
+        membership: string;
+        displayname?: string | undefined;
+        avatar_url?: string | undefined;
+        is_direct?: boolean | undefined;
+        third_party_invite?: {
+            display_name: string;
+            signed: {
+                mxid: string;
+                signatures: {
+                    "ed25519:": string;
+                };
+                token: string;
+            };
+        } | undefined;
+    };
+} | {
+    type: "m.room.create";
+    content: {
+        creator: string;
+        room_version?: string | undefined;
+        predecessor?: {
+            event_id: string;
+            room_id: string;
+        } | undefined;
+    };
+} | {
+    type: "m.room.join_rules";
+    content: {
+        join_rule: string;
+    };
+} | {
+    type: "m.room.name";
+    content: {
+        name: string;
+    };
+} | {
+    type: "m.room.topic";
+    content: {
+        topic: string;
+    };
+} | {
+    type: "m.room.avatar";
+    content: {
+        url?: string | undefined;
+    };
+} | {
+    type: "m.room.canonical_alias";
+    content: {
+        alias: string;
+    };
+} | {
+    type: "m.room.aliases";
+    content: {
+        aliases: string[];
+    };
+} | {
+    type: "m.room.redaction";
+    content: {
+        reason?: string | undefined;
+    };
 }) & {
     unsigned?: {
         transaction_id?: string | undefined;
         age?: number | undefined;
         prev_content?: {
-            msgType: "m.text";
+            msgtype: "m.text";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.emote";
+            msgtype: "m.emote";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.notice";
+            msgtype: "m.notice";
             body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgType: "m.image";
+            msgtype: "m.image";
             body: string;
             info?: {
                 h: number;
@@ -9271,7 +9970,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.file";
+            msgtype: "m.file";
             body: string;
             filename: string;
             info?: {
@@ -9287,7 +9986,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.audio";
+            msgtype: "m.audio";
             body: string;
             info?: {
                 mimetype?: string | undefined;
@@ -9296,7 +9995,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.location";
+            msgtype: "m.location";
             body: string;
             geo_uri: string;
             info?: {
@@ -9309,7 +10008,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgType: "m.video";
+            msgtype: "m.video";
             body: string;
             info?: {
                 h?: number | undefined;
@@ -9327,7 +10026,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             } | undefined;
             url?: string | undefined;
         } | {
-            msgType: "m.key.verification.request";
+            msgtype: "m.key.verification.request";
             from_device: string;
             methods: string[];
             timestamp: number;
@@ -9335,6 +10034,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             body?: string | undefined;
             format?: string | undefined;
             formatted_body?: string | undefined;
+        } | {
+            msgtype: string;
         } | {
             ban?: number | undefined;
             events?: {
@@ -9353,8 +10054,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 room: number;
             } | undefined;
         } | {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -9369,22 +10070,22 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
-                msgType: "m.text";
+                msgtype: "m.text";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.emote";
+                msgtype: "m.emote";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.notice";
+                msgtype: "m.notice";
                 body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgType: "m.image";
+                msgtype: "m.image";
                 body: string;
                 info?: {
                     h: number;
@@ -9401,7 +10102,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.file";
+                msgtype: "m.file";
                 body: string;
                 filename: string;
                 info?: {
@@ -9417,7 +10118,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.audio";
+                msgtype: "m.audio";
                 body: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -9426,7 +10127,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.location";
+                msgtype: "m.location";
                 body: string;
                 geo_uri: string;
                 info?: {
@@ -9439,7 +10140,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                msgType: "m.video";
+                msgtype: "m.video";
                 body: string;
                 info?: {
                     h?: number | undefined;
@@ -9457,7 +10158,7 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgType: "m.key.verification.request";
+                msgtype: "m.key.verification.request";
                 from_device: string;
                 methods: string[];
                 timestamp: number;
@@ -9465,6 +10166,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                 body?: string | undefined;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
+            } | {
+                msgtype: string;
             } | {
                 ban?: number | undefined;
                 events?: {
@@ -9483,8 +10186,8 @@ export declare const ClientEventSchema: import("valibot").IntersectSchema<[impor
                     room: number;
                 } | undefined;
             } | {
-                body: string;
                 msgtype: string;
+                body: string;
                 "m.relates_to"?: {
                     event_id: string;
                     rel_type: string;

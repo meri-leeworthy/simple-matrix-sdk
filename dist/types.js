@@ -24,25 +24,25 @@ exports.RoomMessageTypeSchema = (0, valibot_1.enum_)({
     KeyVerificationRequest: "m.key.verification.request",
 });
 exports.TextMessageContentSchema = (0, valibot_1.object)({
-    msgType: (0, valibot_1.literal)("m.text"),
+    msgtype: (0, valibot_1.literal)("m.text"),
     body: (0, valibot_1.string)(),
     format: (0, valibot_1.optional)((0, valibot_1.string)()),
     formatted_body: (0, valibot_1.optional)((0, valibot_1.string)()),
 });
 exports.EmoteMessageContentSchema = (0, valibot_1.object)({
-    msgType: (0, valibot_1.literal)("m.emote"),
+    msgtype: (0, valibot_1.literal)("m.emote"),
     body: (0, valibot_1.string)(),
     format: (0, valibot_1.optional)((0, valibot_1.string)()),
     formatted_body: (0, valibot_1.optional)((0, valibot_1.string)()),
 });
 exports.NoticeMessageContentSchema = (0, valibot_1.object)({
-    msgType: (0, valibot_1.literal)("m.notice"),
+    msgtype: (0, valibot_1.literal)("m.notice"),
     body: (0, valibot_1.string)(),
     format: (0, valibot_1.optional)((0, valibot_1.string)()),
     formatted_body: (0, valibot_1.optional)((0, valibot_1.string)()),
 });
 exports.ImageMessageContentSchema = (0, valibot_1.object)({
-    msgType: (0, valibot_1.literal)("m.image"),
+    msgtype: (0, valibot_1.literal)("m.image"),
     body: (0, valibot_1.string)(),
     info: (0, valibot_1.optional)((0, valibot_1.object)({
         h: (0, valibot_1.number)(),
@@ -55,7 +55,7 @@ exports.ImageMessageContentSchema = (0, valibot_1.object)({
     url: (0, valibot_1.optional)((0, valibot_1.string)()),
 });
 exports.FileMessageContentSchema = (0, valibot_1.object)({
-    msgType: (0, valibot_1.literal)("m.file"),
+    msgtype: (0, valibot_1.literal)("m.file"),
     body: (0, valibot_1.string)(),
     filename: (0, valibot_1.string)(),
     info: (0, valibot_1.optional)((0, valibot_1.object)({
@@ -67,7 +67,7 @@ exports.FileMessageContentSchema = (0, valibot_1.object)({
     url: (0, valibot_1.optional)((0, valibot_1.string)()),
 });
 exports.AudioMessageContentSchema = (0, valibot_1.object)({
-    msgType: (0, valibot_1.literal)("m.audio"),
+    msgtype: (0, valibot_1.literal)("m.audio"),
     body: (0, valibot_1.string)("Body must be a string"),
     info: (0, valibot_1.optional)((0, valibot_1.object)({
         duration: (0, valibot_1.optional)((0, valibot_1.number)("Duration must be a number")),
@@ -77,7 +77,7 @@ exports.AudioMessageContentSchema = (0, valibot_1.object)({
     url: (0, valibot_1.optional)((0, valibot_1.string)("URL must be a string")),
 });
 exports.LocationMessageContentSchema = (0, valibot_1.object)({
-    msgType: (0, valibot_1.literal)("m.location"),
+    msgtype: (0, valibot_1.literal)("m.location"),
     body: (0, valibot_1.string)("Body must be a string"),
     info: (0, valibot_1.optional)((0, valibot_1.object)({
         thumbnail_info: (0, valibot_1.optional)(exports.ThumbnailInfoSchema),
@@ -86,7 +86,7 @@ exports.LocationMessageContentSchema = (0, valibot_1.object)({
     geo_uri: (0, valibot_1.string)("Geo URI must be a string"),
 });
 exports.VideoMessageContentSchema = (0, valibot_1.object)({
-    msgType: (0, valibot_1.literal)("m.video"),
+    msgtype: (0, valibot_1.literal)("m.video"),
     body: (0, valibot_1.string)("Body must be a string"),
     info: (0, valibot_1.optional)((0, valibot_1.object)({
         duration: (0, valibot_1.optional)((0, valibot_1.number)("Duration must be a number")),
@@ -100,7 +100,7 @@ exports.VideoMessageContentSchema = (0, valibot_1.object)({
     url: (0, valibot_1.optional)((0, valibot_1.string)("URL must be a string")),
 });
 exports.KeyVerificationRequestMessageContentSchema = (0, valibot_1.object)({
-    msgType: (0, valibot_1.literal)("m.key.verification.request"),
+    msgtype: (0, valibot_1.literal)("m.key.verification.request"),
     body: (0, valibot_1.optional)((0, valibot_1.string)("Body must be a string")),
     format: (0, valibot_1.optional)((0, valibot_1.string)("Format must be a string")),
     formatted_body: (0, valibot_1.optional)((0, valibot_1.string)("Formatted body must be a string")),
@@ -119,6 +119,7 @@ exports.RoomMessageContentSchema = (0, valibot_1.union)([
     exports.LocationMessageContentSchema,
     exports.VideoMessageContentSchema,
     exports.KeyVerificationRequestMessageContentSchema,
+    (0, valibot_1.object)({ msgtype: (0, valibot_1.string)() }),
 ]);
 exports.SpecRoomEventTypeSchema = (0, valibot_1.union)([
     (0, valibot_1.literal)("m.room.message"),
@@ -205,6 +206,78 @@ exports.ClientEventTypeAndContentSchema = (0, valibot_1.union)([
     (0, valibot_1.object)({
         type: (0, valibot_1.literal)("m.room.power_levels"),
         content: exports.PowerLevelsContentSchema,
+    }),
+    (0, valibot_1.object)({
+        type: (0, valibot_1.literal)("m.room.member"),
+        content: (0, valibot_1.object)({
+            membership: (0, valibot_1.string)("Membership must be a string"),
+            displayname: (0, valibot_1.optional)((0, valibot_1.string)("Display name must be a string")),
+            avatar_url: (0, valibot_1.optional)((0, valibot_1.string)("Avatar URL must be a string")),
+            is_direct: (0, valibot_1.optional)((0, valibot_1.boolean)("Is direct must be a boolean")),
+            third_party_invite: (0, valibot_1.optional)((0, valibot_1.object)({
+                display_name: (0, valibot_1.string)("Display name must be a string"),
+                signed: (0, valibot_1.object)({
+                    mxid: (0, valibot_1.string)("MXID must be a string"),
+                    signatures: (0, valibot_1.object)({
+                        "ed25519:": (0, valibot_1.string)("Signature must be a string"),
+                    }),
+                    token: (0, valibot_1.string)("Token must be a string"),
+                }),
+            })),
+        }),
+    }),
+    (0, valibot_1.object)({
+        type: (0, valibot_1.literal)("m.room.create"),
+        content: (0, valibot_1.object)({
+            creator: (0, valibot_1.string)("Creator must be a string"),
+            room_version: (0, valibot_1.optional)((0, valibot_1.string)("Room version must be a string")),
+            predecessor: (0, valibot_1.optional)((0, valibot_1.object)({
+                event_id: (0, valibot_1.string)("Event ID must be a string"),
+                room_id: (0, valibot_1.string)("Room ID must be a string"),
+            })),
+        }),
+    }),
+    (0, valibot_1.object)({
+        type: (0, valibot_1.literal)("m.room.join_rules"),
+        content: (0, valibot_1.object)({
+            join_rule: (0, valibot_1.string)("Join rule must be a string"),
+        }),
+    }),
+    (0, valibot_1.object)({
+        type: (0, valibot_1.literal)("m.room.name"),
+        content: (0, valibot_1.object)({
+            name: (0, valibot_1.string)("Name must be a string"),
+        }),
+    }),
+    (0, valibot_1.object)({
+        type: (0, valibot_1.literal)("m.room.topic"),
+        content: (0, valibot_1.object)({
+            topic: (0, valibot_1.string)("Topic must be a string"),
+        }),
+    }),
+    (0, valibot_1.object)({
+        type: (0, valibot_1.literal)("m.room.avatar"),
+        content: (0, valibot_1.object)({
+            url: (0, valibot_1.optional)((0, valibot_1.string)("URL must be a string")),
+        }),
+    }),
+    (0, valibot_1.object)({
+        type: (0, valibot_1.literal)("m.room.canonical_alias"),
+        content: (0, valibot_1.object)({
+            alias: (0, valibot_1.string)("Alias must be a string"),
+        }),
+    }),
+    (0, valibot_1.object)({
+        type: (0, valibot_1.literal)("m.room.aliases"),
+        content: (0, valibot_1.object)({
+            aliases: (0, valibot_1.array)((0, valibot_1.string)("Alias must be a string")),
+        }),
+    }),
+    (0, valibot_1.object)({
+        type: (0, valibot_1.literal)("m.room.redaction"),
+        content: (0, valibot_1.object)({
+            reason: (0, valibot_1.optional)((0, valibot_1.string)("Reason must be a string")),
+        }),
     }),
 ]);
 exports.UnsignedDataSchema = (0, valibot_1.partial)((0, valibot_1.object)({

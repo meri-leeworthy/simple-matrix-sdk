@@ -13,6 +13,7 @@ import {
   union,
   record,
   unknown,
+  boolean,
 } from "valibot"
 
 export type Params = Record<string, string>
@@ -56,28 +57,28 @@ export const RoomMessageTypeSchema = enum_({
 export type RoomMessageTypeOutput = Output<typeof RoomMessageTypeSchema>
 
 export const TextMessageContentSchema = object({
-  msgType: literal("m.text"),
+  msgtype: literal("m.text"),
   body: string(),
   format: optional(string()),
   formatted_body: optional(string()),
 })
 
 export const EmoteMessageContentSchema = object({
-  msgType: literal("m.emote"),
+  msgtype: literal("m.emote"),
   body: string(),
   format: optional(string()),
   formatted_body: optional(string()),
 })
 
 export const NoticeMessageContentSchema = object({
-  msgType: literal("m.notice"),
+  msgtype: literal("m.notice"),
   body: string(),
   format: optional(string()),
   formatted_body: optional(string()),
 })
 
 export const ImageMessageContentSchema = object({
-  msgType: literal("m.image"),
+  msgtype: literal("m.image"),
   body: string(),
   info: optional(
     object({
@@ -93,7 +94,7 @@ export const ImageMessageContentSchema = object({
 })
 
 export const FileMessageContentSchema = object({
-  msgType: literal("m.file"),
+  msgtype: literal("m.file"),
   body: string(),
   filename: string(),
   info: optional(
@@ -108,7 +109,7 @@ export const FileMessageContentSchema = object({
 })
 
 export const AudioMessageContentSchema = object({
-  msgType: literal("m.audio"),
+  msgtype: literal("m.audio"),
   body: string("Body must be a string"),
   info: optional(
     object({
@@ -121,7 +122,7 @@ export const AudioMessageContentSchema = object({
 })
 
 export const LocationMessageContentSchema = object({
-  msgType: literal("m.location"),
+  msgtype: literal("m.location"),
   body: string("Body must be a string"),
   info: optional(
     object({
@@ -133,7 +134,7 @@ export const LocationMessageContentSchema = object({
 })
 
 export const VideoMessageContentSchema = object({
-  msgType: literal("m.video"),
+  msgtype: literal("m.video"),
   body: string("Body must be a string"),
   info: optional(
     object({
@@ -150,7 +151,7 @@ export const VideoMessageContentSchema = object({
 })
 
 export const KeyVerificationRequestMessageContentSchema = object({
-  msgType: literal("m.key.verification.request"),
+  msgtype: literal("m.key.verification.request"),
   body: optional(string("Body must be a string")),
   format: optional(string("Format must be a string")),
   formatted_body: optional(string("Formatted body must be a string")),
@@ -170,6 +171,7 @@ export const RoomMessageContentSchema = union([
   LocationMessageContentSchema,
   VideoMessageContentSchema,
   KeyVerificationRequestMessageContentSchema,
+  object({ msgtype: string() }),
 ])
 
 export type RoomMessageContentOutput = Output<typeof RoomMessageContentSchema>
@@ -278,6 +280,82 @@ export const ClientEventTypeAndContentSchema = union([
   object({
     type: literal("m.room.power_levels"),
     content: PowerLevelsContentSchema,
+  }),
+  object({
+    type: literal("m.room.member"),
+    content: object({
+      membership: string("Membership must be a string"),
+      displayname: optional(string("Display name must be a string")),
+      avatar_url: optional(string("Avatar URL must be a string")),
+      is_direct: optional(boolean("Is direct must be a boolean")),
+      third_party_invite: optional(
+        object({
+          display_name: string("Display name must be a string"),
+          signed: object({
+            mxid: string("MXID must be a string"),
+            signatures: object({
+              "ed25519:": string("Signature must be a string"),
+            }),
+            token: string("Token must be a string"),
+          }),
+        })
+      ),
+    }),
+  }),
+  object({
+    type: literal("m.room.create"),
+    content: object({
+      creator: string("Creator must be a string"),
+      room_version: optional(string("Room version must be a string")),
+      predecessor: optional(
+        object({
+          event_id: string("Event ID must be a string"),
+          room_id: string("Room ID must be a string"),
+        })
+      ),
+    }),
+  }),
+  object({
+    type: literal("m.room.join_rules"),
+    content: object({
+      join_rule: string("Join rule must be a string"),
+    }),
+  }),
+  object({
+    type: literal("m.room.name"),
+    content: object({
+      name: string("Name must be a string"),
+    }),
+  }),
+  object({
+    type: literal("m.room.topic"),
+    content: object({
+      topic: string("Topic must be a string"),
+    }),
+  }),
+  object({
+    type: literal("m.room.avatar"),
+    content: object({
+      url: optional(string("URL must be a string")),
+    }),
+  }),
+  object({
+    type: literal("m.room.canonical_alias"),
+    content: object({
+      alias: string("Alias must be a string"),
+    }),
+  }),
+  object({
+    type: literal("m.room.aliases"),
+    content: object({
+      aliases: array(string("Alias must be a string")),
+    }),
+  }),
+  object({
+    type: literal("m.room.redaction"),
+    content: object({
+      reason: optional(string("Reason must be a string")),
+    }),
   }),
 ])
 
