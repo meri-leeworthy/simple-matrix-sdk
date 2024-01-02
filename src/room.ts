@@ -1,10 +1,18 @@
+import { is, parse, safeParse } from "valibot"
 import { Client } from "./client"
-import { Event, Params } from "./types"
+import {
+  ClientEventOutput,
+  EventContentOutput,
+  EventContentSchema,
+  Params,
+  Timeline,
+} from "."
 
 export class Room {
   roomId: string
   client: Client
   name?: { name: string }
+  timeline?: Timeline
 
   constructor(roomId: string, client: Client) {
     this.roomId = roomId
@@ -45,7 +53,7 @@ export class Room {
     })
   }
 
-  async getEvent(eventId: string): Promise<Event> {
+  async getEvent(eventId: string): Promise<ClientEventOutput> {
     return this.client.get(`rooms/${this.roomId}/event/$${eventId}`)
   }
 
@@ -221,8 +229,10 @@ export class Room {
     return this.client.put(`directory/room/${alias}`, {})
   }
 
-  static sortEvents(events: Event[]): Record<string, Event[]> {
-    const sortedEvents: Record<string, Event[]> = {}
+  static sortEvents(
+    events: ClientEventOutput[]
+  ): Record<string, ClientEventOutput[]> {
+    const sortedEvents: Record<string, ClientEventOutput[]> = {}
     events.forEach(event => {
       if (!(event.type in sortedEvents)) {
         sortedEvents[event.type] = []
@@ -232,18 +242,21 @@ export class Room {
     return sortedEvents
   }
 
-  static replaceEditedMessages(messages: Event[]) {
+  static replaceEditedMessages(messages: ClientEventOutput[]) {
     // replaces the body of messages that have been edited with the edited body
-
     const editMessages = messages.filter(
-      message => message?.content && "m.new_content" in message.content
+      message =>
+        message?.content &&
+        typeof message.content === "object" &&
+        message.content !== null &&
+        "m.new_content" in message.content &&
+        safeParse(EventContentSchema, message.content).success
     )
 
     const toBeEditedMessageIds = editMessages.map(
       message =>
-        message?.content &&
-        "m.relates_to" in message.content &&
-        message.content["m.relates_to"].event_id
+        is(EventContentSchema, message.content) &&
+        message.content["m.relates_to"]?.event_id
     )
 
     const originalMessagesToBeEdited = messages.filter(message =>
@@ -254,8 +267,9 @@ export class Room {
       message =>
         !toBeEditedMessageIds.includes(message.event_id) &&
         !(
-          message?.content &&
-          "m.relates_to" in message.content &&
+          is(EventContentSchema, message.content) &&
+          message.content["m.relates_to"] &&
+          "rel_type" in message.content["m.relates_to"] &&
           message.content["m.relates_to"]["rel_type"] === "m.replace"
         )
     )
@@ -264,14 +278,20 @@ export class Room {
       message => {
         const thisEditedMessage = editMessages.find(
           editMessage =>
-            editMessage?.content &&
-            "m.relates_to" in editMessage.content &&
-            editMessage.content["m.relates_to"].event_id === message.event_id
+            is(EventContentSchema, editMessage.content) &&
+            editMessage.content["m.relates_to"]?.event_id === message.event_id
         )
-        const editedContent = thisEditedMessage?.content
+        const existingContent = is(EventContentSchema, message.content)
+          ? message.content
+          : {}
+        const editedContent = is(EventContentSchema, thisEditedMessage?.content)
+          ? thisEditedMessage?.content
+          : {}
+
         // "m.new_content" in thisEditedMessage.content &&
         // thisEditedMessage.content["m.new_content"].body
-        return { ...message, content: { ...message.content, ...editedContent } }
+
+        return { ...message, content: { ...existingContent, ...editedContent } }
       }
     )
     return [
@@ -280,12 +300,12 @@ export class Room {
     ]
   }
 
-  static deleteEditedMessages(messages: Event[]) {
-    const rootEvents = new Map<string, Event[]>()
+  static deleteEditedMessages(messages: ClientEventOutput[]) {
+    const rootEvents = new Map<string, ClientEventOutput[]>()
 
     messages.forEach(message => {
-      if (message?.content && "m.relates_to" in message.content) {
-        const id = message.content["m.relates_to"].event_id
+      if (is(EventContentSchema, message.content)) {
+        const id = message.content["m.relates_to"]?.event_id || ""
         const edits = rootEvents.get(id)
         rootEvents.set(id, [...(edits || []), message])
       }

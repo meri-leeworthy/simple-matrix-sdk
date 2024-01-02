@@ -1,18 +1,39 @@
-import { Client, Room } from "../src"
+import { Client, Event, Room, Timeline } from "../src"
 
 require("dotenv").config()
 
-const { BASE_URL_1, ACCESS_TOKEN_1, TEST_ROOM_1, USER_ID_1, TEST_SPACE_1 } =
-  process.env
+const {
+  BASE_URL_2,
+  ACCESS_TOKEN_2,
+  AS_TOKEN,
+  TEST_ROOM_2,
+  USER_ID_2,
+  TEST_SPACE_1,
+} = process.env
 
 test("playground", async () => {
-  const client = new Client(BASE_URL_1!, ACCESS_TOKEN_1!, {
-    userId: USER_ID_1,
+  const client = new Client(BASE_URL_2!, AS_TOKEN!, {
+    params: {
+      user_id: "@_relay_bot:radical.directory",
+    },
   })
-  const room = new Room(TEST_ROOM_1!, client)
+  const room = new Room("!aClTOIoBPhZNaxWdCH:radical.directory", client)
 
-  const response = await room.getHierarchy()
+  const response = await room.getMessages({ dir: "b", limit: 100 })
 
-  console.log("get hierarchy response", response)
+  // console.log("get messages response", response)
+
+  const { chunk } = response
+  // chunk.forEach((event: any) => {
+  //   if (event.unsigned["m.relations"]) {
+  //     // console.log("event", event)
+  //   }
+  //   const eventInstance = new Event(event)
+  //   // console.log("eventInstance", eventInstance)
+  // })
+
+  const timeline = new Timeline(chunk)
+
+  console.log("timeline", timeline)
   expect(response).toBeTruthy()
 })

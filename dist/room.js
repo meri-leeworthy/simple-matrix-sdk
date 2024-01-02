@@ -22,7 +22,9 @@ var __asyncGenerator = (this && this.__asyncGenerator) || function (thisArg, _ar
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Room = void 0;
+const valibot_1 = require("valibot");
 const client_1 = require("./client");
+const _1 = require(".");
 class Room {
     constructor(roomId, client) {
         this.roomId = roomId;
@@ -212,23 +214,37 @@ class Room {
     }
     static replaceEditedMessages(messages) {
         // replaces the body of messages that have been edited with the edited body
-        const editMessages = messages.filter(message => (message === null || message === void 0 ? void 0 : message.content) && "m.new_content" in message.content);
-        const toBeEditedMessageIds = editMessages.map(message => (message === null || message === void 0 ? void 0 : message.content) &&
-            "m.relates_to" in message.content &&
-            message.content["m.relates_to"].event_id);
+        const editMessages = messages.filter(message => (message === null || message === void 0 ? void 0 : message.content) &&
+            typeof message.content === "object" &&
+            message.content !== null &&
+            "m.new_content" in message.content &&
+            (0, valibot_1.safeParse)(_1.EventContentSchema, message.content).success);
+        const toBeEditedMessageIds = editMessages.map(message => {
+            var _a;
+            return (0, valibot_1.is)(_1.EventContentSchema, message.content) &&
+                ((_a = message.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id);
+        });
         const originalMessagesToBeEdited = messages.filter(message => toBeEditedMessageIds.includes(message.event_id));
         const originalMessagesStayingTheSame = messages.filter(message => !toBeEditedMessageIds.includes(message.event_id) &&
-            !((message === null || message === void 0 ? void 0 : message.content) &&
-                "m.relates_to" in message.content &&
+            !((0, valibot_1.is)(_1.EventContentSchema, message.content) &&
+                message.content["m.relates_to"] &&
+                "rel_type" in message.content["m.relates_to"] &&
                 message.content["m.relates_to"]["rel_type"] === "m.replace"));
         const originalMessagesWithEditedBodies = originalMessagesToBeEdited.map(message => {
-            const thisEditedMessage = editMessages.find(editMessage => (editMessage === null || editMessage === void 0 ? void 0 : editMessage.content) &&
-                "m.relates_to" in editMessage.content &&
-                editMessage.content["m.relates_to"].event_id === message.event_id);
-            const editedContent = thisEditedMessage === null || thisEditedMessage === void 0 ? void 0 : thisEditedMessage.content;
+            const thisEditedMessage = editMessages.find(editMessage => {
+                var _a;
+                return (0, valibot_1.is)(_1.EventContentSchema, editMessage.content) &&
+                    ((_a = editMessage.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id) === message.event_id;
+            });
+            const existingContent = (0, valibot_1.is)(_1.EventContentSchema, message.content)
+                ? message.content
+                : {};
+            const editedContent = (0, valibot_1.is)(_1.EventContentSchema, thisEditedMessage === null || thisEditedMessage === void 0 ? void 0 : thisEditedMessage.content)
+                ? thisEditedMessage === null || thisEditedMessage === void 0 ? void 0 : thisEditedMessage.content
+                : {};
             // "m.new_content" in thisEditedMessage.content &&
             // thisEditedMessage.content["m.new_content"].body
-            return Object.assign(Object.assign({}, message), { content: Object.assign(Object.assign({}, message.content), editedContent) });
+            return Object.assign(Object.assign({}, message), { content: Object.assign(Object.assign({}, existingContent), editedContent) });
         });
         return [
             ...originalMessagesStayingTheSame,
@@ -238,8 +254,9 @@ class Room {
     static deleteEditedMessages(messages) {
         const rootEvents = new Map();
         messages.forEach(message => {
-            if ((message === null || message === void 0 ? void 0 : message.content) && "m.relates_to" in message.content) {
-                const id = message.content["m.relates_to"].event_id;
+            var _a;
+            if ((0, valibot_1.is)(_1.EventContentSchema, message.content)) {
+                const id = ((_a = message.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id) || "";
                 const edits = rootEvents.get(id);
                 rootEvents.set(id, [...(edits || []), message]);
             }
