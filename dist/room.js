@@ -162,7 +162,7 @@ class Room {
     }
     sendStateEvent(type, body, stateKey) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.put(`rooms/${this.roomId}/state/${type}/${stateKey}`, body);
+            return this.client.put(`rooms/${this.roomId}/state/${type}/${stateKey || ""}`, body);
         });
     }
     setName(name) {
@@ -182,6 +182,12 @@ class Room {
     redactEvent(eventId) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`rooms/${this.roomId}/redact/${eventId}/${Date.now()}`, {});
+        });
+    }
+    getAvatarUrl() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.client.get(`rooms/${this.roomId}/state/m.room.avatar`);
+            return response;
         });
     }
     getRoomAliases() {

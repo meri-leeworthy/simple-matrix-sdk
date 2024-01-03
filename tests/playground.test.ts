@@ -19,11 +19,11 @@ test("playground", async () => {
   })
   const room = new Room("!aClTOIoBPhZNaxWdCH:radical.directory", client)
 
-  const response = await room.getMessages({ dir: "b", limit: 100 })
+  const response = await room.getState()
 
-  // console.log("get messages response", response)
+  console.log("get avatar response", response)
 
-  const { chunk } = response
+  // const { chunk } = response
   // chunk.forEach((event: any) => {
   //   if (event.unsigned["m.relations"]) {
   //     // console.log("event", event)
@@ -32,8 +32,8 @@ test("playground", async () => {
   //   // console.log("eventInstance", eventInstance)
   // })
 
-  const timeline = new Timeline(chunk)
+  // const timeline = new Timeline(chunk)
 
-  console.log("timeline", timeline)
+  // console.log("timeline", timeline)
   expect(response).toBeTruthy()
 })

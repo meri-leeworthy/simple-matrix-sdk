@@ -189,7 +189,7 @@ export class Room {
     stateKey?: string
   ): Promise<{ event_id: string }> {
     return this.client.put(
-      `rooms/${this.roomId}/state/${type}/${stateKey}`,
+      `rooms/${this.roomId}/state/${type}/${stateKey || ""}`,
       body
     )
   }
@@ -211,6 +211,13 @@ export class Room {
       `rooms/${this.roomId}/redact/${eventId}/${Date.now()}`,
       {}
     )
+  }
+
+  async getAvatarUrl(): Promise<string> {
+    const response = await this.client.get(
+      `rooms/${this.roomId}/state/m.room.avatar`
+    )
+    return response
   }
 
   async getRoomAliases(): Promise<string[]> {
