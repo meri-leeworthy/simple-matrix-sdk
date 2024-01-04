@@ -213,11 +213,11 @@ export class Room {
     )
   }
 
-  async getAvatarUrl(): Promise<string> {
+  async getAvatarMxc(): Promise<string> {
     const response = await this.client.get(
       `rooms/${this.roomId}/state/m.room.avatar`
     )
-    return response
+    return response.url
   }
 
   async getRoomAliases(): Promise<string[]> {
