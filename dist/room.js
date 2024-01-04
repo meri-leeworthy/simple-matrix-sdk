@@ -184,10 +184,10 @@ class Room {
             return this.client.put(`rooms/${this.roomId}/redact/${eventId}/${Date.now()}`, {});
         });
     }
-    getAvatarUrl() {
+    getAvatarMxc() {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.client.get(`rooms/${this.roomId}/state/m.room.avatar`);
-            return response;
+            return response.url;
         });
     }
     getRoomAliases() {

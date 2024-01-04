@@ -34,7 +34,7 @@ export declare class Room {
     setName(name: string): Promise<void>;
     setTopic(topic: string): Promise<void>;
     redactEvent(eventId: string): Promise<void>;
-    getAvatarUrl(): Promise<string>;
+    getAvatarMxc(): Promise<string>;
     getRoomAliases(): Promise<string[]>;
     setRoomAlias(alias: string): Promise<any>;
     deleteRoomAlias(alias: string): Promise<any>;
