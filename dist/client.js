@@ -96,6 +96,29 @@ class Client {
             return data.access_token;
         });
     }
+    static register(username, password, baseUrl) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch(`${baseUrl}/_matrix/client/v3/register`, {
+                method: "POST",
+                body: JSON.stringify({
+                    auth: {
+                        type: "m.login.dummy",
+                    },
+                    username,
+                    password,
+                }),
+            });
+            const data = yield response.json();
+            return data;
+        });
+    }
+    static getLoginFlows(baseUrl) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch(`${baseUrl}/_matrix/client/v3/login`);
+            const data = yield response.json();
+            return data;
+        });
+    }
     buildUrl(endpoint, urlType) {
         const urlTypeOrDefault = urlType || "client/v3/";
         return `${this.baseUrl}/_matrix/${urlTypeOrDefault}${endpoint}`;

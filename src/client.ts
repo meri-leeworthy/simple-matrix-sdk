@@ -126,6 +126,27 @@ export class Client {
     return data.access_token
   }
 
+  static async register(username: string, password: string, baseUrl: string) {
+    const response = await fetch(`${baseUrl}/_matrix/client/v3/register`, {
+      method: "POST",
+      body: JSON.stringify({
+        auth: {
+          type: "m.login.dummy",
+        },
+        username,
+        password,
+      }),
+    })
+    const data = await response.json()
+    return data
+  }
+
+  static async getLoginFlows(baseUrl: string) {
+    const response = await fetch(`${baseUrl}/_matrix/client/v3/login`)
+    const data = await response.json()
+    return data
+  }
+
   buildUrl(endpoint: string, urlType?: string) {
     const urlTypeOrDefault = urlType || "client/v3/"
     return `${this.baseUrl}/_matrix/${urlTypeOrDefault}${endpoint}`

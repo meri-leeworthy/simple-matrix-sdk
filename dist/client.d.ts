@@ -19,6 +19,8 @@ export declare class Client {
         fetch?: any;
     }): Promise<any>;
     static login(baseUrl: string, username: string, password: string, fetch?: any): Promise<any>;
+    static register(username: string, password: string, baseUrl: string): Promise<any>;
+    static getLoginFlows(baseUrl: string): Promise<any>;
     buildUrl(endpoint: string, urlType?: string): string;
     get(endpoint: string, params?: Params): Promise<any>;
     put(endpoint: string, body: any, params?: Params): Promise<any>;
