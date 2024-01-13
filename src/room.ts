@@ -65,7 +65,7 @@ export class Room {
     return this.client.get(
       `rooms/${this.roomId}/relations/${eventId}${relType && "/" + relType}${
         eventType && "/" + eventType
-      }}`,
+      }`,
       {
         ...this.client.params,
         ...params,
@@ -220,18 +220,18 @@ export class Room {
     return response.url
   }
 
-  async getRoomAliases(): Promise<string[]> {
+  async getAliases(): Promise<string[]> {
     const response = await this.get(`directory/room/${this.roomId}`)
     return response.aliases
   }
 
-  async setRoomAlias(alias: string): Promise<any> {
+  async setAlias(alias: string): Promise<any> {
     return this.client.put(`directory/room/${alias}`, {
       room_id: this.roomId,
     })
   }
 
-  async deleteRoomAlias(alias: string): Promise<any> {
+  async deleteAlias(alias: string): Promise<any> {
     return this.client.put(`directory/room/${alias}`, {})
   }
 
