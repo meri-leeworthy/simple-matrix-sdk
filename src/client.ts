@@ -1,3 +1,4 @@
+import { Room } from "."
 import { ClientOptions, Params } from "./types"
 
 export class Client {
@@ -156,6 +157,8 @@ export class Client {
     const combinedParams = { ...this.params, ...params }
     const urlType = combinedParams.urlType || undefined
 
+    console.log("url", this.buildUrl(endpoint, urlType))
+
     return await Client.authenticatedGet(
       this.buildUrl(endpoint, urlType),
       this.accessToken,
@@ -255,7 +258,38 @@ export class Client {
         [key: string]: any
       }
     }[]
-  }): Promise<{ room_id: string } | { errcode: string; error?: string }> {
-    return await this.post("createRoom", body)
+  }): Promise<Room | { errcode: string; error?: string }> {
+    const roomId = await this.post("createRoom", body)
+    if ("errcode" in roomId) {
+      return roomId
+    }
+    return new Room(roomId.room_id, this)
+  }
+
+  async add3pid(
+    body: {
+      sid: string
+      client_secret: string
+      auth?: {
+        session: string
+        type: string
+      }
+    },
+    password: string
+  ): Promise<any> {
+    const unauthorised = await this.post("account/3pid/add", body)
+    const { session, flows } = unauthorised
+    console.log(flows)
+    const next = await this.post("account/3pid/add", {
+      sid: body.sid,
+      client_secret: body.client_secret,
+      auth: {
+        session,
+        type: "m.login.password",
+        user: this.userId,
+        password,
+      },
+    })
+    console.log("next", next)
   }
 }
