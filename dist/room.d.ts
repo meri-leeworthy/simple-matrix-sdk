@@ -35,36 +35,43 @@ export declare class Room {
     setTopic(topic: string): Promise<void>;
     redactEvent(eventId: string): Promise<void>;
     getAvatarMxc(): Promise<string>;
-    getRoomAliases(): Promise<string[]>;
-    setRoomAlias(alias: string): Promise<any>;
-    deleteRoomAlias(alias: string): Promise<any>;
+    getAliases(): Promise<string[]>;
+    setAlias(alias: string): Promise<any>;
+    deleteAlias(alias: string): Promise<any>;
     static sortEvents(events: ClientEventOutput[]): Record<string, ClientEventOutput[]>;
     static replaceEditedMessages(messages: ClientEventOutput[]): ({
-        event_id: string;
         sender: string;
         room_id: string;
+        event_id: string;
         origin_server_ts: number;
         state_key?: string | undefined;
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
+            body: string;
+            msgtype: string;
+            "m.relates_to"?: {
+                event_id: string;
+                rel_type: string;
+            } | undefined;
+        } | {
+            body: string;
             msgtype: "m.text";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
+            body: string;
             msgtype: "m.emote";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
+            body: string;
             msgtype: "m.notice";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgtype: "m.image";
             body: string;
+            msgtype: "m.image";
             info?: {
                 h: number;
                 w: number;
@@ -80,8 +87,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.file";
             body: string;
+            msgtype: "m.file";
             filename: string;
             info?: {
                 mimetype?: string | undefined;
@@ -96,8 +103,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.audio";
             body: string;
+            msgtype: "m.audio";
             info?: {
                 mimetype?: string | undefined;
                 size?: number | undefined;
@@ -105,8 +112,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.location";
             body: string;
+            msgtype: "m.location";
             geo_uri: string;
             info?: {
                 thumbnail_info?: {
@@ -118,8 +125,8 @@ export declare class Room {
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgtype: "m.video";
             body: string;
+            msgtype: "m.video";
             info?: {
                 h?: number | undefined;
                 w?: number | undefined;
@@ -163,20 +170,13 @@ export declare class Room {
             notifications?: {
                 room: number;
             } | undefined;
-        } | {
-            msgtype: string;
-            body: string;
-            "m.relates_to"?: {
-                event_id: string;
-                rel_type: string;
-            } | undefined;
         } | undefined;
         user_id?: string | undefined;
     } & (({
         type: string;
         content: {
-            msgtype: string;
             body: string;
+            msgtype: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -188,23 +188,23 @@ export declare class Room {
     } | {
         type: "m.room.message";
         content: {
+            body: string;
             msgtype: "m.text";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
+            body: string;
             msgtype: "m.emote";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
+            body: string;
             msgtype: "m.notice";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgtype: "m.image";
             body: string;
+            msgtype: "m.image";
             info?: {
                 h: number;
                 w: number;
@@ -220,8 +220,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.file";
             body: string;
+            msgtype: "m.file";
             filename: string;
             info?: {
                 mimetype?: string | undefined;
@@ -236,8 +236,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.audio";
             body: string;
+            msgtype: "m.audio";
             info?: {
                 mimetype?: string | undefined;
                 size?: number | undefined;
@@ -245,8 +245,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.location";
             body: string;
+            msgtype: "m.location";
             geo_uri: string;
             info?: {
                 thumbnail_info?: {
@@ -258,8 +258,8 @@ export declare class Room {
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgtype: "m.video";
             body: string;
+            msgtype: "m.video";
             info?: {
                 h?: number | undefined;
                 w?: number | undefined;
@@ -331,8 +331,8 @@ export declare class Room {
             creator: string;
             room_version?: string | undefined;
             predecessor?: {
-                event_id: string;
                 room_id: string;
+                event_id: string;
             } | undefined;
         };
     } | {
@@ -372,26 +372,32 @@ export declare class Room {
         };
     }) & {
         unsigned?: {
-            transaction_id?: string | undefined;
             age?: number | undefined;
             prev_content?: {
+                body: string;
+                msgtype: string;
+                "m.relates_to"?: {
+                    event_id: string;
+                    rel_type: string;
+                } | undefined;
+            } | {
+                body: string;
                 msgtype: "m.text";
-                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
+                body: string;
                 msgtype: "m.emote";
-                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
+                body: string;
                 msgtype: "m.notice";
-                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgtype: "m.image";
                 body: string;
+                msgtype: "m.image";
                 info?: {
                     h: number;
                     w: number;
@@ -407,8 +413,8 @@ export declare class Room {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgtype: "m.file";
                 body: string;
+                msgtype: "m.file";
                 filename: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -423,8 +429,8 @@ export declare class Room {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgtype: "m.audio";
                 body: string;
+                msgtype: "m.audio";
                 info?: {
                     mimetype?: string | undefined;
                     size?: number | undefined;
@@ -432,8 +438,8 @@ export declare class Room {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgtype: "m.location";
                 body: string;
+                msgtype: "m.location";
                 geo_uri: string;
                 info?: {
                     thumbnail_info?: {
@@ -445,8 +451,8 @@ export declare class Room {
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                msgtype: "m.video";
                 body: string;
+                msgtype: "m.video";
                 info?: {
                     h?: number | undefined;
                     w?: number | undefined;
@@ -490,40 +496,41 @@ export declare class Room {
                 notifications?: {
                     room: number;
                 } | undefined;
-            } | {
-                msgtype: string;
-                body: string;
-                "m.relates_to"?: {
-                    event_id: string;
-                    rel_type: string;
-                } | undefined;
             } | undefined;
+            transaction_id?: string | undefined;
             redacted_because?: {
-                event_id: string;
                 sender: string;
                 room_id: string;
+                event_id: string;
                 origin_server_ts: number;
                 state_key?: string | undefined;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
+                    body: string;
+                    msgtype: string;
+                    "m.relates_to"?: {
+                        event_id: string;
+                        rel_type: string;
+                    } | undefined;
+                } | {
+                    body: string;
                     msgtype: "m.text";
-                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
+                    body: string;
                     msgtype: "m.emote";
-                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
+                    body: string;
                     msgtype: "m.notice";
-                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
-                    msgtype: "m.image";
                     body: string;
+                    msgtype: "m.image";
                     info?: {
                         h: number;
                         w: number;
@@ -539,8 +546,8 @@ export declare class Room {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    msgtype: "m.file";
                     body: string;
+                    msgtype: "m.file";
                     filename: string;
                     info?: {
                         mimetype?: string | undefined;
@@ -555,8 +562,8 @@ export declare class Room {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    msgtype: "m.audio";
                     body: string;
+                    msgtype: "m.audio";
                     info?: {
                         mimetype?: string | undefined;
                         size?: number | undefined;
@@ -564,8 +571,8 @@ export declare class Room {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    msgtype: "m.location";
                     body: string;
+                    msgtype: "m.location";
                     geo_uri: string;
                     info?: {
                         thumbnail_info?: {
@@ -577,8 +584,8 @@ export declare class Room {
                         thumbnail_url?: string | undefined;
                     } | undefined;
                 } | {
-                    msgtype: "m.video";
                     body: string;
+                    msgtype: "m.video";
                     info?: {
                         h?: number | undefined;
                         w?: number | undefined;
@@ -621,13 +628,6 @@ export declare class Room {
                     users_default?: number | undefined;
                     notifications?: {
                         room: number;
-                    } | undefined;
-                } | {
-                    msgtype: string;
-                    body: string;
-                    "m.relates_to"?: {
-                        event_id: string;
-                        rel_type: string;
                     } | undefined;
                 } | undefined;
                 user_id?: string | undefined;
@@ -638,31 +638,38 @@ export declare class Room {
         } | undefined;
     }))[];
     static deleteEditedMessages(messages: ClientEventOutput[]): ({
-        event_id: string;
         sender: string;
         room_id: string;
+        event_id: string;
         origin_server_ts: number;
         state_key?: string | undefined;
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
+            body: string;
+            msgtype: string;
+            "m.relates_to"?: {
+                event_id: string;
+                rel_type: string;
+            } | undefined;
+        } | {
+            body: string;
             msgtype: "m.text";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
+            body: string;
             msgtype: "m.emote";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
+            body: string;
             msgtype: "m.notice";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgtype: "m.image";
             body: string;
+            msgtype: "m.image";
             info?: {
                 h: number;
                 w: number;
@@ -678,8 +685,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.file";
             body: string;
+            msgtype: "m.file";
             filename: string;
             info?: {
                 mimetype?: string | undefined;
@@ -694,8 +701,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.audio";
             body: string;
+            msgtype: "m.audio";
             info?: {
                 mimetype?: string | undefined;
                 size?: number | undefined;
@@ -703,8 +710,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.location";
             body: string;
+            msgtype: "m.location";
             geo_uri: string;
             info?: {
                 thumbnail_info?: {
@@ -716,8 +723,8 @@ export declare class Room {
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgtype: "m.video";
             body: string;
+            msgtype: "m.video";
             info?: {
                 h?: number | undefined;
                 w?: number | undefined;
@@ -761,20 +768,13 @@ export declare class Room {
             notifications?: {
                 room: number;
             } | undefined;
-        } | {
-            msgtype: string;
-            body: string;
-            "m.relates_to"?: {
-                event_id: string;
-                rel_type: string;
-            } | undefined;
         } | undefined;
         user_id?: string | undefined;
     } & (({
         type: string;
         content: {
-            msgtype: string;
             body: string;
+            msgtype: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -786,23 +786,23 @@ export declare class Room {
     } | {
         type: "m.room.message";
         content: {
+            body: string;
             msgtype: "m.text";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
+            body: string;
             msgtype: "m.emote";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
+            body: string;
             msgtype: "m.notice";
-            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            msgtype: "m.image";
             body: string;
+            msgtype: "m.image";
             info?: {
                 h: number;
                 w: number;
@@ -818,8 +818,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.file";
             body: string;
+            msgtype: "m.file";
             filename: string;
             info?: {
                 mimetype?: string | undefined;
@@ -834,8 +834,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.audio";
             body: string;
+            msgtype: "m.audio";
             info?: {
                 mimetype?: string | undefined;
                 size?: number | undefined;
@@ -843,8 +843,8 @@ export declare class Room {
             } | undefined;
             url?: string | undefined;
         } | {
-            msgtype: "m.location";
             body: string;
+            msgtype: "m.location";
             geo_uri: string;
             info?: {
                 thumbnail_info?: {
@@ -856,8 +856,8 @@ export declare class Room {
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            msgtype: "m.video";
             body: string;
+            msgtype: "m.video";
             info?: {
                 h?: number | undefined;
                 w?: number | undefined;
@@ -929,8 +929,8 @@ export declare class Room {
             creator: string;
             room_version?: string | undefined;
             predecessor?: {
-                event_id: string;
                 room_id: string;
+                event_id: string;
             } | undefined;
         };
     } | {
@@ -970,26 +970,32 @@ export declare class Room {
         };
     }) & {
         unsigned?: {
-            transaction_id?: string | undefined;
             age?: number | undefined;
             prev_content?: {
+                body: string;
+                msgtype: string;
+                "m.relates_to"?: {
+                    event_id: string;
+                    rel_type: string;
+                } | undefined;
+            } | {
+                body: string;
                 msgtype: "m.text";
-                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
+                body: string;
                 msgtype: "m.emote";
-                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
+                body: string;
                 msgtype: "m.notice";
-                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                msgtype: "m.image";
                 body: string;
+                msgtype: "m.image";
                 info?: {
                     h: number;
                     w: number;
@@ -1005,8 +1011,8 @@ export declare class Room {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgtype: "m.file";
                 body: string;
+                msgtype: "m.file";
                 filename: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -1021,8 +1027,8 @@ export declare class Room {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgtype: "m.audio";
                 body: string;
+                msgtype: "m.audio";
                 info?: {
                     mimetype?: string | undefined;
                     size?: number | undefined;
@@ -1030,8 +1036,8 @@ export declare class Room {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                msgtype: "m.location";
                 body: string;
+                msgtype: "m.location";
                 geo_uri: string;
                 info?: {
                     thumbnail_info?: {
@@ -1043,8 +1049,8 @@ export declare class Room {
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                msgtype: "m.video";
                 body: string;
+                msgtype: "m.video";
                 info?: {
                     h?: number | undefined;
                     w?: number | undefined;
@@ -1088,40 +1094,41 @@ export declare class Room {
                 notifications?: {
                     room: number;
                 } | undefined;
-            } | {
-                msgtype: string;
-                body: string;
-                "m.relates_to"?: {
-                    event_id: string;
-                    rel_type: string;
-                } | undefined;
             } | undefined;
+            transaction_id?: string | undefined;
             redacted_because?: {
-                event_id: string;
                 sender: string;
                 room_id: string;
+                event_id: string;
                 origin_server_ts: number;
                 state_key?: string | undefined;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
+                    body: string;
+                    msgtype: string;
+                    "m.relates_to"?: {
+                        event_id: string;
+                        rel_type: string;
+                    } | undefined;
+                } | {
+                    body: string;
                     msgtype: "m.text";
-                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
+                    body: string;
                     msgtype: "m.emote";
-                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
+                    body: string;
                     msgtype: "m.notice";
-                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
-                    msgtype: "m.image";
                     body: string;
+                    msgtype: "m.image";
                     info?: {
                         h: number;
                         w: number;
@@ -1137,8 +1144,8 @@ export declare class Room {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    msgtype: "m.file";
                     body: string;
+                    msgtype: "m.file";
                     filename: string;
                     info?: {
                         mimetype?: string | undefined;
@@ -1153,8 +1160,8 @@ export declare class Room {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    msgtype: "m.audio";
                     body: string;
+                    msgtype: "m.audio";
                     info?: {
                         mimetype?: string | undefined;
                         size?: number | undefined;
@@ -1162,8 +1169,8 @@ export declare class Room {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    msgtype: "m.location";
                     body: string;
+                    msgtype: "m.location";
                     geo_uri: string;
                     info?: {
                         thumbnail_info?: {
@@ -1175,8 +1182,8 @@ export declare class Room {
                         thumbnail_url?: string | undefined;
                     } | undefined;
                 } | {
-                    msgtype: "m.video";
                     body: string;
+                    msgtype: "m.video";
                     info?: {
                         h?: number | undefined;
                         w?: number | undefined;
@@ -1219,13 +1226,6 @@ export declare class Room {
                     users_default?: number | undefined;
                     notifications?: {
                         room: number;
-                    } | undefined;
-                } | {
-                    msgtype: string;
-                    body: string;
-                    "m.relates_to"?: {
-                        event_id: string;
-                        rel_type: string;
                     } | undefined;
                 } | undefined;
                 user_id?: string | undefined;

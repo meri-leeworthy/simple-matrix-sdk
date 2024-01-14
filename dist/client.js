@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Client = void 0;
+const _1 = require(".");
 class Client {
     constructor(baseUrl, accessToken, opts) {
         this.baseUrl = baseUrl;
@@ -112,6 +113,12 @@ class Client {
             return data;
         });
     }
+    static isUsernameAvailable(username, baseUrl) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield fetch(`${baseUrl}/_matrix/client/v3/register/available?username=${username}`);
+            return response.ok;
+        });
+    }
     static getLoginFlows(baseUrl) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield fetch(`${baseUrl}/_matrix/client/v3/login`);
@@ -127,6 +134,7 @@ class Client {
         return __awaiter(this, void 0, void 0, function* () {
             const combinedParams = Object.assign(Object.assign({}, this.params), params);
             const urlType = combinedParams.urlType || undefined;
+            console.log("url", this.buildUrl(endpoint, urlType));
             return yield Client.authenticatedGet(this.buildUrl(endpoint, urlType), this.accessToken, {
                 params: combinedParams,
                 fetch: this.fetch,
@@ -204,7 +212,29 @@ class Client {
     }
     createRoom(body) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.post("createRoom", body);
+            const roomId = yield this.post("createRoom", body);
+            if ("errcode" in roomId) {
+                return roomId;
+            }
+            return new _1.Room(roomId.room_id, this);
+        });
+    }
+    add3pid(body, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const unauthorised = yield this.post("account/3pid/add", body);
+            const { session, flows } = unauthorised;
+            console.log(flows);
+            const next = yield this.post("account/3pid/add", {
+                sid: body.sid,
+                client_secret: body.client_secret,
+                auth: {
+                    session,
+                    type: "m.login.password",
+                    user: this.userId,
+                    password,
+                },
+            });
+            console.log("next", next);
         });
     }
 }

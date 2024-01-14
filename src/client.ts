@@ -142,6 +142,13 @@ export class Client {
     return data
   }
 
+  static async isUsernameAvailable(username: string, baseUrl: string) {
+    const response = await fetch(
+      `${baseUrl}/_matrix/client/v3/register/available?username=${username}`
+    )
+    return response.ok
+  }
+
   static async getLoginFlows(baseUrl: string) {
     const response = await fetch(`${baseUrl}/_matrix/client/v3/login`)
     const data = await response.json()

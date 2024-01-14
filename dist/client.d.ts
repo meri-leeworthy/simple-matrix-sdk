@@ -1,3 +1,4 @@
+import { Room } from ".";
 import { ClientOptions, Params } from "./types";
 export declare class Client {
     private baseUrl;
@@ -20,6 +21,7 @@ export declare class Client {
     }): Promise<any>;
     static login(baseUrl: string, username: string, password: string, fetch?: any): Promise<any>;
     static register(username: string, password: string, baseUrl: string): Promise<any>;
+    static isUsernameAvailable(username: string, baseUrl: string): Promise<boolean>;
     static getLoginFlows(baseUrl: string): Promise<any>;
     buildUrl(endpoint: string, urlType?: string): string;
     get(endpoint: string, params?: Params): Promise<any>;
@@ -47,10 +49,16 @@ export declare class Client {
                 [key: string]: any;
             };
         }[];
-    }): Promise<{
-        room_id: string;
-    } | {
+    }): Promise<Room | {
         errcode: string;
         error?: string;
     }>;
+    add3pid(body: {
+        sid: string;
+        client_secret: string;
+        auth?: {
+            session: string;
+            type: string;
+        };
+    }, password: string): Promise<any>;
 }

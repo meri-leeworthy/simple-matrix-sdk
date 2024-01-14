@@ -66,7 +66,7 @@ class Room {
     }
     getRelations(eventId, params, relType, eventType) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.get(`rooms/${this.roomId}/relations/${eventId}${relType && "/" + relType}${eventType && "/" + eventType}}`, Object.assign(Object.assign({}, this.client.params), params));
+            return this.client.get(`rooms/${this.roomId}/relations/${eventId}${relType && "/" + relType}${eventType && "/" + eventType}`, Object.assign(Object.assign({}, this.client.params), params));
         });
     }
     getStateEvent(type, stateKey) {
@@ -190,20 +190,20 @@ class Room {
             return response.url;
         });
     }
-    getRoomAliases() {
+    getAliases() {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.get(`directory/room/${this.roomId}`);
             return response.aliases;
         });
     }
-    setRoomAlias(alias) {
+    setAlias(alias) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`directory/room/${alias}`, {
                 room_id: this.roomId,
             });
         });
     }
-    deleteRoomAlias(alias) {
+    deleteAlias(alias) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`directory/room/${alias}`, {});
         });
