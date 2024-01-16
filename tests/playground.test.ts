@@ -39,50 +39,58 @@ const {
 //   expect(response).toBeTruthy()
 // })
 
+test("playground", async () => {
+  const flows = await Client.getLoginFlows(BASE_URL_2!)
+  // console.log("flows", flows)
+
+  // const register = await Client.register(
+  //   "test1234567",
+  //   "blahBlah!197Hhh",
+  //   BASE_URL_2!
+  // )
+  // console.log("register", register)
+
+  const accessToken = await Client.login(
+    BASE_URL_2!,
+    "test1234567",
+    "blahBlah!197Hhh"
+  )
+
+  console.log("accessToken", accessToken)
+
+  const client = new Client(BASE_URL_2!, accessToken, {
+    userId: "@test1234567:radical.directory",
+  })
+
+  // await client.add3pid(
+  //   {
+  //     sid: "test1234567",
+  //     client_secret: "blahBlah!197Hhh",
+  //   },
+  //   "blahBlah!197Hhh"
+  // )
+
+  const email = await client.requestTokenEmail(
+    "meri.leeworthy.accounts@skiff.com",
+    "jkasndfkjn",
+    2
+  )
+
+  console.log("email", email)
+
+  expect(flows).toBeTruthy()
+})
+
 // test("playground", async () => {
-//   const flows = await Client.getLoginFlows(BASE_URL_2!)
-//   console.log("flows", flows)
-
-//   // const register = await Client.register(
-//   //   "test1234567",
-//   //   "blahBlah!197Hhh",
-//   //   BASE_URL_2!
-//   // )
-//   // console.log("register", register)
-
-//   const accessToken = await Client.login(
-//     BASE_URL_2!,
-//     "test1234567",
-//     "blahBlah!197Hhh"
-//   )
-
-//   console.log("accessToken", accessToken)
-
-//   const client = new Client(BASE_URL_2!, accessToken, {
-//     userId: "@test1234567:radical.directory",
+//   const client = new Client(BASE_URL_1!, ACCESS_TOKEN_2!, {
+//     userId: USER_ID_2!,
 //   })
 
-//   await client.add3pid(
-//     {
-//       sid: "test1234567",
-//       client_secret: "blahBlah!197Hhh",
-//     },
-//     "blahBlah!197Hhh"
-// //   )
+//   const response = await client.get("/versions", {
+//     urlType: "identity",
+//   })
 
-//   expect(flows).toBeTruthy()
+//   console.log("response", response)
+
+//   expect(response).toBeTruthy()
 // })
-
-test("playground", async () => {
-  const client = new Client(BASE_URL_1!, ACCESS_TOKEN_2!, {
-    userId: USER_ID_2!,
-  })
-
-  const response = await client.get("/versions", {
-    urlType: "identity",
-  })
-
-  console.log("response", response)
-
-  expect(response).toBeTruthy()
-})

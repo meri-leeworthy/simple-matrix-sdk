@@ -61,4 +61,5 @@ export declare class Client {
             type: string;
         };
     }, password: string): Promise<any>;
+    requestTokenEmail(email: string, clientSecret: string, sendAttempt?: number): Promise<any>;
 }

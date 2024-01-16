@@ -164,7 +164,8 @@ export class Client {
     const combinedParams = { ...this.params, ...params }
     const urlType = combinedParams.urlType || undefined
 
-    console.log("url", this.buildUrl(endpoint, urlType))
+    if (combinedParams.debug)
+      console.log("url", this.buildUrl(endpoint, urlType))
 
     return await Client.authenticatedGet(
       this.buildUrl(endpoint, urlType),
@@ -180,6 +181,9 @@ export class Client {
     const combinedParams = { ...this.params, ...params }
     const urlType = combinedParams.urlType || undefined
 
+    if (combinedParams.debug)
+      console.log("url", this.buildUrl(endpoint, urlType))
+
     return await Client.authenticatedPut(
       this.buildUrl(endpoint, urlType),
       this.accessToken,
@@ -194,6 +198,9 @@ export class Client {
   async post(endpoint: string, body: any, params?: Params) {
     const combinedParams = { ...this.params, ...params }
     const urlType = combinedParams.urlType || undefined
+
+    if (combinedParams.debug)
+      console.log("url", this.buildUrl(endpoint, urlType))
 
     return await Client.authenticatedPost(
       this.buildUrl(endpoint, urlType),
@@ -298,5 +305,22 @@ export class Client {
       },
     })
     console.log("next", next)
+  }
+
+  async requestTokenEmail(
+    email: string,
+    clientSecret: string,
+    sendAttempt: number = 1
+  ) {
+    const response = await this.post(
+      "register/email/requestToken",
+      {
+        email,
+        client_secret: clientSecret,
+        send_attempt: sendAttempt,
+      },
+      { debug: "true" }
+    )
+    return response
   }
 }

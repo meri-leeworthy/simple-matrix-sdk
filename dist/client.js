@@ -134,7 +134,8 @@ class Client {
         return __awaiter(this, void 0, void 0, function* () {
             const combinedParams = Object.assign(Object.assign({}, this.params), params);
             const urlType = combinedParams.urlType || undefined;
-            console.log("url", this.buildUrl(endpoint, urlType));
+            if (combinedParams.debug)
+                console.log("url", this.buildUrl(endpoint, urlType));
             return yield Client.authenticatedGet(this.buildUrl(endpoint, urlType), this.accessToken, {
                 params: combinedParams,
                 fetch: this.fetch,
@@ -145,6 +146,8 @@ class Client {
         return __awaiter(this, void 0, void 0, function* () {
             const combinedParams = Object.assign(Object.assign({}, this.params), params);
             const urlType = combinedParams.urlType || undefined;
+            if (combinedParams.debug)
+                console.log("url", this.buildUrl(endpoint, urlType));
             return yield Client.authenticatedPut(this.buildUrl(endpoint, urlType), this.accessToken, body, {
                 params: combinedParams,
                 fetch: this.fetch,
@@ -155,6 +158,8 @@ class Client {
         return __awaiter(this, void 0, void 0, function* () {
             const combinedParams = Object.assign(Object.assign({}, this.params), params);
             const urlType = combinedParams.urlType || undefined;
+            if (combinedParams.debug)
+                console.log("url", this.buildUrl(endpoint, urlType));
             return yield Client.authenticatedPost(this.buildUrl(endpoint, urlType), this.accessToken, body, {
                 params: combinedParams,
                 fetch: this.fetch,
@@ -235,6 +240,16 @@ class Client {
                 },
             });
             console.log("next", next);
+        });
+    }
+    requestTokenEmail(email, clientSecret, sendAttempt = 1) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.post("register/email/requestToken", {
+                email,
+                client_secret: clientSecret,
+                send_attempt: sendAttempt,
+            }, { debug: "true" });
+            return response;
         });
     }
 }
