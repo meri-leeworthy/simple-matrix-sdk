@@ -312,15 +312,11 @@ export class Client {
     clientSecret: string,
     sendAttempt: number = 1
   ) {
-    const response = await this.post(
-      "register/email/requestToken",
-      {
-        email,
-        client_secret: clientSecret,
-        send_attempt: sendAttempt,
-      },
-      { debug: "true" }
-    )
+    const response = await this.post("register/email/requestToken", {
+      email,
+      client_secret: clientSecret,
+      send_attempt: sendAttempt,
+    })
     return response
   }
 }
