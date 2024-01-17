@@ -41,7 +41,7 @@ const {
 
 test("playground", async () => {
   const flows = await Client.getLoginFlows(BASE_URL_2!)
-  // console.log("flows", flows)
+  console.log("flows", flows.flows[0])
 
   // const register = await Client.register(
   //   "test1234567",
@@ -50,17 +50,17 @@ test("playground", async () => {
   // )
   // console.log("register", register)
 
-  const accessToken = await Client.login(
-    BASE_URL_2!,
-    "test1234567",
-    "blahBlah!197Hhh"
-  )
+  // const accessToken = await Client.login(
+  //   BASE_URL_2!,
+  //   "test1234567",
+  //   "blahBlah!197Hhh"
+  // )
 
-  console.log("accessToken", accessToken)
+  // console.log("accessToken", accessToken)
 
-  const client = new Client(BASE_URL_2!, accessToken, {
-    userId: "@test1234567:radical.directory",
-  })
+  // const client = new Client(BASE_URL_2!, accessToken, {
+  //   userId: "@test1234567:radical.directory",
+  // })
 
   // await client.add3pid(
   //   {
@@ -70,13 +70,13 @@ test("playground", async () => {
   //   "blahBlah!197Hhh"
   // )
 
-  const email = await client.requestTokenEmail(
-    "meri.leeworthy.accounts@skiff.com",
-    "jkasndfkjn",
-    2
-  )
+  // const email = await client.requestTokenEmail(
+  //   "meri.leeworthy.accounts@skiff.com",
+  //   "jkasndfkjn",
+  //   2
+  // )
 
-  console.log("email", email)
+  // console.log("email", email)
 
   expect(flows).toBeTruthy()
 })

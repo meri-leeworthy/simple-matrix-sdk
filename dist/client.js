@@ -248,7 +248,7 @@ class Client {
                 email,
                 client_secret: clientSecret,
                 send_attempt: sendAttempt,
-            }, { debug: "true" });
+            });
             return response;
         });
     }

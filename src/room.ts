@@ -2,6 +2,7 @@ import { is, parse, safeParse } from "valibot"
 import { Client } from "./client"
 import {
   ClientEventOutput,
+  ErrorSchema,
   EventContentOutput,
   EventContentSchema,
   Params,
@@ -74,7 +75,15 @@ export class Room {
   }
 
   async getStateEvent(type: string, stateKey?: string): Promise<any> {
-    return this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`)
+    const response = this.client.get(
+      `rooms/${this.roomId}/state/${type}/${stateKey}`
+    )
+    if (!is(ErrorSchema, response)) return response
+    const fullState = await this.getState()
+    const stateEvent = fullState.find(
+      (event: any) => event.type === type && event.state_key === stateKey
+    )
+    return stateEvent
   }
 
   async getPowerLevels(): Promise<any> {
