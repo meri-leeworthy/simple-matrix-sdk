@@ -25,8 +25,8 @@ export type ClientOptions = {
 }
 
 export const ErrorSchema = object({
-  errcode: string(),
-  error: optional(string()),
+  errcode: string("Errcode must be a string"),
+  error: optional(string("Error must be a string")),
 })
 
 export type ErrorOutput = Output<typeof ErrorSchema>

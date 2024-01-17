@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ClientEventSchema = exports.UnsignedDataSchema = exports.ClientEventTypeAndContentSchema = exports.ClientEventBaseSchema = exports.ContentUnionSchema = exports.EventContentSchema = exports.PowerLevelsContentSchema = exports.SpecRoomEventTypeSchema = exports.RoomMessageContentSchema = exports.KeyVerificationRequestMessageContentSchema = exports.VideoMessageContentSchema = exports.LocationMessageContentSchema = exports.AudioMessageContentSchema = exports.FileMessageContentSchema = exports.ImageMessageContentSchema = exports.NoticeMessageContentSchema = exports.EmoteMessageContentSchema = exports.TextMessageContentSchema = exports.RoomMessageTypeSchema = exports.ThumbnailInfoSchema = exports.ErrorSchema = void 0;
 const valibot_1 = require("valibot");
 exports.ErrorSchema = (0, valibot_1.object)({
-    errcode: (0, valibot_1.string)(),
-    error: (0, valibot_1.optional)((0, valibot_1.string)()),
+    errcode: (0, valibot_1.string)("Errcode must be a string"),
+    error: (0, valibot_1.optional)((0, valibot_1.string)("Error must be a string")),
 });
 exports.ThumbnailInfoSchema = (0, valibot_1.partial)((0, valibot_1.object)({
     h: (0, valibot_1.number)(),

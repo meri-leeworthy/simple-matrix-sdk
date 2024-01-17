@@ -71,11 +71,11 @@ class Room {
     }
     getStateEvent(type, stateKey) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`);
+            const response = yield this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`);
             if (!(0, valibot_1.is)(_1.ErrorSchema, response))
                 return response;
             const fullState = yield this.getState();
-            const stateEvent = fullState.find((event) => event.type === type && event.state_key === stateKey);
+            const stateEvent = fullState.find((event) => event.type === type && (stateKey ? event.state_key === stateKey : true));
             return stateEvent;
         });
     }

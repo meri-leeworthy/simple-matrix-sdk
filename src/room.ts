@@ -75,13 +75,14 @@ export class Room {
   }
 
   async getStateEvent(type: string, stateKey?: string): Promise<any> {
-    const response = this.client.get(
+    const response = await this.client.get(
       `rooms/${this.roomId}/state/${type}/${stateKey}`
     )
     if (!is(ErrorSchema, response)) return response
     const fullState = await this.getState()
     const stateEvent = fullState.find(
-      (event: any) => event.type === type && event.state_key === stateKey
+      (event: any) =>
+        event.type === type && (stateKey ? event.state_key === stateKey : true)
     )
     return stateEvent
   }

@@ -12,74 +12,78 @@ const {
   TEST_SPACE_1,
 } = process.env
 
+test("playground", async () => {
+  const client = new Client(BASE_URL_2!, AS_TOKEN!, {
+    params: {
+      user_id: "@_relay_bot:radical.directory",
+    },
+  })
+
+  const room = new Room("!uUGoRnUTewFsCSetUC:radical.directory", client)
+  const roomType = await room.getStateEvent("organ.room.type")
+  console.log("roomType", roomType)
+  //   const room = new Room("!aClTOIoBPhZNaxWdCH:radical.directory", client)
+
+  //   const response = await room.getState()
+
+  //   console.log("get avatar response", response)
+
+  //   // const { chunk } = response
+  //   // chunk.forEach((event: any) => {
+  //   //   if (event.unsigned["m.relations"]) {
+  //   //     // console.log("event", event)
+  //   //   }
+  //   //   const eventInstance = new Event(event)
+  //   //   // console.log("eventInstance", eventInstance)
+  //   // })
+
+  //   // const timeline = new Timeline(chunk)
+
+  //   // console.log("timeline", timeline)
+  expect(roomType).toBeTruthy()
+})
+
 // test("playground", async () => {
-//   const client = new Client(BASE_URL_2!, AS_TOKEN!, {
-//     params: {
-//       user_id: "@_relay_bot:radical.directory",
-//     },
-//   })
-//   const room = new Room("!aClTOIoBPhZNaxWdCH:radical.directory", client)
+//   const flows = await Client.getLoginFlows(BASE_URL_2!)
+//   console.log("flows", flows.flows[0])
 
-//   const response = await room.getState()
+// const register = await Client.register(
+//   "test1234567",
+//   "blahBlah!197Hhh",
+//   BASE_URL_2!
+// )
+// console.log("register", register)
 
-//   console.log("get avatar response", response)
+// const accessToken = await Client.login(
+//   BASE_URL_2!,
+//   "test1234567",
+//   "blahBlah!197Hhh"
+// )
 
-//   // const { chunk } = response
-//   // chunk.forEach((event: any) => {
-//   //   if (event.unsigned["m.relations"]) {
-//   //     // console.log("event", event)
-//   //   }
-//   //   const eventInstance = new Event(event)
-//   //   // console.log("eventInstance", eventInstance)
-//   // })
+// console.log("accessToken", accessToken)
 
-//   // const timeline = new Timeline(chunk)
-
-//   // console.log("timeline", timeline)
-//   expect(response).toBeTruthy()
+// const client = new Client(BASE_URL_2!, accessToken, {
+//   userId: "@test1234567:radical.directory",
 // })
 
-test("playground", async () => {
-  const flows = await Client.getLoginFlows(BASE_URL_2!)
-  console.log("flows", flows.flows[0])
+// await client.add3pid(
+//   {
+//     sid: "test1234567",
+//     client_secret: "blahBlah!197Hhh",
+//   },
+//   "blahBlah!197Hhh"
+// )
 
-  // const register = await Client.register(
-  //   "test1234567",
-  //   "blahBlah!197Hhh",
-  //   BASE_URL_2!
-  // )
-  // console.log("register", register)
+// const email = await client.requestTokenEmail(
+//   "meri.leeworthy.accounts@skiff.com",
+//   "jkasndfkjn",
+//   2
+// )
 
-  // const accessToken = await Client.login(
-  //   BASE_URL_2!,
-  //   "test1234567",
-  //   "blahBlah!197Hhh"
-  // )
+// console.log("email", email)
 
-  // console.log("accessToken", accessToken)
-
-  // const client = new Client(BASE_URL_2!, accessToken, {
-  //   userId: "@test1234567:radical.directory",
-  // })
-
-  // await client.add3pid(
-  //   {
-  //     sid: "test1234567",
-  //     client_secret: "blahBlah!197Hhh",
-  //   },
-  //   "blahBlah!197Hhh"
-  // )
-
-  // const email = await client.requestTokenEmail(
-  //   "meri.leeworthy.accounts@skiff.com",
-  //   "jkasndfkjn",
-  //   2
-  // )
-
-  // console.log("email", email)
-
-  expect(flows).toBeTruthy()
-})
+//   expect(flows).toBeTruthy()
+// })
 
 // test("playground", async () => {
 //   const client = new Client(BASE_URL_1!, ACCESS_TOKEN_2!, {
