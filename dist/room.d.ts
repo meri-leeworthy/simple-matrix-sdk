@@ -20,6 +20,7 @@ export declare class Room {
     getPowerLevels(): Promise<any>;
     setEventPowerLevel(eventType: string, powerLevel: number): Promise<any>;
     getUserPowerLevel(): Promise<number>;
+    setUserPowerLevel(userId: string, powerLevel: number): Promise<any>;
     getHierarchy(): Promise<{
         [x: string]: any;
     }[]>;

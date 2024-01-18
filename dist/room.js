@@ -107,6 +107,18 @@ class Room {
             return users[this.client.userId];
         });
     }
+    setUserPowerLevel(userId, powerLevel) {
+        return __awaiter(this, void 0, void 0, function* () {
+            if (powerLevel < 0 || powerLevel > 100) {
+                throw new Error("Power level must be between 0 and 100");
+            }
+            const powerLevels = yield this.getPowerLevels();
+            const users = powerLevels.users;
+            const newUsers = Object.assign(Object.assign({}, users), { [userId]: powerLevel });
+            const newPowerLevels = Object.assign(Object.assign({}, powerLevels), { users: newUsers });
+            return this.client.put(`rooms/${this.roomId}/state/m.room.power_levels`, newPowerLevels);
+        });
+    }
     getHierarchy() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rooms } = yield this.client.get(`rooms/${this.roomId}/hierarchy`, {

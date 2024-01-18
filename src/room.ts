@@ -127,6 +127,26 @@ export class Room {
     return users[this.client.userId]
   }
 
+  async setUserPowerLevel(userId: string, powerLevel: number): Promise<any> {
+    if (powerLevel < 0 || powerLevel > 100) {
+      throw new Error("Power level must be between 0 and 100")
+    }
+    const powerLevels = await this.getPowerLevels()
+    const users = powerLevels.users
+    const newUsers = {
+      ...users,
+      [userId]: powerLevel,
+    }
+    const newPowerLevels = {
+      ...powerLevels,
+      users: newUsers,
+    }
+    return this.client.put(
+      `rooms/${this.roomId}/state/m.room.power_levels`,
+      newPowerLevels
+    )
+  }
+
   async getHierarchy(): Promise<{ [x: string]: any }[]> {
     const { rooms } = await this.client.get(`rooms/${this.roomId}/hierarchy`, {
       urlType: "client/v1/",
