@@ -33,10 +33,7 @@ class Room {
     get(endpoint, params) {
         return __awaiter(this, void 0, void 0, function* () {
             const combinedParams = Object.assign(Object.assign({}, this.client.params), params);
-            return yield client_1.Client.authenticatedGet(this.client.buildUrl(endpoint + "/rooms/" + this.roomId), this.client.accessToken, {
-                params: combinedParams,
-                fetch: this.client.fetch,
-            });
+            return yield this.client.get("rooms/" + this.roomId + "/" + endpoint, combinedParams);
         });
     }
     getName() {
@@ -44,6 +41,11 @@ class Room {
             const name = yield this.client.get(`rooms/${this.roomId}/state/m.room.name`);
             this.name = name;
             return name;
+        });
+    }
+    getMembers() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return this.get(`members`, { debug: "true" });
         });
     }
     getState() {

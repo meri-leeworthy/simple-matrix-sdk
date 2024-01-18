@@ -2,6 +2,7 @@ import { is, parse, safeParse } from "valibot"
 import { Client } from "./client"
 import {
   ClientEventOutput,
+  ErrorOutput,
   ErrorSchema,
   EventContentOutput,
   EventContentSchema,
@@ -21,13 +22,9 @@ export class Room {
 
   async get(endpoint: string, params?: Params) {
     const combinedParams = { ...this.client.params, ...params }
-    return await Client.authenticatedGet(
-      this.client.buildUrl(endpoint + "/rooms/" + this.roomId),
-      this.client.accessToken,
-      {
-        params: combinedParams,
-        fetch: this.client.fetch,
-      }
+    return await this.client.get(
+      "rooms/" + this.roomId + "/" + endpoint,
+      combinedParams
     )
   }
 
@@ -37,6 +34,10 @@ export class Room {
     )
     this.name = name
     return name
+  }
+
+  async getMembers(): Promise<ErrorOutput | { chunk: ClientEventOutput[] }> {
+    return this.get(`members`, { debug: "true" })
   }
 
   async getState(): Promise<any> {

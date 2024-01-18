@@ -24,6 +24,16 @@ const rdTestSpaceId = process.env.RD_TEST_SPACE!
 const rdAccessToken = process.env.RD_ACCESS_TOKEN!
 const rdUserId = process.env.RD_USER_ID!
 
+const {
+  BASE_URL_1,
+  BASE_URL_2,
+  ACCESS_TOKEN_2,
+  AS_TOKEN,
+  TEST_ROOM_2,
+  USER_ID_2,
+  TEST_SPACE_1,
+} = process.env
+
 describe("Test Room Static Messages Methods", () => {
   let client: Client | null
   let room: Room | null
@@ -33,15 +43,9 @@ describe("Test Room Static Messages Methods", () => {
     room = new Room(testRoomId, client)
   })
 
-  test("getRoomMessagesOneShot returns something", async () => {
-    const response = await room?.getMessagesOneShot()
+  test("getMessages returns something", async () => {
+    const response = await room?.getMessages({})
     // console.log("getRoomMessagesOneShot: ", response);
-    expect(response).toBeTruthy()
-  })
-
-  test("getRoomMessagesOneShotParams returns something", async () => {
-    const response = await room?.getMessagesOneShotParams({})
-    // console.log("getRoomMessagesOneShotParams: ", response);
     expect(response).toBeTruthy()
   })
 
@@ -161,5 +165,13 @@ test("sendEvent returns something", async () => {
     msgtype: "m.text",
   })
   console.log("sendEvent", response)
+  expect(response).toBeTruthy()
+})
+
+test("getMembers returns something", async () => {
+  const client = new Client(BASE_URL_2!, ACCESS_TOKEN_2!, { userId: USER_ID_2 })
+  const room = new Room(TEST_SPACE_1!, client)
+  const response = await room.getMembers()
+  console.log("getMembers", response)
   expect(response).toBeTruthy()
 })

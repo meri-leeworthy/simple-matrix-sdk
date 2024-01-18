@@ -1,5 +1,5 @@
 import { Client } from "./client";
-import { ClientEventOutput, Params } from ".";
+import { ClientEventOutput, ErrorOutput, Params } from ".";
 export declare class Room {
     roomId: string;
     client: Client;
@@ -9,6 +9,9 @@ export declare class Room {
     constructor(roomId: string, client: Client);
     get(endpoint: string, params?: Params): Promise<any>;
     getName(): Promise<unknown>;
+    getMembers(): Promise<ErrorOutput | {
+        chunk: ClientEventOutput[];
+    }>;
     getState(): Promise<any>;
     getMessages(params: Record<string, any>): Promise<any>;
     getEvent(eventId: string): Promise<ClientEventOutput>;
