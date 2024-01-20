@@ -34,6 +34,7 @@ export declare class Client {
     getProfile(userId?: string): Promise<{
         displayname: string;
     }>;
+    getUser3pids(): Promise<any>;
     uploadFile(file: File): Promise<any>;
     joinRoom(roomIdOrAlias: string): Promise<any>;
     leaveRoom(roomId: string): Promise<any>;

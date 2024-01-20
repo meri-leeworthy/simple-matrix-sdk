@@ -183,6 +183,12 @@ class Client {
             return profile;
         });
     }
+    getUser3pids() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.get(`account/3pid`);
+            return response;
+        });
+    }
     // async createMediaId(): Promise<any> {
     //   return await Client.authenticatedPost(
     //     `${this.baseUrl}/_matrix/media/r0/createContent`,

@@ -229,6 +229,11 @@ export class Client {
     return profile
   }
 
+  async getUser3pids(): Promise<any> {
+    const response = await this.get(`account/3pid`)
+    return response
+  }
+
   // async createMediaId(): Promise<any> {
   //   return await Client.authenticatedPost(
   //     `${this.baseUrl}/_matrix/media/r0/createContent`,
