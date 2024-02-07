@@ -19,9 +19,30 @@ test("playground", async () => {
     },
   })
 
-  const room = new Room("!uUGoRnUTewFsCSetUC:radical.directory", client)
-  const roomType = await room.getStateEvent("organ.room.type")
-  console.log("roomType", roomType)
+  const newSpace = await client.createRoom({
+    creation_content: { type: "m.space" },
+    name: "Test Space",
+    topic: "This is a test space",
+    invite: ["@meri:radical.directory"],
+  })
+
+  console.log("newSpace", newSpace)
+
+  // const room = new Room("!XNjpYKBllvuWXOrBuW:radical.directory", client)
+
+  // const powerLevels = await room.getPowerLevels()
+
+  // console.log("powerLevels", powerLevels)
+
+  // const isEstherModerator = await room.isUserModerator(
+  //   "@esther_joey:radical.directory"
+  // )
+
+  // console.log("isEstherModerator", isEstherModerator)
+
+  // const room = new Room("!uUGoRnUTewFsCSetUC:radical.directory", client)
+  // const roomType = await room.getStateEvent("organ.room.type")
+  // console.log("roomType", roomType)
   //   const room = new Room("!aClTOIoBPhZNaxWdCH:radical.directory", client)
 
   //   const response = await room.getState()
@@ -40,7 +61,7 @@ test("playground", async () => {
   //   // const timeline = new Timeline(chunk)
 
   //   // console.log("timeline", timeline)
-  expect(roomType).toBeTruthy()
+  expect(newSpace).toBeTruthy()
 })
 
 // test("playground", async () => {
