@@ -1,6 +1,6 @@
 {
   "name": "simple-matrix-sdk",
-  "version": "0.3.13",
+  "version": "0.3.14",
   "description": "Convenient, simple fetch wrapper for Matrix Client-Server API",
   "main": "dist/index.js",
   "scripts": {
