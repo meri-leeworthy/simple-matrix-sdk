@@ -1,4 +1,4 @@
-import { is, parse, safeParse } from "valibot"
+import * as v from "valibot"
 import { Client } from "./client"
 import {
   ClientEventOutput,
@@ -16,6 +16,15 @@ export class Room {
   name?: { name: string }
 
   constructor(roomId: string, client: Client) {
+    v.parse(
+      v.string([
+        v.toTrimmed(),
+        v.startsWith("!"),
+        v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/), //roomId pattern
+      ]),
+      roomId
+    )
+
     this.roomId = roomId
     this.client = client
   }
@@ -28,7 +37,7 @@ export class Room {
     )
   }
 
-  async getName(): Promise<unknown> {
+  async getName(): Promise<unknown | ErrorOutput> {
     const name: { name: string } = await this.client.get(
       `rooms/${this.roomId}/state/m.room.name`
     )
@@ -40,21 +49,23 @@ export class Room {
     return this.get(`members`, { debug: "true" })
   }
 
-  async getState(): Promise<any> {
+  async getState(): Promise<any | ErrorOutput> {
     const state: any[] = await this.client.get(`rooms/${this.roomId}/state`)
     // const name = state.find(event => event.type === "m.room.name").content.name;
     // this.name = name;
     return state
   }
 
-  async getMessages(params: Record<string, any>): Promise<any> {
+  async getMessages(
+    params: Record<string, any>
+  ): Promise<{ chunk: ClientEventOutput[] } | ErrorOutput> {
     return this.client.get(`rooms/${this.roomId}/messages`, {
       ...this.client.params,
       ...params,
     })
   }
 
-  async getEvent(eventId: string): Promise<ClientEventOutput> {
+  async getEvent(eventId: string): Promise<ClientEventOutput | ErrorOutput> {
     return this.client.get(`rooms/${this.roomId}/event/${eventId}`)
   }
 
@@ -75,11 +86,14 @@ export class Room {
     )
   }
 
-  async getStateEvent(type: string, stateKey?: string): Promise<any> {
+  async getStateEvent(
+    type: string,
+    stateKey?: string
+  ): Promise<ClientEventOutput | ErrorOutput> {
     const response = await this.client.get(
       `rooms/${this.roomId}/state/${type}/${stateKey}`
     )
-    if (!is(ErrorSchema, response)) return response
+    if (!v.is(ErrorSchema, response)) return response
     const fullState = await this.getState()
     const stateEvent = fullState.find(
       (event: any) =>
@@ -88,14 +102,14 @@ export class Room {
     return stateEvent
   }
 
-  async getPowerLevels(): Promise<any> {
+  async getPowerLevels(): Promise<any | ErrorOutput> {
     return this.client.get(`rooms/${this.roomId}/state/m.room.power_levels`)
   }
 
   async setEventPowerLevel(
     eventType: string,
     powerLevel: number
-  ): Promise<any> {
+  ): Promise<any | ErrorOutput> {
     if (!this.client.userId) throw new Error("No user ID")
     if (powerLevel < 0 || powerLevel > 100) {
       throw new Error("Power level must be between 0 and 100")
@@ -154,11 +168,11 @@ export class Room {
     return rooms
   }
 
-  async isUserModerator(): Promise<boolean> {
+  async isUserModerator(userId?: string): Promise<boolean> {
     const powerLevels = await this.getPowerLevels()
     console.log("powerLevels", powerLevels)
     if (!this.client.userId) throw new Error("No user ID")
-    const userPowerLevel = powerLevels.users[this.client.userId]
+    const userPowerLevel = powerLevels.users[userId || this.client.userId]
     const modPowerLevel =
       powerLevels.events["m.room.power_levels"] || powerLevels.state_default
     return userPowerLevel >= modPowerLevel
@@ -270,7 +284,7 @@ export class Room {
     events: ClientEventOutput[]
   ): Record<string, ClientEventOutput[]> {
     const sortedEvents: Record<string, ClientEventOutput[]> = {}
-    events.forEach(event => {
+    events.forEach((event) => {
       if (!(event.type in sortedEvents)) {
         sortedEvents[event.type] = []
       }
@@ -282,29 +296,29 @@ export class Room {
   static replaceEditedMessages(messages: ClientEventOutput[]) {
     // replaces the body of messages that have been edited with the edited body
     const editMessages = messages.filter(
-      message =>
+      (message) =>
         message?.content &&
         typeof message.content === "object" &&
         message.content !== null &&
         "m.new_content" in message.content &&
-        safeParse(EventContentSchema, message.content).success
+        v.safeParse(EventContentSchema, message.content).success
     )
 
     const toBeEditedMessageIds = editMessages.map(
-      message =>
-        is(EventContentSchema, message.content) &&
+      (message) =>
+        v.is(EventContentSchema, message.content) &&
         message.content["m.relates_to"]?.event_id
     )
 
-    const originalMessagesToBeEdited = messages.filter(message =>
+    const originalMessagesToBeEdited = messages.filter((message) =>
       toBeEditedMessageIds.includes(message.event_id)
     )
 
     const originalMessagesStayingTheSame = messages.filter(
-      message =>
+      (message) =>
         !toBeEditedMessageIds.includes(message.event_id) &&
         !(
-          is(EventContentSchema, message.content) &&
+          v.is(EventContentSchema, message.content) &&
           message.content["m.relates_to"] &&
           "rel_type" in message.content["m.relates_to"] &&
           message.content["m.relates_to"]["rel_type"] === "m.replace"
@@ -312,16 +326,19 @@ export class Room {
     )
 
     const originalMessagesWithEditedBodies = originalMessagesToBeEdited.map(
-      message => {
+      (message) => {
         const thisEditedMessage = editMessages.find(
-          editMessage =>
-            is(EventContentSchema, editMessage.content) &&
+          (editMessage) =>
+            v.is(EventContentSchema, editMessage.content) &&
             editMessage.content["m.relates_to"]?.event_id === message.event_id
         )
-        const existingContent = is(EventContentSchema, message.content)
+        const existingContent = v.is(EventContentSchema, message.content)
           ? message.content
           : {}
-        const editedContent = is(EventContentSchema, thisEditedMessage?.content)
+        const editedContent = v.is(
+          EventContentSchema,
+          thisEditedMessage?.content
+        )
           ? thisEditedMessage?.content
           : {}
 
@@ -340,8 +357,8 @@ export class Room {
   static deleteEditedMessages(messages: ClientEventOutput[]) {
     const rootEvents = new Map<string, ClientEventOutput[]>()
 
-    messages.forEach(message => {
-      if (is(EventContentSchema, message.content)) {
+    messages.forEach((message) => {
+      if (v.is(EventContentSchema, message.content)) {
         const id = message.content["m.relates_to"]?.event_id || ""
         const edits = rootEvents.get(id)
         rootEvents.set(id, [...(edits || []), message])
