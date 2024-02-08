@@ -8,23 +8,25 @@ export declare class Room {
     };
     constructor(roomId: string, client: Client);
     get(endpoint: string, params?: Params): Promise<any>;
-    getName(): Promise<unknown>;
+    getName(): Promise<unknown | ErrorOutput>;
     getMembers(): Promise<ErrorOutput | {
         chunk: ClientEventOutput[];
     }>;
-    getState(): Promise<any>;
-    getMessages(params: Record<string, any>): Promise<any>;
-    getEvent(eventId: string): Promise<ClientEventOutput>;
+    getState(): Promise<any | ErrorOutput>;
+    getMessages(params: Record<string, any>): Promise<{
+        chunk: ClientEventOutput[];
+    } | ErrorOutput>;
+    getEvent(eventId: string): Promise<ClientEventOutput | ErrorOutput>;
     getRelations(eventId: string, params: Record<string, any>, relType?: string, eventType?: string): Promise<any>;
-    getStateEvent(type: string, stateKey?: string): Promise<any>;
-    getPowerLevels(): Promise<any>;
-    setEventPowerLevel(eventType: string, powerLevel: number): Promise<any>;
+    getStateEvent(type: string, stateKey?: string): Promise<ClientEventOutput | ErrorOutput>;
+    getPowerLevels(): Promise<any | ErrorOutput>;
+    setEventPowerLevel(eventType: string, powerLevel: number): Promise<any | ErrorOutput>;
     getUserPowerLevel(): Promise<number>;
     setUserPowerLevel(userId: string, powerLevel: number): Promise<any>;
     getHierarchy(): Promise<{
         [x: string]: any;
     }[]>;
-    isUserModerator(): Promise<boolean>;
+    isUserModerator(userId?: string): Promise<boolean>;
     getMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): AsyncGenerator<any, void, any>;
     sendMessage(body: any): Promise<{
         event_id: string;

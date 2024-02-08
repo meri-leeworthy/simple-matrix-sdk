@@ -43,6 +43,7 @@ export declare class Client {
         topic?: string;
         invite?: string[];
         room_alias_name?: string;
+        creation_content?: Record<string, any>;
         initial_state?: {
             type: string;
             state_key?: string;

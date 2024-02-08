@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -22,11 +45,16 @@ var __asyncGenerator = (this && this.__asyncGenerator) || function (thisArg, _ar
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Room = void 0;
-const valibot_1 = require("valibot");
+const v = __importStar(require("valibot"));
 const client_1 = require("./client");
 const _1 = require(".");
 class Room {
     constructor(roomId, client) {
+        v.parse(v.string([
+            v.toTrimmed(),
+            v.startsWith("!"),
+            v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/), //roomId pattern
+        ]), roomId);
         this.roomId = roomId;
         this.client = client;
     }
@@ -74,7 +102,7 @@ class Room {
     getStateEvent(type, stateKey) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`);
-            if (!(0, valibot_1.is)(_1.ErrorSchema, response))
+            if (!v.is(_1.ErrorSchema, response))
                 return response;
             const fullState = yield this.getState();
             const stateEvent = fullState.find((event) => event.type === type && (stateKey ? event.state_key === stateKey : true));
@@ -127,13 +155,13 @@ class Room {
             return rooms;
         });
     }
-    isUserModerator() {
+    isUserModerator(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             const powerLevels = yield this.getPowerLevels();
             console.log("powerLevels", powerLevels);
             if (!this.client.userId)
                 throw new Error("No user ID");
-            const userPowerLevel = powerLevels.users[this.client.userId];
+            const userPowerLevel = powerLevels.users[userId || this.client.userId];
             const modPowerLevel = powerLevels.events["m.room.power_levels"] || powerLevels.state_default;
             return userPowerLevel >= modPowerLevel;
         });
@@ -229,7 +257,7 @@ class Room {
     }
     static sortEvents(events) {
         const sortedEvents = {};
-        events.forEach(event => {
+        events.forEach((event) => {
             if (!(event.type in sortedEvents)) {
                 sortedEvents[event.type] = [];
             }
@@ -239,32 +267,32 @@ class Room {
     }
     static replaceEditedMessages(messages) {
         // replaces the body of messages that have been edited with the edited body
-        const editMessages = messages.filter(message => (message === null || message === void 0 ? void 0 : message.content) &&
+        const editMessages = messages.filter((message) => (message === null || message === void 0 ? void 0 : message.content) &&
             typeof message.content === "object" &&
             message.content !== null &&
             "m.new_content" in message.content &&
-            (0, valibot_1.safeParse)(_1.EventContentSchema, message.content).success);
-        const toBeEditedMessageIds = editMessages.map(message => {
+            v.safeParse(_1.EventContentSchema, message.content).success);
+        const toBeEditedMessageIds = editMessages.map((message) => {
             var _a;
-            return (0, valibot_1.is)(_1.EventContentSchema, message.content) &&
+            return v.is(_1.EventContentSchema, message.content) &&
                 ((_a = message.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id);
         });
-        const originalMessagesToBeEdited = messages.filter(message => toBeEditedMessageIds.includes(message.event_id));
-        const originalMessagesStayingTheSame = messages.filter(message => !toBeEditedMessageIds.includes(message.event_id) &&
-            !((0, valibot_1.is)(_1.EventContentSchema, message.content) &&
+        const originalMessagesToBeEdited = messages.filter((message) => toBeEditedMessageIds.includes(message.event_id));
+        const originalMessagesStayingTheSame = messages.filter((message) => !toBeEditedMessageIds.includes(message.event_id) &&
+            !(v.is(_1.EventContentSchema, message.content) &&
                 message.content["m.relates_to"] &&
                 "rel_type" in message.content["m.relates_to"] &&
                 message.content["m.relates_to"]["rel_type"] === "m.replace"));
-        const originalMessagesWithEditedBodies = originalMessagesToBeEdited.map(message => {
-            const thisEditedMessage = editMessages.find(editMessage => {
+        const originalMessagesWithEditedBodies = originalMessagesToBeEdited.map((message) => {
+            const thisEditedMessage = editMessages.find((editMessage) => {
                 var _a;
-                return (0, valibot_1.is)(_1.EventContentSchema, editMessage.content) &&
+                return v.is(_1.EventContentSchema, editMessage.content) &&
                     ((_a = editMessage.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id) === message.event_id;
             });
-            const existingContent = (0, valibot_1.is)(_1.EventContentSchema, message.content)
+            const existingContent = v.is(_1.EventContentSchema, message.content)
                 ? message.content
                 : {};
-            const editedContent = (0, valibot_1.is)(_1.EventContentSchema, thisEditedMessage === null || thisEditedMessage === void 0 ? void 0 : thisEditedMessage.content)
+            const editedContent = v.is(_1.EventContentSchema, thisEditedMessage === null || thisEditedMessage === void 0 ? void 0 : thisEditedMessage.content)
                 ? thisEditedMessage === null || thisEditedMessage === void 0 ? void 0 : thisEditedMessage.content
                 : {};
             // "m.new_content" in thisEditedMessage.content &&
@@ -278,9 +306,9 @@ class Room {
     }
     static deleteEditedMessages(messages) {
         const rootEvents = new Map();
-        messages.forEach(message => {
+        messages.forEach((message) => {
             var _a;
-            if ((0, valibot_1.is)(_1.EventContentSchema, message.content)) {
+            if (v.is(_1.EventContentSchema, message.content)) {
                 const id = ((_a = message.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id) || "";
                 const edits = rootEvents.get(id);
                 rootEvents.set(id, [...(edits || []), message]);
