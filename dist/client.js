@@ -30,8 +30,8 @@ class Client {
             const fetch = (opts === null || opts === void 0 ? void 0 : opts.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
             const response = yield fetch(url, {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
+                    Authorization: `Bearer ${accessToken}`
+                }
             });
             const data = yield response.json();
             return data;
@@ -50,9 +50,9 @@ class Client {
             const response = yield fetch(url, {
                 method: "PUT",
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`
                 },
-                body: JSON.stringify(body),
+                body: JSON.stringify(body)
             });
             const data = yield response.json();
             return data;
@@ -68,9 +68,9 @@ class Client {
             const response = yield fetch(url, {
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${accessToken}`,
+                    Authorization: `Bearer ${accessToken}`
                 },
-                body: JSON.stringify(body),
+                body: JSON.stringify(body)
             });
             const data = yield response.json();
             return data;
@@ -85,10 +85,10 @@ class Client {
                     type: "m.login.password",
                     identifier: {
                         type: "m.id.user",
-                        user: username,
+                        user: username
                     },
-                    password: password,
-                }),
+                    password: password
+                })
             });
             const data = yield response.json();
             if (!("access_token" in data)) {
@@ -103,11 +103,11 @@ class Client {
                 method: "POST",
                 body: JSON.stringify({
                     auth: {
-                        type: "m.login.dummy",
+                        type: "m.login.dummy"
                     },
                     username,
-                    password,
-                }),
+                    password
+                })
             });
             const data = yield response.json();
             return data;
@@ -126,6 +126,9 @@ class Client {
             return data;
         });
     }
+    getRoom(roomId) {
+        return new _1.Room(roomId, this);
+    }
     buildUrl(endpoint, urlType) {
         const urlTypeOrDefault = urlType || "client/v3/";
         return `${this.baseUrl}/_matrix/${urlTypeOrDefault}${endpoint}`;
@@ -138,7 +141,7 @@ class Client {
                 console.log("url", this.buildUrl(endpoint, urlType));
             return yield Client.authenticatedGet(this.buildUrl(endpoint, urlType), this.accessToken, {
                 params: combinedParams,
-                fetch: this.fetch,
+                fetch: this.fetch
             });
         });
     }
@@ -150,7 +153,7 @@ class Client {
                 console.log("url", this.buildUrl(endpoint, urlType));
             return yield Client.authenticatedPut(this.buildUrl(endpoint, urlType), this.accessToken, body, {
                 params: combinedParams,
-                fetch: this.fetch,
+                fetch: this.fetch
             });
         });
     }
@@ -162,7 +165,7 @@ class Client {
                 console.log("url", this.buildUrl(endpoint, urlType));
             return yield Client.authenticatedPost(this.buildUrl(endpoint, urlType), this.accessToken, body, {
                 params: combinedParams,
-                fetch: this.fetch,
+                fetch: this.fetch
             });
         });
     }
@@ -204,8 +207,8 @@ class Client {
                 body: file,
                 headers: {
                     Authorization: `Bearer ${this.accessToken}`,
-                    "Content-Type": "application/octet-stream",
-                },
+                    "Content-Type": "application/octet-stream"
+                }
             });
             const data = yield response.json();
             return data;
@@ -242,8 +245,8 @@ class Client {
                     session,
                     type: "m.login.password",
                     user: this.userId,
-                    password,
-                },
+                    password
+                }
             });
             console.log("next", next);
         });
@@ -253,7 +256,7 @@ class Client {
             const response = yield this.post("register/email/requestToken", {
                 email,
                 client_secret: clientSecret,
-                send_attempt: sendAttempt,
+                send_attempt: sendAttempt
             });
             return response;
         });

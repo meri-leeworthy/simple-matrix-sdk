@@ -23,6 +23,7 @@ export declare class Client {
     static register(username: string, password: string, baseUrl: string): Promise<any>;
     static isUsernameAvailable(username: string, baseUrl: string): Promise<boolean>;
     static getLoginFlows(baseUrl: string): Promise<any>;
+    getRoom(roomId: string): Room;
     buildUrl(endpoint: string, urlType?: string): string;
     get(endpoint: string, params?: Params): Promise<any>;
     put(endpoint: string, body: any, params?: Params): Promise<any>;
@@ -42,8 +43,18 @@ export declare class Client {
         name?: string;
         topic?: string;
         invite?: string[];
+        invite_3pid?: {
+            id_server: string;
+            medium: string;
+            address: string;
+            id_access_token: string;
+        }[];
         room_alias_name?: string;
         creation_content?: Record<string, any>;
+        power_level_content_override?: Record<string, any>;
+        visibility?: "public" | "private";
+        preset?: "public_chat" | "private_chat" | "trusted_private_chat";
+        room_version?: string;
         initial_state?: {
             type: string;
             state_key?: string;
