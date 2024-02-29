@@ -1,5 +1,5 @@
 import { Room } from ".";
-import { ClientOptions, Params } from "./types";
+import { ClientOptions, ErrorOutput, Params } from "./types";
 export declare class Client {
     private baseUrl;
     accessToken: string;
@@ -31,7 +31,7 @@ export declare class Client {
     getJoinedRooms(): Promise<{
         joined_rooms: string[];
     }>;
-    getRoomIdFromAlias(alias: string): Promise<string>;
+    getRoomIdFromAlias(alias: string): Promise<string | ErrorOutput>;
     getProfile(userId?: string): Promise<{
         displayname: string;
     }>;

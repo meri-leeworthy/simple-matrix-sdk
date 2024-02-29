@@ -53,7 +53,7 @@ class Room {
         v.parse(v.string([
             v.toTrimmed(),
             v.startsWith("!"),
-            v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/), //roomId pattern
+            v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/) //roomId pattern
         ]), roomId);
         this.roomId = roomId;
         this.client = client;
@@ -81,7 +81,7 @@ class Room {
             const state = yield this.client.get(`rooms/${this.roomId}/state`);
             // const name = state.find(event => event.type === "m.room.name").content.name;
             // this.name = name;
-            return state;
+            return new _1.State(state);
         });
     }
     getMessages(params) {
@@ -105,7 +105,9 @@ class Room {
             if (!v.is(_1.ErrorSchema, response))
                 return response;
             const fullState = yield this.getState();
-            const stateEvent = fullState.find((event) => event.type === type && (stateKey ? event.state_key === stateKey : true));
+            if ("errcode" in fullState)
+                return fullState;
+            const stateEvent = fullState.get(type, stateKey);
             return stateEvent;
         });
     }
@@ -150,7 +152,7 @@ class Room {
     getHierarchy() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rooms } = yield this.client.get(`rooms/${this.roomId}/hierarchy`, {
-                urlType: "client/v1/",
+                urlType: "client/v1/"
             });
             return rooms;
         });
@@ -185,7 +187,7 @@ class Room {
                     }
                     const response = yield __await(client_1.Client.authenticatedGet(url, accessToken, {
                         params,
-                        fetch,
+                        fetch
                     }));
                     if (!("end" in response)) {
                         break;
@@ -215,14 +217,14 @@ class Room {
     setName(name) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`rooms/${this.roomId}/state/m.room.name`, {
-                name,
+                name
             });
         });
     }
     setTopic(topic) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`rooms/${this.roomId}/state/m.room.topic`, {
-                topic,
+                topic
             });
         });
     }
@@ -239,14 +241,16 @@ class Room {
     }
     getAliases() {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.get(`directory/room/${this.roomId}`);
+            const response = yield this.client.get(`rooms/${this.roomId}/aliases`);
+            if ("errcode" in response)
+                return response;
             return response.aliases;
         });
     }
     setAlias(alias) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`directory/room/${alias}`, {
-                room_id: this.roomId,
+                room_id: this.roomId
             });
         });
     }
@@ -301,7 +305,7 @@ class Room {
         });
         return [
             ...originalMessagesStayingTheSame,
-            ...originalMessagesWithEditedBodies,
+            ...originalMessagesWithEditedBodies
         ];
     }
     static deleteEditedMessages(messages) {

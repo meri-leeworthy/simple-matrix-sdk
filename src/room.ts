@@ -7,7 +7,8 @@ import {
   EventContentOutput,
   EventContentSchema,
   Params,
-  Timeline,
+  State,
+  Timeline
 } from "."
 
 export class Room {
@@ -20,7 +21,7 @@ export class Room {
       v.string([
         v.toTrimmed(),
         v.startsWith("!"),
-        v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/), //roomId pattern
+        v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/) //roomId pattern
       ]),
       roomId
     )
@@ -49,11 +50,11 @@ export class Room {
     return this.get(`members`, { debug: "true" })
   }
 
-  async getState(): Promise<any | ErrorOutput> {
+  async getState(): Promise<State | ErrorOutput> {
     const state: any[] = await this.client.get(`rooms/${this.roomId}/state`)
     // const name = state.find(event => event.type === "m.room.name").content.name;
     // this.name = name;
-    return state
+    return new State(state)
   }
 
   async getMessages(
@@ -61,7 +62,7 @@ export class Room {
   ): Promise<{ chunk: ClientEventOutput[] } | ErrorOutput> {
     return this.client.get(`rooms/${this.roomId}/messages`, {
       ...this.client.params,
-      ...params,
+      ...params
     })
   }
 
@@ -81,7 +82,7 @@ export class Room {
       }`,
       {
         ...this.client.params,
-        ...params,
+        ...params
       }
     )
   }
@@ -95,10 +96,8 @@ export class Room {
     )
     if (!v.is(ErrorSchema, response)) return response
     const fullState = await this.getState()
-    const stateEvent = fullState.find(
-      (event: any) =>
-        event.type === type && (stateKey ? event.state_key === stateKey : true)
-    )
+    if ("errcode" in fullState) return fullState
+    const stateEvent = fullState.get(type, stateKey)
     return stateEvent
   }
 
@@ -120,14 +119,14 @@ export class Room {
 
     const newEvents = {
       ...events,
-      [eventType]: powerLevel,
+      [eventType]: powerLevel
     }
 
     console.log("newEvents", newEvents) // needs checking :)
 
     const newPowerLevels = {
       ...powerLevels,
-      events: newEvents,
+      events: newEvents
     }
 
     return this.client.put(
@@ -149,11 +148,11 @@ export class Room {
     const users = powerLevels.users
     const newUsers = {
       ...users,
-      [userId]: powerLevel,
+      [userId]: powerLevel
     }
     const newPowerLevels = {
       ...powerLevels,
-      users: newUsers,
+      users: newUsers
     }
     return this.client.put(
       `rooms/${this.roomId}/state/m.room.power_levels`,
@@ -163,7 +162,7 @@ export class Room {
 
   async getHierarchy(): Promise<{ [x: string]: any }[]> {
     const { rooms } = await this.client.get(`rooms/${this.roomId}/hierarchy`, {
-      urlType: "client/v1/",
+      urlType: "client/v1/"
     })
     return rooms
   }
@@ -202,7 +201,7 @@ export class Room {
         }
         const response = await Client.authenticatedGet(url, accessToken, {
           params,
-          fetch,
+          fetch
         })
         if (!("end" in response)) {
           break
@@ -241,13 +240,13 @@ export class Room {
 
   async setName(name: string): Promise<void> {
     return this.client.put(`rooms/${this.roomId}/state/m.room.name`, {
-      name,
+      name
     })
   }
 
   async setTopic(topic: string): Promise<void> {
     return this.client.put(`rooms/${this.roomId}/state/m.room.topic`, {
-      topic,
+      topic
     })
   }
 
@@ -265,14 +264,15 @@ export class Room {
     return response.url
   }
 
-  async getAliases(): Promise<string[]> {
-    const response = await this.get(`directory/room/${this.roomId}`)
+  async getAliases(): Promise<string[] | ErrorOutput> {
+    const response = await this.client.get(`rooms/${this.roomId}/aliases`)
+    if ("errcode" in response) return response
     return response.aliases
   }
 
   async setAlias(alias: string): Promise<any> {
     return this.client.put(`directory/room/${alias}`, {
-      room_id: this.roomId,
+      room_id: this.roomId
     })
   }
 
@@ -350,7 +350,7 @@ export class Room {
     )
     return [
       ...originalMessagesStayingTheSame,
-      ...originalMessagesWithEditedBodies,
+      ...originalMessagesWithEditedBodies
     ]
   }
 

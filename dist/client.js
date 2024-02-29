@@ -176,7 +176,9 @@ class Client {
     }
     getRoomIdFromAlias(alias) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.get(`directory/room/${alias}`);
+            const response = yield this.get(`directory/room/${encodeURIComponent(alias)}`);
+            if ("errcode" in response)
+                return response;
             return response.room_id;
         });
     }

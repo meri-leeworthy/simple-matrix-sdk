@@ -1,6 +1,20 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ClientEventSchema = exports.UnsignedDataSchema = exports.ClientEventBaseSchema = exports.ContentUnionSchema = exports.EventContentSchema = exports.SpecRoomEventTypeSchema = exports.RoomMessageContentSchema = exports.KeyVerificationRequestMessageContentSchema = exports.VideoMessageContentSchema = exports.LocationMessageContentSchema = exports.AudioMessageContentSchema = exports.FileMessageContentSchema = exports.ImageMessageContentSchema = exports.NoticeMessageContentSchema = exports.EmoteMessageContentSchema = exports.TextMessageContentSchema = exports.RoomMessageTypeSchema = exports.ThumbnailInfoSchema = exports.ErrorSchema = exports.Event = exports.Timeline = exports.Room = exports.Client = void 0;
+exports.State = exports.Event = exports.Timeline = exports.Room = exports.Client = void 0;
 var client_1 = require("./client");
 Object.defineProperty(exports, "Client", { enumerable: true, get: function () { return client_1.Client; } });
 var room_1 = require("./room");
@@ -9,23 +23,6 @@ var timeline_1 = require("./timeline");
 Object.defineProperty(exports, "Timeline", { enumerable: true, get: function () { return timeline_1.Timeline; } });
 var event_1 = require("./event");
 Object.defineProperty(exports, "Event", { enumerable: true, get: function () { return event_1.Event; } });
-var types_1 = require("./types");
-Object.defineProperty(exports, "ErrorSchema", { enumerable: true, get: function () { return types_1.ErrorSchema; } });
-Object.defineProperty(exports, "ThumbnailInfoSchema", { enumerable: true, get: function () { return types_1.ThumbnailInfoSchema; } });
-Object.defineProperty(exports, "RoomMessageTypeSchema", { enumerable: true, get: function () { return types_1.RoomMessageTypeSchema; } });
-Object.defineProperty(exports, "TextMessageContentSchema", { enumerable: true, get: function () { return types_1.TextMessageContentSchema; } });
-Object.defineProperty(exports, "EmoteMessageContentSchema", { enumerable: true, get: function () { return types_1.EmoteMessageContentSchema; } });
-Object.defineProperty(exports, "NoticeMessageContentSchema", { enumerable: true, get: function () { return types_1.NoticeMessageContentSchema; } });
-Object.defineProperty(exports, "ImageMessageContentSchema", { enumerable: true, get: function () { return types_1.ImageMessageContentSchema; } });
-Object.defineProperty(exports, "FileMessageContentSchema", { enumerable: true, get: function () { return types_1.FileMessageContentSchema; } });
-Object.defineProperty(exports, "AudioMessageContentSchema", { enumerable: true, get: function () { return types_1.AudioMessageContentSchema; } });
-Object.defineProperty(exports, "LocationMessageContentSchema", { enumerable: true, get: function () { return types_1.LocationMessageContentSchema; } });
-Object.defineProperty(exports, "VideoMessageContentSchema", { enumerable: true, get: function () { return types_1.VideoMessageContentSchema; } });
-Object.defineProperty(exports, "KeyVerificationRequestMessageContentSchema", { enumerable: true, get: function () { return types_1.KeyVerificationRequestMessageContentSchema; } });
-Object.defineProperty(exports, "RoomMessageContentSchema", { enumerable: true, get: function () { return types_1.RoomMessageContentSchema; } });
-Object.defineProperty(exports, "SpecRoomEventTypeSchema", { enumerable: true, get: function () { return types_1.SpecRoomEventTypeSchema; } });
-Object.defineProperty(exports, "EventContentSchema", { enumerable: true, get: function () { return types_1.EventContentSchema; } });
-Object.defineProperty(exports, "ContentUnionSchema", { enumerable: true, get: function () { return types_1.ContentUnionSchema; } });
-Object.defineProperty(exports, "ClientEventBaseSchema", { enumerable: true, get: function () { return types_1.ClientEventBaseSchema; } });
-Object.defineProperty(exports, "UnsignedDataSchema", { enumerable: true, get: function () { return types_1.UnsignedDataSchema; } });
-Object.defineProperty(exports, "ClientEventSchema", { enumerable: true, get: function () { return types_1.ClientEventSchema; } });
+var state_1 = require("./state");
+Object.defineProperty(exports, "State", { enumerable: true, get: function () { return state_1.State; } });
+__exportStar(require("./types"), exports);

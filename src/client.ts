@@ -1,5 +1,5 @@
 import { Room } from "."
-import { ClientOptions, Params } from "./types"
+import { ClientOptions, ErrorOutput, Params } from "./types"
 
 export class Client {
   private baseUrl: string
@@ -221,8 +221,11 @@ export class Client {
     return this.get("joined_rooms")
   }
 
-  async getRoomIdFromAlias(alias: string): Promise<string> {
-    const response = await this.get(`directory/room/${alias}`)
+  async getRoomIdFromAlias(alias: string): Promise<string | ErrorOutput> {
+    const response = await this.get(
+      `directory/room/${encodeURIComponent(alias)}`
+    )
+    if ("errcode" in response) return response
     return response.room_id
   }
 

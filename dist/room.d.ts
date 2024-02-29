@@ -1,5 +1,5 @@
 import { Client } from "./client";
-import { ClientEventOutput, ErrorOutput, Params } from ".";
+import { ClientEventOutput, ErrorOutput, Params, State } from ".";
 export declare class Room {
     roomId: string;
     client: Client;
@@ -12,7 +12,7 @@ export declare class Room {
     getMembers(): Promise<ErrorOutput | {
         chunk: ClientEventOutput[];
     }>;
-    getState(): Promise<any | ErrorOutput>;
+    getState(): Promise<State | ErrorOutput>;
     getMessages(params: Record<string, any>): Promise<{
         chunk: ClientEventOutput[];
     } | ErrorOutput>;
@@ -41,7 +41,7 @@ export declare class Room {
     setTopic(topic: string): Promise<void>;
     redactEvent(eventId: string): Promise<void>;
     getAvatarMxc(): Promise<string>;
-    getAliases(): Promise<string[]>;
+    getAliases(): Promise<string[] | ErrorOutput>;
     setAlias(alias: string): Promise<any>;
     deleteAlias(alias: string): Promise<any>;
     static sortEvents(events: ClientEventOutput[]): Record<string, ClientEventOutput[]>;
