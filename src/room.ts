@@ -170,10 +170,12 @@ export class Room {
   async isUserModerator(userId?: string): Promise<boolean> {
     const powerLevels = await this.getPowerLevels()
     console.log("powerLevels", powerLevels)
-    if (!this.client.userId) throw new Error("No user ID")
+    if (!this.client.userId) return false
     const userPowerLevel = powerLevels.users[userId || this.client.userId]
     const modPowerLevel =
-      powerLevels.events["m.room.power_levels"] || powerLevels.state_default
+      powerLevels.events["m.room.power_levels"] ||
+      powerLevels.state_default ||
+      50
     return userPowerLevel >= modPowerLevel
   }
 

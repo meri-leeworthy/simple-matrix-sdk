@@ -162,9 +162,11 @@ class Room {
             const powerLevels = yield this.getPowerLevels();
             console.log("powerLevels", powerLevels);
             if (!this.client.userId)
-                throw new Error("No user ID");
+                return false;
             const userPowerLevel = powerLevels.users[userId || this.client.userId];
-            const modPowerLevel = powerLevels.events["m.room.power_levels"] || powerLevels.state_default;
+            const modPowerLevel = powerLevels.events["m.room.power_levels"] ||
+                powerLevels.state_default ||
+                50;
             return userPowerLevel >= modPowerLevel;
         });
     }
