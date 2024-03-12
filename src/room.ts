@@ -38,10 +38,8 @@ export class Room {
     )
   }
 
-  async getName(): Promise<unknown | ErrorOutput> {
-    const name: { name: string } = await this.client.get(
-      `rooms/${this.roomId}/state/m.room.name`
-    )
+  async getName(): Promise<{ name: string } | ErrorOutput> {
+    const name = await this.client.get(`rooms/${this.roomId}/state/m.room.name`)
     this.name = name
     return name
   }
@@ -160,10 +158,32 @@ export class Room {
     )
   }
 
-  async getHierarchy(): Promise<{ [x: string]: any }[]> {
-    const { rooms } = await this.client.get(`rooms/${this.roomId}/hierarchy`, {
-      urlType: "client/v1/",
-    })
+  async getHierarchy(opts?: {
+    max_depth?: number
+    limit: number
+    from: string
+    suggested_only: boolean
+  }): Promise<{ [x: string]: any }[]> {
+    const params: Params = { urlType: "client/v1/" }
+
+    const max_depth =
+      opts?.max_depth && opts.max_depth > 0
+        ? Math.floor(opts.max_depth).toString()
+        : undefined
+    const limit =
+      opts?.limit && opts.limit > 0 ? Math.floor(opts.limit).toString() : "100"
+    const from = opts?.from
+    const suggested_only = opts?.suggested_only
+
+    if (max_depth) params["max_depth"] = max_depth
+    if (limit) params["limit"] = limit
+    if (from) params["from"] = from
+    if (suggested_only) params["suggested_only"] = "true"
+
+    const { rooms } = await this.client.get(
+      `rooms/${this.roomId}/hierarchy`,
+      params
+    )
     return rooms
   }
 

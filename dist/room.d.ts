@@ -8,7 +8,9 @@ export declare class Room {
     };
     constructor(roomId: string, client: Client);
     get(endpoint: string, params?: Params): Promise<any>;
-    getName(): Promise<unknown | ErrorOutput>;
+    getName(): Promise<{
+        name: string;
+    } | ErrorOutput>;
     getMembers(): Promise<ErrorOutput | {
         chunk: ClientEventOutput[];
     }>;
@@ -23,7 +25,12 @@ export declare class Room {
     setEventPowerLevel(eventType: string, powerLevel: number): Promise<any | ErrorOutput>;
     getUserPowerLevel(): Promise<number>;
     setUserPowerLevel(userId: string, powerLevel: number): Promise<any>;
-    getHierarchy(): Promise<{
+    getHierarchy(opts?: {
+        max_depth?: number;
+        limit: number;
+        from: string;
+        suggested_only: boolean;
+    }): Promise<{
         [x: string]: any;
     }[]>;
     isUserModerator(userId?: string): Promise<boolean>;

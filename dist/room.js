@@ -149,11 +149,24 @@ class Room {
             return this.client.put(`rooms/${this.roomId}/state/m.room.power_levels`, newPowerLevels);
         });
     }
-    getHierarchy() {
+    getHierarchy(opts) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { rooms } = yield this.client.get(`rooms/${this.roomId}/hierarchy`, {
-                urlType: "client/v1/",
-            });
+            const params = { urlType: "client/v1/" };
+            const max_depth = (opts === null || opts === void 0 ? void 0 : opts.max_depth) && opts.max_depth > 0
+                ? Math.floor(opts.max_depth).toString()
+                : undefined;
+            const limit = (opts === null || opts === void 0 ? void 0 : opts.limit) && opts.limit > 0 ? Math.floor(opts.limit).toString() : "100";
+            const from = opts === null || opts === void 0 ? void 0 : opts.from;
+            const suggested_only = opts === null || opts === void 0 ? void 0 : opts.suggested_only;
+            if (max_depth)
+                params["max_depth"] = max_depth;
+            if (limit)
+                params["limit"] = limit;
+            if (from)
+                params["from"] = from;
+            if (suggested_only)
+                params["suggested_only"] = "true";
+            const { rooms } = yield this.client.get(`rooms/${this.roomId}/hierarchy`, params);
             return rooms;
         });
     }
