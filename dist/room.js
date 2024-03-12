@@ -53,7 +53,7 @@ class Room {
         v.parse(v.string([
             v.toTrimmed(),
             v.startsWith("!"),
-            v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/) //roomId pattern
+            v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/), //roomId pattern
         ]), roomId);
         this.roomId = roomId;
         this.client = client;
@@ -152,7 +152,7 @@ class Room {
     getHierarchy() {
         return __awaiter(this, void 0, void 0, function* () {
             const { rooms } = yield this.client.get(`rooms/${this.roomId}/hierarchy`, {
-                urlType: "client/v1/"
+                urlType: "client/v1/",
             });
             return rooms;
         });
@@ -189,7 +189,7 @@ class Room {
                     }
                     const response = yield __await(client_1.Client.authenticatedGet(url, accessToken, {
                         params,
-                        fetch
+                        fetch,
                     }));
                     if (!("end" in response)) {
                         break;
@@ -219,14 +219,14 @@ class Room {
     setName(name) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`rooms/${this.roomId}/state/m.room.name`, {
-                name
+                name,
             });
         });
     }
     setTopic(topic) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`rooms/${this.roomId}/state/m.room.topic`, {
-                topic
+                topic,
             });
         });
     }
@@ -252,7 +252,7 @@ class Room {
     setAlias(alias) {
         return __awaiter(this, void 0, void 0, function* () {
             return this.client.put(`directory/room/${alias}`, {
-                room_id: this.roomId
+                room_id: this.roomId,
             });
         });
     }
@@ -263,7 +263,7 @@ class Room {
     }
     static sortEvents(events) {
         const sortedEvents = {};
-        events.forEach((event) => {
+        events.forEach(event => {
             if (!(event.type in sortedEvents)) {
                 sortedEvents[event.type] = [];
             }
@@ -273,24 +273,24 @@ class Room {
     }
     static replaceEditedMessages(messages) {
         // replaces the body of messages that have been edited with the edited body
-        const editMessages = messages.filter((message) => (message === null || message === void 0 ? void 0 : message.content) &&
+        const editMessages = messages.filter(message => (message === null || message === void 0 ? void 0 : message.content) &&
             typeof message.content === "object" &&
             message.content !== null &&
             "m.new_content" in message.content &&
             v.safeParse(_1.EventContentSchema, message.content).success);
-        const toBeEditedMessageIds = editMessages.map((message) => {
+        const toBeEditedMessageIds = editMessages.map(message => {
             var _a;
             return v.is(_1.EventContentSchema, message.content) &&
                 ((_a = message.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id);
         });
-        const originalMessagesToBeEdited = messages.filter((message) => toBeEditedMessageIds.includes(message.event_id));
-        const originalMessagesStayingTheSame = messages.filter((message) => !toBeEditedMessageIds.includes(message.event_id) &&
+        const originalMessagesToBeEdited = messages.filter(message => toBeEditedMessageIds.includes(message.event_id));
+        const originalMessagesStayingTheSame = messages.filter(message => !toBeEditedMessageIds.includes(message.event_id) &&
             !(v.is(_1.EventContentSchema, message.content) &&
                 message.content["m.relates_to"] &&
                 "rel_type" in message.content["m.relates_to"] &&
                 message.content["m.relates_to"]["rel_type"] === "m.replace"));
-        const originalMessagesWithEditedBodies = originalMessagesToBeEdited.map((message) => {
-            const thisEditedMessage = editMessages.find((editMessage) => {
+        const originalMessagesWithEditedBodies = originalMessagesToBeEdited.map(message => {
+            const thisEditedMessage = editMessages.find(editMessage => {
                 var _a;
                 return v.is(_1.EventContentSchema, editMessage.content) &&
                     ((_a = editMessage.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id) === message.event_id;
@@ -307,12 +307,12 @@ class Room {
         });
         return [
             ...originalMessagesStayingTheSame,
-            ...originalMessagesWithEditedBodies
+            ...originalMessagesWithEditedBodies,
         ];
     }
     static deleteEditedMessages(messages) {
         const rootEvents = new Map();
-        messages.forEach((message) => {
+        messages.forEach(message => {
             var _a;
             if (v.is(_1.EventContentSchema, message.content)) {
                 const id = ((_a = message.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id) || "";

@@ -18,7 +18,7 @@ export declare class Room {
     } | ErrorOutput>;
     getEvent(eventId: string): Promise<ClientEventOutput | ErrorOutput>;
     getRelations(eventId: string, params: Record<string, any>, relType?: string, eventType?: string): Promise<any>;
-    getStateEvent(type: string, stateKey?: string): Promise<ClientEventOutput | ErrorOutput>;
+    getStateEvent(type: string, stateKey?: string): Promise<ClientEventOutput | ErrorOutput | undefined>;
     getPowerLevels(): Promise<any | ErrorOutput>;
     setEventPowerLevel(eventType: string, powerLevel: number): Promise<any | ErrorOutput>;
     getUserPowerLevel(): Promise<number>;

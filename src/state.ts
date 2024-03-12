@@ -1,12 +1,12 @@
 import { ClientEventOutput } from "./types"
 
 export class State {
-  map: Map<string, Map<string, any>>
+  map: Map<string, Map<string, ClientEventOutput>>
 
   constructor(chunk: ClientEventOutput[]) {
-    const stateMap = new Map<string, Map<string, any>>()
+    const stateMap = new Map<string, Map<string, ClientEventOutput>>()
 
-    chunk.forEach((stateEvent) => {
+    chunk.forEach(stateEvent => {
       const prevTypeMap = stateMap.get(stateEvent.type)
 
       const newTypeMap = new Map(prevTypeMap)

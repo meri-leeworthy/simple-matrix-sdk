@@ -8,7 +8,7 @@ import {
   EventContentSchema,
   Params,
   State,
-  Timeline
+  Timeline,
 } from "."
 
 export class Room {
@@ -21,7 +21,7 @@ export class Room {
       v.string([
         v.toTrimmed(),
         v.startsWith("!"),
-        v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/) //roomId pattern
+        v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/), //roomId pattern
       ]),
       roomId
     )
@@ -62,7 +62,7 @@ export class Room {
   ): Promise<{ chunk: ClientEventOutput[] } | ErrorOutput> {
     return this.client.get(`rooms/${this.roomId}/messages`, {
       ...this.client.params,
-      ...params
+      ...params,
     })
   }
 
@@ -82,7 +82,7 @@ export class Room {
       }`,
       {
         ...this.client.params,
-        ...params
+        ...params,
       }
     )
   }
@@ -90,7 +90,7 @@ export class Room {
   async getStateEvent(
     type: string,
     stateKey?: string
-  ): Promise<ClientEventOutput | ErrorOutput> {
+  ): Promise<ClientEventOutput | ErrorOutput | undefined> {
     const response = await this.client.get(
       `rooms/${this.roomId}/state/${type}/${stateKey}`
     )
@@ -119,14 +119,14 @@ export class Room {
 
     const newEvents = {
       ...events,
-      [eventType]: powerLevel
+      [eventType]: powerLevel,
     }
 
     console.log("newEvents", newEvents) // needs checking :)
 
     const newPowerLevels = {
       ...powerLevels,
-      events: newEvents
+      events: newEvents,
     }
 
     return this.client.put(
@@ -148,11 +148,11 @@ export class Room {
     const users = powerLevels.users
     const newUsers = {
       ...users,
-      [userId]: powerLevel
+      [userId]: powerLevel,
     }
     const newPowerLevels = {
       ...powerLevels,
-      users: newUsers
+      users: newUsers,
     }
     return this.client.put(
       `rooms/${this.roomId}/state/m.room.power_levels`,
@@ -162,7 +162,7 @@ export class Room {
 
   async getHierarchy(): Promise<{ [x: string]: any }[]> {
     const { rooms } = await this.client.get(`rooms/${this.roomId}/hierarchy`, {
-      urlType: "client/v1/"
+      urlType: "client/v1/",
     })
     return rooms
   }
@@ -203,7 +203,7 @@ export class Room {
         }
         const response = await Client.authenticatedGet(url, accessToken, {
           params,
-          fetch
+          fetch,
         })
         if (!("end" in response)) {
           break
@@ -242,13 +242,13 @@ export class Room {
 
   async setName(name: string): Promise<void> {
     return this.client.put(`rooms/${this.roomId}/state/m.room.name`, {
-      name
+      name,
     })
   }
 
   async setTopic(topic: string): Promise<void> {
     return this.client.put(`rooms/${this.roomId}/state/m.room.topic`, {
-      topic
+      topic,
     })
   }
 
@@ -274,7 +274,7 @@ export class Room {
 
   async setAlias(alias: string): Promise<any> {
     return this.client.put(`directory/room/${alias}`, {
-      room_id: this.roomId
+      room_id: this.roomId,
     })
   }
 
@@ -286,7 +286,7 @@ export class Room {
     events: ClientEventOutput[]
   ): Record<string, ClientEventOutput[]> {
     const sortedEvents: Record<string, ClientEventOutput[]> = {}
-    events.forEach((event) => {
+    events.forEach(event => {
       if (!(event.type in sortedEvents)) {
         sortedEvents[event.type] = []
       }
@@ -298,7 +298,7 @@ export class Room {
   static replaceEditedMessages(messages: ClientEventOutput[]) {
     // replaces the body of messages that have been edited with the edited body
     const editMessages = messages.filter(
-      (message) =>
+      message =>
         message?.content &&
         typeof message.content === "object" &&
         message.content !== null &&
@@ -307,17 +307,17 @@ export class Room {
     )
 
     const toBeEditedMessageIds = editMessages.map(
-      (message) =>
+      message =>
         v.is(EventContentSchema, message.content) &&
         message.content["m.relates_to"]?.event_id
     )
 
-    const originalMessagesToBeEdited = messages.filter((message) =>
+    const originalMessagesToBeEdited = messages.filter(message =>
       toBeEditedMessageIds.includes(message.event_id)
     )
 
     const originalMessagesStayingTheSame = messages.filter(
-      (message) =>
+      message =>
         !toBeEditedMessageIds.includes(message.event_id) &&
         !(
           v.is(EventContentSchema, message.content) &&
@@ -328,9 +328,9 @@ export class Room {
     )
 
     const originalMessagesWithEditedBodies = originalMessagesToBeEdited.map(
-      (message) => {
+      message => {
         const thisEditedMessage = editMessages.find(
-          (editMessage) =>
+          editMessage =>
             v.is(EventContentSchema, editMessage.content) &&
             editMessage.content["m.relates_to"]?.event_id === message.event_id
         )
@@ -352,14 +352,14 @@ export class Room {
     )
     return [
       ...originalMessagesStayingTheSame,
-      ...originalMessagesWithEditedBodies
+      ...originalMessagesWithEditedBodies,
     ]
   }
 
   static deleteEditedMessages(messages: ClientEventOutput[]) {
     const rootEvents = new Map<string, ClientEventOutput[]>()
 
-    messages.forEach((message) => {
+    messages.forEach(message => {
       if (v.is(EventContentSchema, message.content)) {
         const id = message.content["m.relates_to"]?.event_id || ""
         const edits = rootEvents.get(id)

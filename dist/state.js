@@ -4,7 +4,7 @@ exports.State = void 0;
 class State {
     constructor(chunk) {
         const stateMap = new Map();
-        chunk.forEach((stateEvent) => {
+        chunk.forEach(stateEvent => {
             const prevTypeMap = stateMap.get(stateEvent.type);
             const newTypeMap = new Map(prevTypeMap);
             newTypeMap.set(stateEvent.state_key || "", stateEvent);
