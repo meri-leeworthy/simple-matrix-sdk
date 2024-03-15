@@ -21,7 +21,7 @@ export class Room {
       v.string([
         v.toTrimmed(),
         v.startsWith("!"),
-        v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/), //roomId pattern
+        v.regex(/![a-zA-Z0-9]*:([a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*)/), //roomId pattern
       ]),
       roomId
     )
@@ -163,7 +163,7 @@ export class Room {
     limit: number
     from: string
     suggested_only: boolean
-  }): Promise<{ [x: string]: any }[]> {
+  }): Promise<{ [x: string]: any }[] | undefined> {
     const params: Params = { urlType: "client/v1/" }
 
     const max_depth =

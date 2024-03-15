@@ -32,7 +32,7 @@ export declare class Room {
         suggested_only: boolean;
     }): Promise<{
         [x: string]: any;
-    }[]>;
+    }[] | undefined>;
     isUserModerator(userId?: string): Promise<boolean>;
     getMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): AsyncGenerator<any, void, any>;
     sendMessage(body: any): Promise<{

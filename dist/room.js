@@ -53,7 +53,7 @@ class Room {
         v.parse(v.string([
             v.toTrimmed(),
             v.startsWith("!"),
-            v.regex(/![a-zA-Z0-9]*:[a-zA-Z0-9]*\.[a-zA-Z0-9.]+/), //roomId pattern
+            v.regex(/![a-zA-Z0-9]*:([a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*)/), //roomId pattern
         ]), roomId);
         this.roomId = roomId;
         this.client = client;
