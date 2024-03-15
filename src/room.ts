@@ -293,7 +293,7 @@ export class Room {
   }
 
   async setAlias(alias: string): Promise<any> {
-    return this.client.put(`directory/room/${alias}`, {
+    return this.client.put(`directory/room/${encodeURIComponent(alias)}`, {
       room_id: this.roomId,
     })
   }

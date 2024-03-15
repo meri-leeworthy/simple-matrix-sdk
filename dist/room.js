@@ -264,7 +264,7 @@ class Room {
     }
     setAlias(alias) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.put(`directory/room/${alias}`, {
+            return this.client.put(`directory/room/${encodeURIComponent(alias)}`, {
                 room_id: this.roomId,
             });
         });
