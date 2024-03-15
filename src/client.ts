@@ -1,5 +1,5 @@
 import { Room } from "."
-import { ClientOptions, ErrorOutput, Params } from "./types"
+import { ClientOptions, CreateRoomOpts, ErrorOutput, Params } from "./types"
 
 export class Client {
   private baseUrl: string
@@ -40,8 +40,8 @@ export class Client {
 
     const response = await fetch(url, {
       headers: {
-        Authorization: `Bearer ${accessToken}`
-      }
+        Authorization: `Bearer ${accessToken}`,
+      },
     })
 
     const data = await response.json()
@@ -67,9 +67,9 @@ export class Client {
     const response = await fetch(url, {
       method: "PUT",
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     })
     const data = await response.json()
     return data
@@ -92,9 +92,9 @@ export class Client {
     const response = await fetch(url, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${accessToken}`
+        Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify(body),
     })
     const data = await response.json()
     return data
@@ -113,10 +113,10 @@ export class Client {
         type: "m.login.password",
         identifier: {
           type: "m.id.user",
-          user: username
+          user: username,
         },
-        password: password
-      })
+        password: password,
+      }),
     })
     const data = await response.json()
 
@@ -132,11 +132,11 @@ export class Client {
       method: "POST",
       body: JSON.stringify({
         auth: {
-          type: "m.login.dummy"
+          type: "m.login.dummy",
         },
         username,
-        password
-      })
+        password,
+      }),
     })
     const data = await response.json()
     return data
@@ -176,7 +176,7 @@ export class Client {
       this.accessToken,
       {
         params: combinedParams,
-        fetch: this.fetch
+        fetch: this.fetch,
       }
     )
   }
@@ -194,7 +194,7 @@ export class Client {
       body,
       {
         params: combinedParams,
-        fetch: this.fetch
+        fetch: this.fetch,
       }
     )
   }
@@ -212,7 +212,7 @@ export class Client {
       body,
       {
         params: combinedParams,
-        fetch: this.fetch
+        fetch: this.fetch,
       }
     )
   }
@@ -257,8 +257,8 @@ export class Client {
       body: file,
       headers: {
         Authorization: `Bearer ${this.accessToken}`,
-        "Content-Type": "application/octet-stream"
-      }
+        "Content-Type": "application/octet-stream",
+      },
     })
     const data = await response.json()
     return data
@@ -272,35 +272,20 @@ export class Client {
     return await this.post(`rooms/${roomId}/leave`, {})
   }
 
-  async createRoom(body: {
-    name?: string
-    topic?: string
-    invite?: string[]
-    invite_3pid?: {
-      id_server: string
-      medium: string
-      address: string
-      id_access_token: string
-    }[]
-    room_alias_name?: string
-    creation_content?: Record<string, any>
-    power_level_content_override?: Record<string, any> // TODO: type this
-    visibility?: "public" | "private"
-    preset?: "public_chat" | "private_chat" | "trusted_private_chat"
-    room_version?: string
-    initial_state?: {
-      type: string
-      state_key?: string
-      content: {
-        [key: string]: any
-      }
-    }[]
-  }): Promise<Room | { errcode: string; error?: string }> {
+  async createRoom(
+    body: CreateRoomOpts
+  ): Promise<Room | { errcode: string; error?: string }> {
     const roomId = await this.post("createRoom", body)
     if ("errcode" in roomId) {
       return roomId
     }
-    return new Room(roomId.room_id, this)
+
+    try {
+      const room = new Room(roomId.room_id, this)
+      return room
+    } catch (e) {
+      return roomId.room_id
+    }
   }
 
   async add3pid(
@@ -324,8 +309,8 @@ export class Client {
         session,
         type: "m.login.password",
         user: this.userId,
-        password
-      }
+        password,
+      },
     })
     console.log("next", next)
   }
@@ -338,7 +323,7 @@ export class Client {
     const response = await this.post("register/email/requestToken", {
       email,
       client_secret: clientSecret,
-      send_attempt: sendAttempt
+      send_attempt: sendAttempt,
     })
     return response
   }

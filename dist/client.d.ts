@@ -1,5 +1,5 @@
 import { Room } from ".";
-import { ClientOptions, ErrorOutput, Params } from "./types";
+import { ClientOptions, CreateRoomOpts, ErrorOutput, Params } from "./types";
 export declare class Client {
     private baseUrl;
     accessToken: string;
@@ -39,30 +39,7 @@ export declare class Client {
     uploadFile(file: File): Promise<any>;
     joinRoom(roomIdOrAlias: string): Promise<any>;
     leaveRoom(roomId: string): Promise<any>;
-    createRoom(body: {
-        name?: string;
-        topic?: string;
-        invite?: string[];
-        invite_3pid?: {
-            id_server: string;
-            medium: string;
-            address: string;
-            id_access_token: string;
-        }[];
-        room_alias_name?: string;
-        creation_content?: Record<string, any>;
-        power_level_content_override?: Record<string, any>;
-        visibility?: "public" | "private";
-        preset?: "public_chat" | "private_chat" | "trusted_private_chat";
-        room_version?: string;
-        initial_state?: {
-            type: string;
-            state_key?: string;
-            content: {
-                [key: string]: any;
-            };
-        }[];
-    }): Promise<Room | {
+    createRoom(body: CreateRoomOpts): Promise<Room | {
         errcode: string;
         error?: string;
     }>;

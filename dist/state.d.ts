@@ -3,38 +3,31 @@ export declare class State {
     map: Map<string, Map<string, ClientEventOutput>>;
     constructor(chunk: ClientEventOutput[]);
     get(type: string, stateKey?: string): ({
+        event_id: string;
         sender: string;
         room_id: string;
-        event_id: string;
         origin_server_ts: number;
         state_key?: string | undefined;
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
-            body: string;
-            msgtype: string;
-            "m.relates_to"?: {
-                event_id: string;
-                rel_type: string;
-            } | undefined;
-        } | {
-            body: string;
             msgtype: "m.text";
+            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.emote";
+            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.notice";
+            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.image";
+            body: string;
             info?: {
                 h: number;
                 w: number;
@@ -50,8 +43,8 @@ export declare class State {
             } | undefined;
             url?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.file";
+            body: string;
             filename: string;
             info?: {
                 mimetype?: string | undefined;
@@ -66,8 +59,8 @@ export declare class State {
             } | undefined;
             url?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.audio";
+            body: string;
             info?: {
                 mimetype?: string | undefined;
                 size?: number | undefined;
@@ -75,8 +68,8 @@ export declare class State {
             } | undefined;
             url?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.location";
+            body: string;
             geo_uri: string;
             info?: {
                 thumbnail_info?: {
@@ -88,8 +81,8 @@ export declare class State {
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            body: string;
             msgtype: "m.video";
+            body: string;
             info?: {
                 h?: number | undefined;
                 w?: number | undefined;
@@ -133,6 +126,13 @@ export declare class State {
             notifications?: {
                 room: number;
             } | undefined;
+        } | {
+            msgtype: string;
+            body: string;
+            "m.relates_to"?: {
+                event_id: string;
+                rel_type: string;
+            } | undefined;
         } | undefined;
         user_id?: string | undefined;
     } & {
@@ -140,32 +140,26 @@ export declare class State {
         content: unknown;
     } & {
         unsigned?: {
+            transaction_id?: string | undefined;
             age?: number | undefined;
             prev_content?: {
-                body: string;
-                msgtype: string;
-                "m.relates_to"?: {
-                    event_id: string;
-                    rel_type: string;
-                } | undefined;
-            } | {
-                body: string;
                 msgtype: "m.text";
+                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.emote";
+                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.notice";
+                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.image";
+                body: string;
                 info?: {
                     h: number;
                     w: number;
@@ -181,8 +175,8 @@ export declare class State {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.file";
+                body: string;
                 filename: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -197,8 +191,8 @@ export declare class State {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.audio";
+                body: string;
                 info?: {
                     mimetype?: string | undefined;
                     size?: number | undefined;
@@ -206,8 +200,8 @@ export declare class State {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.location";
+                body: string;
                 geo_uri: string;
                 info?: {
                     thumbnail_info?: {
@@ -219,8 +213,8 @@ export declare class State {
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                body: string;
                 msgtype: "m.video";
+                body: string;
                 info?: {
                     h?: number | undefined;
                     w?: number | undefined;
@@ -264,41 +258,40 @@ export declare class State {
                 notifications?: {
                     room: number;
                 } | undefined;
+            } | {
+                msgtype: string;
+                body: string;
+                "m.relates_to"?: {
+                    event_id: string;
+                    rel_type: string;
+                } | undefined;
             } | undefined;
-            transaction_id?: string | undefined;
             redacted_because?: {
+                event_id: string;
                 sender: string;
                 room_id: string;
-                event_id: string;
                 origin_server_ts: number;
                 state_key?: string | undefined;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
-                    body: string;
-                    msgtype: string;
-                    "m.relates_to"?: {
-                        event_id: string;
-                        rel_type: string;
-                    } | undefined;
-                } | {
-                    body: string;
                     msgtype: "m.text";
+                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.emote";
+                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.notice";
+                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.image";
+                    body: string;
                     info?: {
                         h: number;
                         w: number;
@@ -314,8 +307,8 @@ export declare class State {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.file";
+                    body: string;
                     filename: string;
                     info?: {
                         mimetype?: string | undefined;
@@ -330,8 +323,8 @@ export declare class State {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.audio";
+                    body: string;
                     info?: {
                         mimetype?: string | undefined;
                         size?: number | undefined;
@@ -339,8 +332,8 @@ export declare class State {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.location";
+                    body: string;
                     geo_uri: string;
                     info?: {
                         thumbnail_info?: {
@@ -352,8 +345,8 @@ export declare class State {
                         thumbnail_url?: string | undefined;
                     } | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.video";
+                    body: string;
                     info?: {
                         h?: number | undefined;
                         w?: number | undefined;
@@ -397,6 +390,13 @@ export declare class State {
                     notifications?: {
                         room: number;
                     } | undefined;
+                } | {
+                    msgtype: string;
+                    body: string;
+                    "m.relates_to"?: {
+                        event_id: string;
+                        rel_type: string;
+                    } | undefined;
                 } | undefined;
                 user_id?: string | undefined;
             } | undefined;
@@ -406,38 +406,31 @@ export declare class State {
         } | undefined;
     }) | undefined;
     getAll(type: string): Map<string, {
+        event_id: string;
         sender: string;
         room_id: string;
-        event_id: string;
         origin_server_ts: number;
         state_key?: string | undefined;
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
-            body: string;
-            msgtype: string;
-            "m.relates_to"?: {
-                event_id: string;
-                rel_type: string;
-            } | undefined;
-        } | {
-            body: string;
             msgtype: "m.text";
+            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.emote";
+            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.notice";
+            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.image";
+            body: string;
             info?: {
                 h: number;
                 w: number;
@@ -453,8 +446,8 @@ export declare class State {
             } | undefined;
             url?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.file";
+            body: string;
             filename: string;
             info?: {
                 mimetype?: string | undefined;
@@ -469,8 +462,8 @@ export declare class State {
             } | undefined;
             url?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.audio";
+            body: string;
             info?: {
                 mimetype?: string | undefined;
                 size?: number | undefined;
@@ -478,8 +471,8 @@ export declare class State {
             } | undefined;
             url?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.location";
+            body: string;
             geo_uri: string;
             info?: {
                 thumbnail_info?: {
@@ -491,8 +484,8 @@ export declare class State {
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            body: string;
             msgtype: "m.video";
+            body: string;
             info?: {
                 h?: number | undefined;
                 w?: number | undefined;
@@ -536,13 +529,20 @@ export declare class State {
             notifications?: {
                 room: number;
             } | undefined;
+        } | {
+            msgtype: string;
+            body: string;
+            "m.relates_to"?: {
+                event_id: string;
+                rel_type: string;
+            } | undefined;
         } | undefined;
         user_id?: string | undefined;
     } & (({
         type: string;
         content: {
-            body: string;
             msgtype: string;
+            body: string;
             "m.relates_to"?: {
                 event_id: string;
                 rel_type: string;
@@ -554,23 +554,23 @@ export declare class State {
     } | {
         type: "m.room.message";
         content: {
-            body: string;
             msgtype: "m.text";
+            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.emote";
+            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.notice";
+            body: string;
             format?: string | undefined;
             formatted_body?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.image";
+            body: string;
             info?: {
                 h: number;
                 w: number;
@@ -586,8 +586,8 @@ export declare class State {
             } | undefined;
             url?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.file";
+            body: string;
             filename: string;
             info?: {
                 mimetype?: string | undefined;
@@ -602,8 +602,8 @@ export declare class State {
             } | undefined;
             url?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.audio";
+            body: string;
             info?: {
                 mimetype?: string | undefined;
                 size?: number | undefined;
@@ -611,8 +611,8 @@ export declare class State {
             } | undefined;
             url?: string | undefined;
         } | {
-            body: string;
             msgtype: "m.location";
+            body: string;
             geo_uri: string;
             info?: {
                 thumbnail_info?: {
@@ -624,8 +624,8 @@ export declare class State {
                 thumbnail_url?: string | undefined;
             } | undefined;
         } | {
-            body: string;
             msgtype: "m.video";
+            body: string;
             info?: {
                 h?: number | undefined;
                 w?: number | undefined;
@@ -697,8 +697,8 @@ export declare class State {
             creator: string;
             room_version?: string | undefined;
             predecessor?: {
-                room_id: string;
                 event_id: string;
+                room_id: string;
             } | undefined;
         };
     } | {
@@ -738,32 +738,26 @@ export declare class State {
         };
     }) & {
         unsigned?: {
+            transaction_id?: string | undefined;
             age?: number | undefined;
             prev_content?: {
-                body: string;
-                msgtype: string;
-                "m.relates_to"?: {
-                    event_id: string;
-                    rel_type: string;
-                } | undefined;
-            } | {
-                body: string;
                 msgtype: "m.text";
+                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.emote";
+                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.notice";
+                body: string;
                 format?: string | undefined;
                 formatted_body?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.image";
+                body: string;
                 info?: {
                     h: number;
                     w: number;
@@ -779,8 +773,8 @@ export declare class State {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.file";
+                body: string;
                 filename: string;
                 info?: {
                     mimetype?: string | undefined;
@@ -795,8 +789,8 @@ export declare class State {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.audio";
+                body: string;
                 info?: {
                     mimetype?: string | undefined;
                     size?: number | undefined;
@@ -804,8 +798,8 @@ export declare class State {
                 } | undefined;
                 url?: string | undefined;
             } | {
-                body: string;
                 msgtype: "m.location";
+                body: string;
                 geo_uri: string;
                 info?: {
                     thumbnail_info?: {
@@ -817,8 +811,8 @@ export declare class State {
                     thumbnail_url?: string | undefined;
                 } | undefined;
             } | {
-                body: string;
                 msgtype: "m.video";
+                body: string;
                 info?: {
                     h?: number | undefined;
                     w?: number | undefined;
@@ -862,41 +856,40 @@ export declare class State {
                 notifications?: {
                     room: number;
                 } | undefined;
+            } | {
+                msgtype: string;
+                body: string;
+                "m.relates_to"?: {
+                    event_id: string;
+                    rel_type: string;
+                } | undefined;
             } | undefined;
-            transaction_id?: string | undefined;
             redacted_because?: {
+                event_id: string;
                 sender: string;
                 room_id: string;
-                event_id: string;
                 origin_server_ts: number;
                 state_key?: string | undefined;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
-                    body: string;
-                    msgtype: string;
-                    "m.relates_to"?: {
-                        event_id: string;
-                        rel_type: string;
-                    } | undefined;
-                } | {
-                    body: string;
                     msgtype: "m.text";
+                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.emote";
+                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.notice";
+                    body: string;
                     format?: string | undefined;
                     formatted_body?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.image";
+                    body: string;
                     info?: {
                         h: number;
                         w: number;
@@ -912,8 +905,8 @@ export declare class State {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.file";
+                    body: string;
                     filename: string;
                     info?: {
                         mimetype?: string | undefined;
@@ -928,8 +921,8 @@ export declare class State {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.audio";
+                    body: string;
                     info?: {
                         mimetype?: string | undefined;
                         size?: number | undefined;
@@ -937,8 +930,8 @@ export declare class State {
                     } | undefined;
                     url?: string | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.location";
+                    body: string;
                     geo_uri: string;
                     info?: {
                         thumbnail_info?: {
@@ -950,8 +943,8 @@ export declare class State {
                         thumbnail_url?: string | undefined;
                     } | undefined;
                 } | {
-                    body: string;
                     msgtype: "m.video";
+                    body: string;
                     info?: {
                         h?: number | undefined;
                         w?: number | undefined;
@@ -994,6 +987,13 @@ export declare class State {
                     users_default?: number | undefined;
                     notifications?: {
                         room: number;
+                    } | undefined;
+                } | {
+                    msgtype: string;
+                    body: string;
+                    "m.relates_to"?: {
+                        event_id: string;
+                        rel_type: string;
                     } | undefined;
                 } | undefined;
                 user_id?: string | undefined;
