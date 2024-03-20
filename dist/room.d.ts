@@ -27,9 +27,9 @@ export declare class Room {
     setUserPowerLevel(userId: string, powerLevel: number): Promise<any>;
     getHierarchy(opts?: {
         max_depth?: number;
-        limit: number;
-        from: string;
-        suggested_only: boolean;
+        limit?: number;
+        from?: string;
+        suggested_only?: boolean;
     }): Promise<{
         [x: string]: any;
     }[] | undefined>;

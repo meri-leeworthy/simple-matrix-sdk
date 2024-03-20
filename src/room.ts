@@ -160,9 +160,9 @@ export class Room {
 
   async getHierarchy(opts?: {
     max_depth?: number
-    limit: number
-    from: string
-    suggested_only: boolean
+    limit?: number
+    from?: string
+    suggested_only?: boolean
   }): Promise<{ [x: string]: any }[] | undefined> {
     const params: Params = { urlType: "client/v1/" }
 
