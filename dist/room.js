@@ -259,7 +259,15 @@ class Room {
             const response = yield this.client.get(`rooms/${this.roomId}/aliases`);
             if ("errcode" in response)
                 return response;
-            return response.aliases;
+            return response;
+        });
+    }
+    getCanonicalAlias() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const response = yield this.client.get(`rooms/${this.roomId}/state/m.room.canonical_alias`);
+            if ("errcode" in response)
+                return response;
+            return response;
         });
     }
     setAlias(alias) {

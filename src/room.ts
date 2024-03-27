@@ -289,7 +289,15 @@ export class Room {
   async getAliases(): Promise<string[] | ErrorOutput> {
     const response = await this.client.get(`rooms/${this.roomId}/aliases`)
     if ("errcode" in response) return response
-    return response.aliases
+    return response
+  }
+
+  async getCanonicalAlias(): Promise<{ alias: string } | ErrorOutput> {
+    const response = await this.client.get(
+      `rooms/${this.roomId}/state/m.room.canonical_alias`
+    )
+    if ("errcode" in response) return response
+    return response
   }
 
   async setAlias(alias: string): Promise<any> {

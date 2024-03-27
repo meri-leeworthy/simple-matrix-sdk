@@ -49,6 +49,9 @@ export declare class Room {
     redactEvent(eventId: string): Promise<void>;
     getAvatarMxc(): Promise<string>;
     getAliases(): Promise<string[] | ErrorOutput>;
+    getCanonicalAlias(): Promise<{
+        alias: string;
+    } | ErrorOutput>;
     setAlias(alias: string): Promise<any>;
     deleteAlias(alias: string): Promise<any>;
     static sortEvents(events: ClientEventOutput[]): Record<string, ClientEventOutput[]>;
