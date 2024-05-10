@@ -79,8 +79,8 @@ class Room {
     getState() {
         return __awaiter(this, void 0, void 0, function* () {
             const state = yield this.client.get(`rooms/${this.roomId}/state`);
-            // const name = state.find(event => event.type === "m.room.name").content.name;
-            // this.name = name;
+            if ("errcode" in state)
+                return state;
             return new _1.State(state);
         });
     }

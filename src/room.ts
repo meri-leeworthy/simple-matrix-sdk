@@ -50,8 +50,7 @@ export class Room {
 
   async getState(): Promise<State | ErrorOutput> {
     const state: any[] = await this.client.get(`rooms/${this.roomId}/state`)
-    // const name = state.find(event => event.type === "m.room.name").content.name;
-    // this.name = name;
+    if ("errcode" in state) return state as ErrorOutput
     return new State(state)
   }
 
