@@ -1,5 +1,6 @@
-import { CreateRoomOptsOutput, Room } from ".";
 import { ClientOptions, ErrorOutput, Params } from "@/types/client";
+import { Room } from "./room";
+import { CreateRoomOptsOutput } from "./types/types";
 export declare class Client {
     private baseUrl;
     accessToken: string;
@@ -10,31 +11,31 @@ export declare class Client {
     static authenticatedGet(url: string, accessToken: string, opts?: {
         params?: Params;
         fetch?: any;
-    }): Promise<any>;
-    static authenticatedPut(url: string, accessToken: string, body: any, options?: {
+    }): Promise<unknown>;
+    static authenticatedPut(url: string, accessToken: string, body: any, opts?: {
         params?: Params;
         fetch?: any;
-    }): Promise<any>;
-    static authenticatedPost(url: string, accessToken: string, body: any, options?: {
+    }): Promise<unknown>;
+    static authenticatedPost(url: string, accessToken: string, body: any, opts?: {
         params?: Params;
         fetch?: any;
-    }): Promise<any>;
+    }): Promise<unknown>;
     static login(baseUrl: string, username: string, password: string, fetch?: any): Promise<any>;
     static register(username: string, password: string, baseUrl: string): Promise<any>;
     static isUsernameAvailable(username: string, baseUrl: string): Promise<boolean>;
     static getLoginFlows(baseUrl: string): Promise<any>;
     getRoom(roomId: string): Room;
     buildUrl(endpoint: string, urlType?: string): string;
-    get(endpoint: string, params?: Params): Promise<any>;
-    put(endpoint: string, body: any, params?: Params): Promise<any>;
-    post(endpoint: string, body: any, params?: Params): Promise<any>;
+    get(endpoint: string, params?: Params): Promise<unknown>;
+    put(endpoint: string, body: any, params?: Params): Promise<unknown>;
+    post(endpoint: string, body: any, params?: Params): Promise<unknown>;
     getJoinedRooms(): Promise<{
         joined_rooms: string[];
-    }>;
+    } | ErrorOutput>;
     getRoomIdFromAlias(alias: string): Promise<string | ErrorOutput>;
     getProfile(userId?: string): Promise<{
         displayname: string;
-    }>;
+    } | ErrorOutput>;
     getUser3pids(): Promise<any>;
     uploadFile(file: File): Promise<any>;
     joinRoom(roomIdOrAlias: string): Promise<any>;
@@ -50,6 +51,6 @@ export declare class Client {
             session: string;
             type: string;
         };
-    }, password: string): Promise<any>;
-    requestTokenEmail(email: string, clientSecret: string, sendAttempt?: number): Promise<any>;
+    }, password: string): Promise<unknown>;
+    requestTokenEmail(email: string, clientSecret: string, sendAttempt?: number): Promise<unknown>;
 }

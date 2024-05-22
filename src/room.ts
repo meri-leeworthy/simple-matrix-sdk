@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { Client } from "@/client"
+import { Client, ErrorSchema } from "@/client"
 import { State, Timeline } from "@/."
 import { EventContentSchema } from "@/types/content"
 import { ErrorOutput, Params } from "@/types/client"
@@ -8,12 +8,12 @@ import {
   ClientEventOutput,
   ClientEventSchema,
 } from "@/types/event"
-import { is } from "./types/utils"
+import { is, schemaError } from "./types/utils"
 
 export class Room {
   roomId: string
   client: Client
-  name?: { name: string }
+  name?: string
 
   constructor(roomId: string, client: Client) {
     z.string()
@@ -36,33 +36,51 @@ export class Room {
 
   async getName(): Promise<{ name: string } | ErrorOutput> {
     const name = await this.client.get(`rooms/${this.roomId}/state/m.room.name`)
-    this.name = name
+    if (is(ErrorSchema, name)) return name
+    if (!is(z.object({ name: z.string() }), name)) return schemaError
+    this.name = name.name
     return name
   }
 
   async getMembers(): Promise<
     ErrorOutput | { chunk: ClientEventBaseOutput[] }
   > {
-    return this.get(`members`, { debug: "true" })
+    const res = await this.get(`members`, { debug: "true" })
+    if (
+      is(ErrorSchema, res) ||
+      is(z.object({ chunk: z.array(ClientEventSchema) }), res)
+    )
+      return res
+    return schemaError
   }
 
   async getState(): Promise<State | ErrorOutput> {
-    const state: any[] = await this.client.get(`rooms/${this.roomId}/state`)
-    if ("errcode" in state) return state as ErrorOutput
-    return new State(state)
+    const state = await this.client.get(`rooms/${this.roomId}/state`)
+    if (is(ErrorSchema, state)) return state
+    if (is(z.array(ClientEventSchema), state)) return new State(state)
+    return schemaError
   }
 
-  async getMessages(
-    params: Record<string, any>
-  ): Promise<{ chunk: ClientEventOutput[] } | ErrorOutput> {
-    return this.client.get(`rooms/${this.roomId}/messages`, {
+  async getMessages(params: {
+    limit?: number
+    dir?: "b" | "f"
+  }): Promise<{ chunk: ClientEventOutput[] } | ErrorOutput> {
+    const res = await this.client.get(`rooms/${this.roomId}/messages`, {
       ...this.client.params,
       ...params,
     })
+
+    if (is(z.object({ chunk: z.array(ClientEventSchema) }), res)) {
+      return res
+    }
+    if (is(ErrorSchema, res)) return res
+    return schemaError
   }
 
   async getEvent(eventId: string): Promise<ClientEventOutput | ErrorOutput> {
-    return this.client.get(`rooms/${this.roomId}/event/${eventId}`)
+    const res = await this.client.get(`rooms/${this.roomId}/event/${eventId}`)
+    if (is(ErrorSchema, res) || is(ClientEventSchema, res)) return res
+    return schemaError
   }
 
   async getRelations(
@@ -86,10 +104,10 @@ export class Room {
     type: string,
     stateKey?: string
   ): Promise<ClientEventOutput | ErrorOutput | undefined> {
-    const response = await this.client.get(
-      `rooms/${this.roomId}/state/${type}/${stateKey}`
-    )
-    if ("error" in ClientEventSchema.safeParse(response)) return response
+    // const response = await this.client.get(
+    //   `rooms/${this.roomId}/state/${type}/${stateKey}`
+    // )
+    // if ("error" in ClientEventSchema.safeParse(response)) return response
     const fullState = await this.getState()
     if ("errcode" in fullState) return fullState
     const stateEvent = fullState.get(type, stateKey)
@@ -160,7 +178,7 @@ export class Room {
     limit?: number
     from?: string
     suggested_only?: boolean
-  }): Promise<{ [x: string]: any }[] | undefined> {
+  }): Promise<Record<string, unknown>[] | ErrorOutput | undefined> {
     const params: Params = { urlType: "client/v1/" }
 
     const max_depth =
@@ -177,11 +195,11 @@ export class Room {
     if (from) params["from"] = from
     if (suggested_only) params["suggested_only"] = "true"
 
-    const { rooms } = await this.client.get(
-      `rooms/${this.roomId}/hierarchy`,
-      params
-    )
-    return rooms
+    const res = await this.client.get(`rooms/${this.roomId}/hierarchy`, params)
+    if (is(ErrorSchema, res)) return res
+    if (is(z.object({ rooms: z.array(z.record(z.unknown())) }), res))
+      return res.rooms
+    return schemaError
   }
 
   async isUserModerator(userId?: string): Promise<boolean> {
@@ -218,83 +236,104 @@ export class Room {
         if (from) {
           params["from"] = from
         }
-        const response = await Client.authenticatedGet(url, accessToken, {
+        const res = await Client.authenticatedGet(url, accessToken, {
           params,
           fetch,
         })
-        if (!("end" in response)) {
+
+        if (
+          typeof res !== "object" ||
+          !res ||
+          !("end" in res) ||
+          typeof res.end !== "string"
+        ) {
           break
         }
-        yield response
-        from = response.end
+        yield res
+        from = res.end
       }
     }
     return messagesGenerator()
   }
 
-  async sendMessage(body: any): Promise<{ event_id: string }> {
-    return this.client.put(
+  async sendMessage(body: any): Promise<{ event_id: string } | ErrorOutput> {
+    const res = await this.client.put(
       `rooms/${this.roomId}/send/m.room.message/${Date.now()}`,
       body
     )
+    if (is(ErrorSchema, res) || is(z.object({ event_id: z.string() }), res))
+      return res
+    return schemaError
   }
 
-  async sendEvent(type: string, body: any): Promise<{ event_id: string }> {
-    return this.client.put(
+  async sendEvent(
+    type: string,
+    body: any
+  ): Promise<{ event_id: string } | ErrorOutput> {
+    const res = await this.client.put(
       `rooms/${this.roomId}/send/${type}/${Date.now()}`,
       body
     )
+    if (is(ErrorSchema, res) || is(z.object({ event_id: z.string() }), res))
+      return res
+    return schemaError
   }
 
   async sendStateEvent(
     type: string,
     body: any,
     stateKey?: string
-  ): Promise<{ event_id: string }> {
-    return this.client.put(
+  ): Promise<{ event_id: string } | ErrorOutput> {
+    const res = await this.client.put(
       `rooms/${this.roomId}/state/${type}/${stateKey || ""}`,
       body
     )
+    if (is(ErrorSchema, res) || is(z.object({ event_id: z.string() }), res))
+      return res
+    return schemaError
   }
 
-  async setName(name: string): Promise<void> {
+  async setName(name: string): Promise<unknown | ErrorOutput> {
     return this.client.put(`rooms/${this.roomId}/state/m.room.name`, {
       name,
     })
   }
 
-  async setTopic(topic: string): Promise<void> {
+  async setTopic(topic: string): Promise<unknown | ErrorOutput> {
     return this.client.put(`rooms/${this.roomId}/state/m.room.topic`, {
       topic,
     })
   }
 
-  async redactEvent(eventId: string): Promise<void> {
+  async redactEvent(eventId: string): Promise<unknown | ErrorOutput> {
     return this.client.put(
       `rooms/${this.roomId}/redact/${eventId}/${Date.now()}`,
       {}
     )
   }
 
-  async getAvatarMxc(): Promise<string> {
-    const response = await this.client.get(
+  async getAvatarMxc(): Promise<string | ErrorOutput> {
+    const res = await this.client.get(
       `rooms/${this.roomId}/state/m.room.avatar`
     )
-    return response.url
+    if (is(ErrorSchema, res)) return res
+    if (is(z.object({ url: z.string() }), res)) return res.url
+    return schemaError
   }
 
   async getAliases(): Promise<string[] | ErrorOutput> {
-    const response = await this.client.get(`rooms/${this.roomId}/aliases`)
-    if ("errcode" in response) return response
-    return response
+    const res = await this.client.get(`rooms/${this.roomId}/aliases`)
+    if (is(ErrorSchema, res) || is(z.array(z.string()), res)) return res
+    return schemaError
   }
 
   async getCanonicalAlias(): Promise<{ alias: string } | ErrorOutput> {
-    const response = await this.client.get(
+    const res = await this.client.get(
       `rooms/${this.roomId}/state/m.room.canonical_alias`
     )
-    if ("errcode" in response) return response
-    return response
+    if (is(ErrorSchema, res) || is(z.object({ alias: z.string() }), res))
+      return res
+    return schemaError
   }
 
   async setAlias(alias: string): Promise<any> {

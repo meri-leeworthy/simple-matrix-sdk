@@ -26,3 +26,7 @@ Object.defineProperty(exports, "Event", { enumerable: true, get: function () { r
 var state_1 = require("./state");
 Object.defineProperty(exports, "State", { enumerable: true, get: function () { return state_1.State; } });
 __exportStar(require("./types/types"), exports);
+__exportStar(require("./types/event"), exports);
+__exportStar(require("./types/content"), exports);
+__exportStar(require("./types/utils"), exports);
+__exportStar(require("./types/client"), exports);

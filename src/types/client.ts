@@ -1,6 +1,6 @@
 import * as z from "zod"
 
-export type Params = Record<string, string>
+export type Params = Record<string, string | number>
 
 export type ClientOptions = {
   userId: string

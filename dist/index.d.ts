@@ -4,3 +4,7 @@ export { Timeline } from "./timeline";
 export { Event } from "./event";
 export { State } from "./state";
 export * from "./types/types";
+export * from "./types/event";
+export * from "./types/content";
+export * from "./types/utils";
+export * from "./types/client";

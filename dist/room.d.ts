@@ -5,11 +5,9 @@ import { ClientEventBaseOutput, ClientEventOutput } from "@/types/event";
 export declare class Room {
     roomId: string;
     client: Client;
-    name?: {
-        name: string;
-    };
+    name?: string;
     constructor(roomId: string, client: Client);
-    get(endpoint: string, params?: Params): Promise<any>;
+    get(endpoint: string, params?: Params): Promise<unknown>;
     getName(): Promise<{
         name: string;
     } | ErrorOutput>;
@@ -17,7 +15,10 @@ export declare class Room {
         chunk: ClientEventBaseOutput[];
     }>;
     getState(): Promise<State | ErrorOutput>;
-    getMessages(params: Record<string, any>): Promise<{
+    getMessages(params: {
+        limit?: number;
+        dir?: "b" | "f";
+    }): Promise<{
         chunk: ClientEventOutput[];
     } | ErrorOutput>;
     getEvent(eventId: string): Promise<ClientEventOutput | ErrorOutput>;
@@ -32,24 +33,22 @@ export declare class Room {
         limit?: number;
         from?: string;
         suggested_only?: boolean;
-    }): Promise<{
-        [x: string]: any;
-    }[] | undefined>;
+    }): Promise<Record<string, unknown>[] | ErrorOutput | undefined>;
     isUserModerator(userId?: string): Promise<boolean>;
     getMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): AsyncGenerator<any, void, any>;
     sendMessage(body: any): Promise<{
         event_id: string;
-    }>;
+    } | ErrorOutput>;
     sendEvent(type: string, body: any): Promise<{
         event_id: string;
-    }>;
+    } | ErrorOutput>;
     sendStateEvent(type: string, body: any, stateKey?: string): Promise<{
         event_id: string;
-    }>;
-    setName(name: string): Promise<void>;
-    setTopic(topic: string): Promise<void>;
-    redactEvent(eventId: string): Promise<void>;
-    getAvatarMxc(): Promise<string>;
+    } | ErrorOutput>;
+    setName(name: string): Promise<unknown | ErrorOutput>;
+    setTopic(topic: string): Promise<unknown | ErrorOutput>;
+    redactEvent(eventId: string): Promise<unknown | ErrorOutput>;
+    getAvatarMxc(): Promise<string | ErrorOutput>;
     getAliases(): Promise<string[] | ErrorOutput>;
     getCanonicalAlias(): Promise<{
         alias: string;

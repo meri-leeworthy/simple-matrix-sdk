@@ -70,31 +70,50 @@ class Room {
     getName() {
         return __awaiter(this, void 0, void 0, function* () {
             const name = yield this.client.get(`rooms/${this.roomId}/state/m.room.name`);
-            this.name = name;
+            if ((0, utils_1.is)(client_1.ErrorSchema, name))
+                return name;
+            if (!(0, utils_1.is)(z.object({ name: z.string() }), name))
+                return utils_1.schemaError;
+            this.name = name.name;
             return name;
         });
     }
     getMembers() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.get(`members`, { debug: "true" });
+            const res = yield this.get(`members`, { debug: "true" });
+            if ((0, utils_1.is)(client_1.ErrorSchema, res) ||
+                (0, utils_1.is)(z.object({ chunk: z.array(event_1.ClientEventSchema) }), res))
+                return res;
+            return utils_1.schemaError;
         });
     }
     getState() {
         return __awaiter(this, void 0, void 0, function* () {
             const state = yield this.client.get(`rooms/${this.roomId}/state`);
-            if ("errcode" in state)
+            if ((0, utils_1.is)(client_1.ErrorSchema, state))
                 return state;
-            return new _1.State(state);
+            if ((0, utils_1.is)(z.array(event_1.ClientEventSchema), state))
+                return new _1.State(state);
+            return utils_1.schemaError;
         });
     }
     getMessages(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.get(`rooms/${this.roomId}/messages`, Object.assign(Object.assign({}, this.client.params), params));
+            const res = yield this.client.get(`rooms/${this.roomId}/messages`, Object.assign(Object.assign({}, this.client.params), params));
+            if ((0, utils_1.is)(z.object({ chunk: z.array(event_1.ClientEventSchema) }), res)) {
+                return res;
+            }
+            if ((0, utils_1.is)(client_1.ErrorSchema, res))
+                return res;
+            return utils_1.schemaError;
         });
     }
     getEvent(eventId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.get(`rooms/${this.roomId}/event/${eventId}`);
+            const res = yield this.client.get(`rooms/${this.roomId}/event/${eventId}`);
+            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(event_1.ClientEventSchema, res))
+                return res;
+            return utils_1.schemaError;
         });
     }
     getRelations(eventId, params, relType, eventType) {
@@ -104,9 +123,10 @@ class Room {
     }
     getStateEvent(type, stateKey) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`);
-            if ("error" in event_1.ClientEventSchema.safeParse(response))
-                return response;
+            // const response = await this.client.get(
+            //   `rooms/${this.roomId}/state/${type}/${stateKey}`
+            // )
+            // if ("error" in ClientEventSchema.safeParse(response)) return response
             const fullState = yield this.getState();
             if ("errcode" in fullState)
                 return fullState;
@@ -169,8 +189,12 @@ class Room {
                 params["from"] = from;
             if (suggested_only)
                 params["suggested_only"] = "true";
-            const { rooms } = yield this.client.get(`rooms/${this.roomId}/hierarchy`, params);
-            return rooms;
+            const res = yield this.client.get(`rooms/${this.roomId}/hierarchy`, params);
+            if ((0, utils_1.is)(client_1.ErrorSchema, res))
+                return res;
+            if ((0, utils_1.is)(z.object({ rooms: z.array(z.record(z.unknown())) }), res))
+                return res.rooms;
+            return utils_1.schemaError;
         });
     }
     isUserModerator(userId) {
@@ -203,15 +227,18 @@ class Room {
                     if (from) {
                         params["from"] = from;
                     }
-                    const response = yield __await(client_1.Client.authenticatedGet(url, accessToken, {
+                    const res = yield __await(client_1.Client.authenticatedGet(url, accessToken, {
                         params,
                         fetch,
                     }));
-                    if (!("end" in response)) {
+                    if (typeof res !== "object" ||
+                        !res ||
+                        !("end" in res) ||
+                        typeof res.end !== "string") {
                         break;
                     }
-                    yield yield __await(response);
-                    from = response.end;
+                    yield yield __await(res);
+                    from = res.end;
                 }
             });
         }
@@ -219,17 +246,26 @@ class Room {
     }
     sendMessage(body) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.put(`rooms/${this.roomId}/send/m.room.message/${Date.now()}`, body);
+            const res = yield this.client.put(`rooms/${this.roomId}/send/m.room.message/${Date.now()}`, body);
+            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(z.object({ event_id: z.string() }), res))
+                return res;
+            return utils_1.schemaError;
         });
     }
     sendEvent(type, body) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.put(`rooms/${this.roomId}/send/${type}/${Date.now()}`, body);
+            const res = yield this.client.put(`rooms/${this.roomId}/send/${type}/${Date.now()}`, body);
+            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(z.object({ event_id: z.string() }), res))
+                return res;
+            return utils_1.schemaError;
         });
     }
     sendStateEvent(type, body, stateKey) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.put(`rooms/${this.roomId}/state/${type}/${stateKey || ""}`, body);
+            const res = yield this.client.put(`rooms/${this.roomId}/state/${type}/${stateKey || ""}`, body);
+            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(z.object({ event_id: z.string() }), res))
+                return res;
+            return utils_1.schemaError;
         });
     }
     setName(name) {
@@ -253,24 +289,28 @@ class Room {
     }
     getAvatarMxc() {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.client.get(`rooms/${this.roomId}/state/m.room.avatar`);
-            return response.url;
+            const res = yield this.client.get(`rooms/${this.roomId}/state/m.room.avatar`);
+            if ((0, utils_1.is)(client_1.ErrorSchema, res))
+                return res;
+            if ((0, utils_1.is)(z.object({ url: z.string() }), res))
+                return res.url;
+            return utils_1.schemaError;
         });
     }
     getAliases() {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.client.get(`rooms/${this.roomId}/aliases`);
-            if ("errcode" in response)
-                return response;
-            return response;
+            const res = yield this.client.get(`rooms/${this.roomId}/aliases`);
+            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(z.array(z.string()), res))
+                return res;
+            return utils_1.schemaError;
         });
     }
     getCanonicalAlias() {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.client.get(`rooms/${this.roomId}/state/m.room.canonical_alias`);
-            if ("errcode" in response)
-                return response;
-            return response;
+            const res = yield this.client.get(`rooms/${this.roomId}/state/m.room.canonical_alias`);
+            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(z.object({ alias: z.string() }), res))
+                return res;
+            return utils_1.schemaError;
         });
     }
     setAlias(alias) {

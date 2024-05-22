@@ -1,5 +1,15 @@
-import { CreateRoomOptsOutput, Room } from "."
-import { ClientOptions, ErrorOutput, Params } from "@/types/client"
+import {
+  ClientOptions,
+  ErrorOutput,
+  ErrorSchema,
+  Params,
+  deepConvertNumbersToStrings,
+  is,
+  schemaError,
+} from "@/types/client"
+import { Room } from "./room"
+import { CreateRoomOptsOutput } from "./types/types"
+import * as z from "zod"
 
 export class Client {
   private baseUrl: string
@@ -27,12 +37,12 @@ export class Client {
       params?: Params
       fetch?: any
     }
-  ) {
-    const params = { ...opts?.params }
+  ): Promise<unknown> {
+    const params = deepConvertNumbersToStrings({ ...opts?.params })
 
     // return async function (url: string) {
     if (opts?.params) {
-      const paramsString = new URLSearchParams(opts.params).toString()
+      const paramsString = new URLSearchParams(params).toString()
       url = `${url}?${paramsString}`
     }
 
@@ -53,14 +63,15 @@ export class Client {
     url: string,
     accessToken: string,
     body: any,
-    options?: {
+    opts?: {
       params?: Params
       fetch?: any
     }
-  ) {
-    const fetch = options?.fetch || window?.fetch || undefined
-    if (options?.params) {
-      const paramsString = new URLSearchParams(options.params).toString()
+  ): Promise<unknown> {
+    const fetch = opts?.fetch || window?.fetch || undefined
+    const params = deepConvertNumbersToStrings({ ...opts?.params })
+    if (opts?.params) {
+      const paramsString = new URLSearchParams(params).toString()
       url = `${url}?${paramsString}`
     }
     if (!fetch) return
@@ -79,16 +90,17 @@ export class Client {
     url: string,
     accessToken: string,
     body: any,
-    options?: {
+    opts?: {
       params?: Params
       fetch?: any
     }
-  ) {
-    if (options?.params) {
-      const paramsString = new URLSearchParams(options.params).toString()
+  ): Promise<unknown> {
+    const params = deepConvertNumbersToStrings({ ...opts?.params })
+    if (opts?.params) {
+      const paramsString = new URLSearchParams(params).toString()
       url = `${url}?${paramsString}`
     }
-    const fetch = options?.fetch || window?.fetch || undefined
+    const fetch = opts?.fetch || window?.fetch || undefined
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -165,7 +177,10 @@ export class Client {
   }
 
   async get(endpoint: string, params?: Params) {
-    const combinedParams = { ...this.params, ...params }
+    const combinedParams = deepConvertNumbersToStrings({
+      ...this.params,
+      ...params,
+    })
     const urlType = combinedParams.urlType || undefined
 
     if (combinedParams.debug)
@@ -182,7 +197,10 @@ export class Client {
   }
 
   async put(endpoint: string, body: any, params?: Params) {
-    const combinedParams = { ...this.params, ...params }
+    const combinedParams = deepConvertNumbersToStrings({
+      ...this.params,
+      ...params,
+    })
     const urlType = combinedParams.urlType || undefined
 
     if (combinedParams.debug)
@@ -200,7 +218,10 @@ export class Client {
   }
 
   async post(endpoint: string, body: any, params?: Params) {
-    const combinedParams = { ...this.params, ...params }
+    const combinedParams = deepConvertNumbersToStrings({
+      ...this.params,
+      ...params,
+    })
     const urlType = combinedParams.urlType || undefined
 
     if (combinedParams.debug)
@@ -217,23 +238,35 @@ export class Client {
     )
   }
 
-  async getJoinedRooms(): Promise<{ joined_rooms: string[] }> {
-    return this.get("joined_rooms")
+  async getJoinedRooms(): Promise<{ joined_rooms: string[] } | ErrorOutput> {
+    const res = await this.get("joined_rooms")
+    if (
+      is(ErrorSchema, res) ||
+      is(z.object({ joined_rooms: z.array(z.string()) }), res)
+    )
+      return res
+    return schemaError
   }
 
   async getRoomIdFromAlias(alias: string): Promise<string | ErrorOutput> {
-    const response = await this.get(
-      `directory/room/${encodeURIComponent(alias)}`
-    )
-    if ("errcode" in response) return response
-    return response.room_id
+    const res = await this.get(`directory/room/${encodeURIComponent(alias)}`)
+    if (is(ErrorSchema, res)) return res
+    if (is(z.object({ room_id: z.string() }), res)) return res.room_id
+    return schemaError
   }
 
-  async getProfile(userId?: string): Promise<{ displayname: string }> {
+  async getProfile(
+    userId?: string
+  ): Promise<{ displayname: string } | ErrorOutput> {
     const profile = await this.get(
       `profile/${userId || this.userId}/displayname`
     )
-    return profile
+    if (
+      is(ErrorSchema, profile) ||
+      is(z.object({ displayname: z.string() }), profile)
+    )
+      return profile
+    return schemaError
   }
 
   async getUser3pids(): Promise<any> {
@@ -276,16 +309,16 @@ export class Client {
     body: CreateRoomOptsOutput
   ): Promise<Room | { errcode: string; error?: string }> {
     const roomId = await this.post("createRoom", body)
-    if ("errcode" in roomId) {
-      return roomId
+    if (is(ErrorSchema, roomId)) return roomId
+    if (is(z.object({ room_id: z.string() }), roomId)) {
+      try {
+        const room = new Room(roomId.room_id, this)
+        return room
+      } catch (e) {
+        return { errcode: "Received strange roomId", error: roomId.room_id }
+      }
     }
-
-    try {
-      const room = new Room(roomId.room_id, this)
-      return room
-    } catch (e) {
-      return roomId.room_id
-    }
+    return schemaError
   }
 
   async add3pid(
@@ -298,8 +331,11 @@ export class Client {
       }
     },
     password: string
-  ): Promise<any> {
+  ): Promise<unknown> {
     const unauthorised = await this.post("account/3pid/add", body)
+    if (is(ErrorSchema, unauthorised)) return unauthorised
+    if (!is(z.object({ session: z.any(), flows: z.any() }), unauthorised))
+      return schemaError
     const { session, flows } = unauthorised
     console.log(flows)
     const next = await this.post("account/3pid/add", {

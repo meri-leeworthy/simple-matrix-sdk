@@ -2,9 +2,8 @@ import {
   ClientEventBaseSchema,
   ClientEventOutput,
   ClientEventSchema,
+  UnsignedDataOutput,
 } from "@/types/event"
-import { SpecRoomEventTypeOutput } from "@/types/types"
-import { UnsignedDataOutput } from "./types/event"
 import * as z from "zod"
 import { is } from "./types/utils"
 

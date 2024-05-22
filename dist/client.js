@@ -1,4 +1,27 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -10,7 +33,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Client = void 0;
-const _1 = require(".");
+const client_1 = require("@/types/client");
+const room_1 = require("./room");
+const z = __importStar(require("zod"));
 class Client {
     constructor(baseUrl, accessToken, opts) {
         this.baseUrl = baseUrl;
@@ -21,10 +46,10 @@ class Client {
     }
     static authenticatedGet(url, accessToken, opts) {
         return __awaiter(this, void 0, void 0, function* () {
-            const params = Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params);
+            const params = (0, client_1.deepConvertNumbersToStrings)(Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params));
             // return async function (url: string) {
             if (opts === null || opts === void 0 ? void 0 : opts.params) {
-                const paramsString = new URLSearchParams(opts.params).toString();
+                const paramsString = new URLSearchParams(params).toString();
                 url = `${url}?${paramsString}`;
             }
             const fetch = (opts === null || opts === void 0 ? void 0 : opts.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
@@ -38,11 +63,12 @@ class Client {
             // }
         });
     }
-    static authenticatedPut(url, accessToken, body, options) {
+    static authenticatedPut(url, accessToken, body, opts) {
         return __awaiter(this, void 0, void 0, function* () {
-            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
-            if (options === null || options === void 0 ? void 0 : options.params) {
-                const paramsString = new URLSearchParams(options.params).toString();
+            const fetch = (opts === null || opts === void 0 ? void 0 : opts.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
+            const params = (0, client_1.deepConvertNumbersToStrings)(Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params));
+            if (opts === null || opts === void 0 ? void 0 : opts.params) {
+                const paramsString = new URLSearchParams(params).toString();
                 url = `${url}?${paramsString}`;
             }
             if (!fetch)
@@ -58,13 +84,14 @@ class Client {
             return data;
         });
     }
-    static authenticatedPost(url, accessToken, body, options) {
+    static authenticatedPost(url, accessToken, body, opts) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (options === null || options === void 0 ? void 0 : options.params) {
-                const paramsString = new URLSearchParams(options.params).toString();
+            const params = (0, client_1.deepConvertNumbersToStrings)(Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params));
+            if (opts === null || opts === void 0 ? void 0 : opts.params) {
+                const paramsString = new URLSearchParams(params).toString();
                 url = `${url}?${paramsString}`;
             }
-            const fetch = (options === null || options === void 0 ? void 0 : options.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
+            const fetch = (opts === null || opts === void 0 ? void 0 : opts.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
             const response = yield fetch(url, {
                 method: "POST",
                 headers: {
@@ -127,7 +154,7 @@ class Client {
         });
     }
     getRoom(roomId) {
-        return new _1.Room(roomId, this);
+        return new room_1.Room(roomId, this);
     }
     buildUrl(endpoint, urlType) {
         const urlTypeOrDefault = urlType || "client/v3/";
@@ -135,7 +162,7 @@ class Client {
     }
     get(endpoint, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const combinedParams = Object.assign(Object.assign({}, this.params), params);
+            const combinedParams = (0, client_1.deepConvertNumbersToStrings)(Object.assign(Object.assign({}, this.params), params));
             const urlType = combinedParams.urlType || undefined;
             if (combinedParams.debug)
                 console.log("url", this.buildUrl(endpoint, urlType));
@@ -147,7 +174,7 @@ class Client {
     }
     put(endpoint, body, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const combinedParams = Object.assign(Object.assign({}, this.params), params);
+            const combinedParams = (0, client_1.deepConvertNumbersToStrings)(Object.assign(Object.assign({}, this.params), params));
             const urlType = combinedParams.urlType || undefined;
             if (combinedParams.debug)
                 console.log("url", this.buildUrl(endpoint, urlType));
@@ -159,7 +186,7 @@ class Client {
     }
     post(endpoint, body, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const combinedParams = Object.assign(Object.assign({}, this.params), params);
+            const combinedParams = (0, client_1.deepConvertNumbersToStrings)(Object.assign(Object.assign({}, this.params), params));
             const urlType = combinedParams.urlType || undefined;
             if (combinedParams.debug)
                 console.log("url", this.buildUrl(endpoint, urlType));
@@ -171,21 +198,30 @@ class Client {
     }
     getJoinedRooms() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.get("joined_rooms");
+            const res = yield this.get("joined_rooms");
+            if ((0, client_1.is)(client_1.ErrorSchema, res) ||
+                (0, client_1.is)(z.object({ joined_rooms: z.array(z.string()) }), res))
+                return res;
+            return client_1.schemaError;
         });
     }
     getRoomIdFromAlias(alias) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield this.get(`directory/room/${encodeURIComponent(alias)}`);
-            if ("errcode" in response)
-                return response;
-            return response.room_id;
+            const res = yield this.get(`directory/room/${encodeURIComponent(alias)}`);
+            if ((0, client_1.is)(client_1.ErrorSchema, res))
+                return res;
+            if ((0, client_1.is)(z.object({ room_id: z.string() }), res))
+                return res.room_id;
+            return client_1.schemaError;
         });
     }
     getProfile(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             const profile = yield this.get(`profile/${userId || this.userId}/displayname`);
-            return profile;
+            if ((0, client_1.is)(client_1.ErrorSchema, profile) ||
+                (0, client_1.is)(z.object({ displayname: z.string() }), profile))
+                return profile;
+            return client_1.schemaError;
         });
     }
     getUser3pids() {
@@ -229,21 +265,27 @@ class Client {
     createRoom(body) {
         return __awaiter(this, void 0, void 0, function* () {
             const roomId = yield this.post("createRoom", body);
-            if ("errcode" in roomId) {
+            if ((0, client_1.is)(client_1.ErrorSchema, roomId))
                 return roomId;
+            if ((0, client_1.is)(z.object({ room_id: z.string() }), roomId)) {
+                try {
+                    const room = new room_1.Room(roomId.room_id, this);
+                    return room;
+                }
+                catch (e) {
+                    return { errcode: "Received strange roomId", error: roomId.room_id };
+                }
             }
-            try {
-                const room = new _1.Room(roomId.room_id, this);
-                return room;
-            }
-            catch (e) {
-                return roomId.room_id;
-            }
+            return client_1.schemaError;
         });
     }
     add3pid(body, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const unauthorised = yield this.post("account/3pid/add", body);
+            if ((0, client_1.is)(client_1.ErrorSchema, unauthorised))
+                return unauthorised;
+            if (!(0, client_1.is)(z.object({ session: z.any(), flows: z.any() }), unauthorised))
+                return client_1.schemaError;
             const { session, flows } = unauthorised;
             console.log(flows);
             const next = yield this.post("account/3pid/add", {
