@@ -1,8 +1,10 @@
 //intention to create a class for events timeline similiar to the matrix-js-sdl
 //create a normalised, structured, validated, deduplicated tree of relations between events
 
-import { is } from "valibot"
-import { ClientEventOutput, EventContentSchema, Event } from "."
+import { Event } from "./event"
+import { EventContentSchema } from "./types/content"
+import { ClientEventOutput } from "./types/event"
+import { is } from "./types/utils"
 
 export class Timeline {
   events: Map<string, Event> = new Map<string, Event>()

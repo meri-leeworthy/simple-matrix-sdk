@@ -1,7 +1,6 @@
-import { ClientEventOutput } from "@/types/event";
-import { UnsignedDataOutput } from "./types/event";
+import { ClientEventOutput, SpecRoomEventTypeOutput, UnsignedDataOutput } from ".";
 export declare class Event {
-    type: string;
+    type: string | SpecRoomEventTypeOutput;
     content: unknown;
     eventId: string;
     sender: string;

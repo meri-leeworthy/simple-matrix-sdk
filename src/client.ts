@@ -1,5 +1,5 @@
-import { Room } from "."
-import { ClientOptions, CreateRoomOpts, ErrorOutput, Params } from "./types"
+import { CreateRoomOptsOutput, Room } from "."
+import { ClientOptions, ErrorOutput, Params } from "@/types/client"
 
 export class Client {
   private baseUrl: string
@@ -273,7 +273,7 @@ export class Client {
   }
 
   async createRoom(
-    body: CreateRoomOpts
+    body: CreateRoomOptsOutput
   ): Promise<Room | { errcode: string; error?: string }> {
     const roomId = await this.post("createRoom", body)
     if ("errcode" in roomId) {

@@ -3,9 +3,8 @@
 //create a normalised, structured, validated, deduplicated tree of relations between events
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Timeline = void 0;
-const event_1 = require("./event");
-const content_1 = require("./types/content");
-const utils_1 = require("./types/utils");
+const valibot_1 = require("valibot");
+const _1 = require(".");
 class Timeline {
     constructor(chunk) {
         this.events = new Map();
@@ -17,20 +16,20 @@ class Timeline {
         });
     }
     addEvent(event) {
-        if ((0, utils_1.is)(content_1.EventContentSchema, event.content) &&
+        if ((0, valibot_1.is)(_1.EventContentSchema, event.content) &&
             event.content["m.relates_to"] &&
             event.content["m.relates_to"].rel_type === "m.replace") {
             const id = event.content["m.relates_to"].event_id;
             const eventParent = this.events.get(id);
             if (eventParent) {
-                eventParent.edits.set(event.event_id, new event_1.Event(event));
+                eventParent.edits.set(event.event_id, new _1.Event(event));
             }
             else {
-                this.events.set(event.event_id, new event_1.Event(event));
+                this.events.set(event.event_id, new _1.Event(event));
             }
         }
         else {
-            this.events.set(event.event_id, new event_1.Event(event));
+            this.events.set(event.event_id, new _1.Event(event));
         }
     }
 }

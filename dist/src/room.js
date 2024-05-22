@@ -46,18 +46,16 @@ var __asyncGenerator = (this && this.__asyncGenerator) || function (thisArg, _ar
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Room = void 0;
 const z = __importStar(require("zod"));
-const client_1 = require("@/client");
-const _1 = require("@/.");
-const content_1 = require("@/types/content");
-const event_1 = require("@/types/event");
-const utils_1 = require("./types/utils");
+const client_1 = require("./client");
+const _1 = require(".");
+const content_1 = require("types/content");
 class Room {
     constructor(roomId, client) {
-        z.string()
-            .trim()
-            .startsWith("!")
-            .regex(/![a-zA-Z0-9]*:([a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*)/)
-            .parse(roomId);
+        z.parse(z.string().pipe([
+            z.toTrimmed(),
+            z.startsWith("!"),
+            z.regex(/![a-zA-Z0-9]*:([a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*)/), //roomId pattern
+        ]), roomId);
         this.roomId = roomId;
         this.client = client;
     }
@@ -105,7 +103,7 @@ class Room {
     getStateEvent(type, stateKey) {
         return __awaiter(this, void 0, void 0, function* () {
             const response = yield this.client.get(`rooms/${this.roomId}/state/${type}/${stateKey}`);
-            if ("error" in event_1.ClientEventSchema.safeParse(response))
+            if ("error" in ClientEvent.safeParse(response))
                 return response;
             const fullState = yield this.getState();
             if ("errcode" in fullState)
@@ -304,25 +302,25 @@ class Room {
             content_1.EventContentSchema.safeParse(message.content).success);
         const toBeEditedMessageIds = editMessages.map(message => {
             var _a;
-            return (0, utils_1.is)(content_1.EventContentSchema, message.content) &&
+            return "success" in content_1.EventContentSchema.safeParse(message.content) &&
                 ((_a = message.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id);
         });
         const originalMessagesToBeEdited = messages.filter(message => toBeEditedMessageIds.includes(message.event_id));
         const originalMessagesStayingTheSame = messages.filter(message => !toBeEditedMessageIds.includes(message.event_id) &&
-            !((0, utils_1.is)(content_1.EventContentSchema, message.content) &&
+            !("success" in content_1.EventContentSchema.safeParse(message.content) &&
                 message.content["m.relates_to"] &&
                 "rel_type" in message.content["m.relates_to"] &&
                 message.content["m.relates_to"]["rel_type"] === "m.replace"));
         const originalMessagesWithEditedBodies = originalMessagesToBeEdited.map(message => {
             const thisEditedMessage = editMessages.find(editMessage => {
                 var _a;
-                return (0, utils_1.is)(content_1.EventContentSchema, editMessage.content) &&
+                return z.is(content_1.EventContentSchema, editMessage.content) &&
                     ((_a = editMessage.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id) === message.event_id;
             });
-            const existingContent = (0, utils_1.is)(content_1.EventContentSchema, message.content)
+            const existingContent = v.is(content_1.EventContentSchema, message.content)
                 ? message.content
                 : {};
-            const editedContent = (0, utils_1.is)(content_1.EventContentSchema, thisEditedMessage === null || thisEditedMessage === void 0 ? void 0 : thisEditedMessage.content)
+            const editedContent = v.is(content_1.EventContentSchema, thisEditedMessage === null || thisEditedMessage === void 0 ? void 0 : thisEditedMessage.content)
                 ? thisEditedMessage === null || thisEditedMessage === void 0 ? void 0 : thisEditedMessage.content
                 : {};
             // "m.new_content" in thisEditedMessage.content &&
@@ -338,7 +336,7 @@ class Room {
         const rootEvents = new Map();
         messages.forEach(message => {
             var _a;
-            if ((0, utils_1.is)(content_1.EventContentSchema, message.content)) {
+            if ("success" in content_1.EventContentSchema.safeParse(message.content)) {
                 const id = ((_a = message.content["m.relates_to"]) === null || _a === void 0 ? void 0 : _a.event_id) || "";
                 const edits = rootEvents.get(id);
                 rootEvents.set(id, [...(edits || []), message]);

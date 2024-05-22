@@ -1,5 +1,6 @@
-import { CreateRoomOptsOutput, Room } from ".";
-import { ClientOptions, ErrorOutput, Params } from "@/types/client";
+import { Room } from ".";
+import { CreateRoomOpts } from "./types/types";
+import { ClientOptions, ErrorOutput, Params } from "types/client";
 export declare class Client {
     private baseUrl;
     accessToken: string;
@@ -39,7 +40,7 @@ export declare class Client {
     uploadFile(file: File): Promise<any>;
     joinRoom(roomIdOrAlias: string): Promise<any>;
     leaveRoom(roomId: string): Promise<any>;
-    createRoom(body: CreateRoomOptsOutput): Promise<Room | {
+    createRoom(body: CreateRoomOpts): Promise<Room | {
         errcode: string;
         error?: string;
     }>;

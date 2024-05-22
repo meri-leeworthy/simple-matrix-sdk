@@ -1,12 +1,50 @@
-import {
-  ClientEventBaseSchema,
-  ClientEventOutput,
-  ClientEventSchema,
-} from "@/types/event"
-import { SpecRoomEventTypeOutput } from "@/types/types"
-import { UnsignedDataOutput } from "./types/event"
 import * as z from "zod"
-import { is } from "./types/utils"
+import { ContentUnionSchema } from "./content"
+import { is } from "@/types/utils"
+
+export const ClientEventBaseSchema = z.object({
+  type: z.string({ invalid_type_error: "Event type must be a string" }),
+  content: z.unknown(),
+  sender: z.string({ invalid_type_error: "Sender must be a string" }),
+  room_id: z.string({ invalid_type_error: "Room ID must be a string" }),
+  event_id: z.string({ invalid_type_error: "Event ID must be a string" }),
+  state_key: z.optional(
+    z.string({ invalid_type_error: "State key must be a string" })
+  ),
+  origin_server_ts: z.number({
+    invalid_type_error: "Origin server timestamp must be a number",
+  }),
+  age: z.optional(z.number({ invalid_type_error: "Age must be a number" })),
+  replaces_state: z.optional(
+    z.string({ invalid_type_error: "Replaces state must be a string" })
+  ),
+  prev_content: z.optional(ContentUnionSchema),
+  user_id: z.optional(
+    z.string({ invalid_type_error: "User ID must be a string" })
+  ),
+})
+
+export type ClientEventBaseOutput = z.infer<typeof ClientEventBaseSchema> // 'redacted_because' ClientEvent should not contain another unsigned field
+
+export const UnsignedDataSchema = z
+  .object({
+    age: z.number({ invalid_type_error: "Age must be a number" }),
+    transaction_id: z.string({
+      invalid_type_error: "Transaction ID must be a string",
+    }),
+    prev_content: ContentUnionSchema,
+    "m.relations": z.unknown(),
+    redacted_because: ClientEventBaseSchema,
+  })
+  .partial()
+
+export type UnsignedDataOutput = z.infer<typeof UnsignedDataSchema>
+
+export const ClientEventSchema = ClientEventBaseSchema.extend({
+  unsigned: z.optional(UnsignedDataSchema),
+})
+
+export type ClientEventOutput = z.infer<typeof ClientEventSchema>
 
 export class Event {
   type: string
@@ -30,7 +68,6 @@ export class Event {
     }
 
     // event has been validated but the exact type and corresponding content is still unknown
-
     this.type = event.type
     this.content = event.content
     this.eventId = event.event_id

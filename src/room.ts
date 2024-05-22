@@ -1,15 +1,14 @@
-import * as v from "valibot"
-import { Client } from "./client"
+import * as z from "zod"
+import { Client } from "@/client"
+import { State, Timeline } from "@/."
+import { EventContentSchema } from "@/types/content"
+import { ErrorOutput, Params } from "@/types/client"
 import {
+  ClientEventBaseOutput,
   ClientEventOutput,
-  ErrorOutput,
-  ErrorSchema,
-  EventContentOutput,
-  EventContentSchema,
-  Params,
-  State,
-  Timeline,
-} from "."
+  ClientEventSchema,
+} from "@/types/event"
+import { is } from "./types/utils"
 
 export class Room {
   roomId: string
@@ -17,14 +16,11 @@ export class Room {
   name?: { name: string }
 
   constructor(roomId: string, client: Client) {
-    v.parse(
-      v.string([
-        v.toTrimmed(),
-        v.startsWith("!"),
-        v.regex(/![a-zA-Z0-9]*:([a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*)/), //roomId pattern
-      ]),
-      roomId
-    )
+    z.string()
+      .trim()
+      .startsWith("!")
+      .regex(/![a-zA-Z0-9]*:([a-zA-Z0-9]+(\.[a-zA-Z0-9]+)*)/)
+      .parse(roomId)
 
     this.roomId = roomId
     this.client = client
@@ -44,7 +40,9 @@ export class Room {
     return name
   }
 
-  async getMembers(): Promise<ErrorOutput | { chunk: ClientEventOutput[] }> {
+  async getMembers(): Promise<
+    ErrorOutput | { chunk: ClientEventBaseOutput[] }
+  > {
     return this.get(`members`, { debug: "true" })
   }
 
@@ -91,7 +89,7 @@ export class Room {
     const response = await this.client.get(
       `rooms/${this.roomId}/state/${type}/${stateKey}`
     )
-    if (!v.is(ErrorSchema, response)) return response
+    if ("error" in ClientEventSchema.safeParse(response)) return response
     const fullState = await this.getState()
     if ("errcode" in fullState) return fullState
     const stateEvent = fullState.get(type, stateKey)
@@ -330,12 +328,12 @@ export class Room {
         typeof message.content === "object" &&
         message.content !== null &&
         "m.new_content" in message.content &&
-        v.safeParse(EventContentSchema, message.content).success
+        EventContentSchema.safeParse(message.content).success
     )
 
     const toBeEditedMessageIds = editMessages.map(
       message =>
-        v.is(EventContentSchema, message.content) &&
+        is(EventContentSchema, message.content) &&
         message.content["m.relates_to"]?.event_id
     )
 
@@ -347,7 +345,7 @@ export class Room {
       message =>
         !toBeEditedMessageIds.includes(message.event_id) &&
         !(
-          v.is(EventContentSchema, message.content) &&
+          is(EventContentSchema, message.content) &&
           message.content["m.relates_to"] &&
           "rel_type" in message.content["m.relates_to"] &&
           message.content["m.relates_to"]["rel_type"] === "m.replace"
@@ -358,16 +356,13 @@ export class Room {
       message => {
         const thisEditedMessage = editMessages.find(
           editMessage =>
-            v.is(EventContentSchema, editMessage.content) &&
+            is(EventContentSchema, editMessage.content) &&
             editMessage.content["m.relates_to"]?.event_id === message.event_id
         )
-        const existingContent = v.is(EventContentSchema, message.content)
+        const existingContent = is(EventContentSchema, message.content)
           ? message.content
           : {}
-        const editedContent = v.is(
-          EventContentSchema,
-          thisEditedMessage?.content
-        )
+        const editedContent = is(EventContentSchema, thisEditedMessage?.content)
           ? thisEditedMessage?.content
           : {}
 
@@ -387,7 +382,7 @@ export class Room {
     const rootEvents = new Map<string, ClientEventOutput[]>()
 
     messages.forEach(message => {
-      if (v.is(EventContentSchema, message.content)) {
+      if (is(EventContentSchema, message.content)) {
         const id = message.content["m.relates_to"]?.event_id || ""
         const edits = rootEvents.get(id)
         rootEvents.set(id, [...(edits || []), message])

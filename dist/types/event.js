@@ -23,14 +23,43 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Event = void 0;
-const event_1 = require("@/types/event");
+exports.Event = exports.ClientEventSchema = exports.UnsignedDataSchema = exports.ClientEventBaseSchema = void 0;
 const z = __importStar(require("zod"));
-const utils_1 = require("./types/utils");
+const content_1 = require("./content");
+const utils_1 = require("@/types/utils");
+exports.ClientEventBaseSchema = z.object({
+    type: z.string({ invalid_type_error: "Event type must be a string" }),
+    content: z.unknown(),
+    sender: z.string({ invalid_type_error: "Sender must be a string" }),
+    room_id: z.string({ invalid_type_error: "Room ID must be a string" }),
+    event_id: z.string({ invalid_type_error: "Event ID must be a string" }),
+    state_key: z.optional(z.string({ invalid_type_error: "State key must be a string" })),
+    origin_server_ts: z.number({
+        invalid_type_error: "Origin server timestamp must be a number",
+    }),
+    age: z.optional(z.number({ invalid_type_error: "Age must be a number" })),
+    replaces_state: z.optional(z.string({ invalid_type_error: "Replaces state must be a string" })),
+    prev_content: z.optional(content_1.ContentUnionSchema),
+    user_id: z.optional(z.string({ invalid_type_error: "User ID must be a string" })),
+});
+exports.UnsignedDataSchema = z
+    .object({
+    age: z.number({ invalid_type_error: "Age must be a number" }),
+    transaction_id: z.string({
+        invalid_type_error: "Transaction ID must be a string",
+    }),
+    prev_content: content_1.ContentUnionSchema,
+    "m.relations": z.unknown(),
+    redacted_because: exports.ClientEventBaseSchema,
+})
+    .partial();
+exports.ClientEventSchema = exports.ClientEventBaseSchema.extend({
+    unsigned: z.optional(exports.UnsignedDataSchema),
+});
 class Event {
     constructor(event) {
         this.edits = new Map();
-        const result = event_1.ClientEventSchema.safeParse(event);
+        const result = exports.ClientEventSchema.safeParse(event);
         if (!result.success) {
             console.log("event", event);
             console.log("result", result);
@@ -46,7 +75,7 @@ class Event {
         this.stateKey = event.state_key;
         this.unsigned = event.unsigned;
         const RelationsSchema = z.object({
-            "m.replace": event_1.ClientEventBaseSchema,
+            "m.replace": exports.ClientEventBaseSchema,
         });
         if (event.unsigned &&
             event.unsigned["m.relations"] &&
@@ -54,11 +83,11 @@ class Event {
             const edits = event.unsigned["m.relations"]["m.replace"];
             if (Array.isArray(edits)) {
                 edits.forEach(edit => {
-                    "success" in event_1.ClientEventBaseSchema.safeParse(edit) &&
+                    "success" in exports.ClientEventBaseSchema.safeParse(edit) &&
                         this.addReplacement(edit);
                 });
             }
-            else if ("success" in event_1.ClientEventBaseSchema.safeParse(edits)) {
+            else if ("success" in exports.ClientEventBaseSchema.safeParse(edits)) {
                 this.addReplacement(edits);
             }
         }

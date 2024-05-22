@@ -1,5 +1,4 @@
-import { Event } from "./event";
-import { ClientEventOutput } from "./types/event";
+import { ClientEventOutput, Event } from ".";
 export declare class Timeline {
     events: Map<string, Event>;
     constructor(chunk: ClientEventOutput[]);
