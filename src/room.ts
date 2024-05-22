@@ -85,10 +85,10 @@ export class Room {
 
   async getRelations(
     eventId: string,
-    params: Record<string, any>,
+    params: Params,
     relType?: string,
     eventType?: string
-  ): Promise<any> {
+  ): Promise<unknown> {
     return this.client.get(
       `rooms/${this.roomId}/relations/${eventId}${relType && "/" + relType}${
         eventType && "/" + eventType
@@ -114,20 +114,44 @@ export class Room {
     return stateEvent
   }
 
-  async getPowerLevels(): Promise<any | ErrorOutput> {
-    return this.client.get(`rooms/${this.roomId}/state/m.room.power_levels`)
+  async getPowerLevels(): Promise<
+    | {
+        users: Record<string, number>
+        events: Record<string, number>
+        state_default: number
+      }
+    | ErrorOutput
+  > {
+    const res = await this.client.get(
+      `rooms/${this.roomId}/state/m.room.power_levels`
+    )
+    if (
+      is(
+        z.object({
+          users: z.record(z.number()),
+          events: z.record(z.number()),
+          state_default: z.number(),
+        }),
+        res
+      ) ||
+      is(ErrorSchema, res)
+    )
+      return res
+    return schemaError
   }
 
   async setEventPowerLevel(
     eventType: string,
     powerLevel: number
-  ): Promise<any | ErrorOutput> {
+  ): Promise<unknown | ErrorOutput> {
     if (!this.client.userId) throw new Error("No user ID")
     if (powerLevel < 0 || powerLevel > 100) {
       throw new Error("Power level must be between 0 and 100")
     }
 
     const powerLevels = await this.getPowerLevels()
+
+    if (is(ErrorSchema, powerLevels)) return powerLevels
     const events = powerLevels.events
 
     const newEvents = {
@@ -148,16 +172,21 @@ export class Room {
     )
   }
 
-  async getUserPowerLevel(): Promise<number> {
-    const { users } = await this.getPowerLevels()
-    return users[this.client.userId]
+  async getUserPowerLevel(): Promise<number | ErrorOutput> {
+    const res = await this.getPowerLevels()
+    if (is(ErrorSchema, res)) return res
+    return res.users[this.client.userId]
   }
 
-  async setUserPowerLevel(userId: string, powerLevel: number): Promise<any> {
+  async setUserPowerLevel(
+    userId: string,
+    powerLevel: number
+  ): Promise<unknown> {
     if (powerLevel < 0 || powerLevel > 100) {
       throw new Error("Power level must be between 0 and 100")
     }
     const powerLevels = await this.getPowerLevels()
+    if (is(ErrorSchema, powerLevels)) return powerLevels
     const users = powerLevels.users
     const newUsers = {
       ...users,
@@ -204,6 +233,7 @@ export class Room {
 
   async isUserModerator(userId?: string): Promise<boolean> {
     const powerLevels = await this.getPowerLevels()
+    if (is(ErrorSchema, powerLevels)) return false
     console.log("powerLevels", powerLevels)
     if (!this.client.userId) return false
     const userPowerLevel = powerLevels.users[userId || this.client.userId]
@@ -336,13 +366,13 @@ export class Room {
     return schemaError
   }
 
-  async setAlias(alias: string): Promise<any> {
+  async setAlias(alias: string): Promise<unknown> {
     return this.client.put(`directory/room/${encodeURIComponent(alias)}`, {
       room_id: this.roomId,
     })
   }
 
-  async deleteAlias(alias: string): Promise<any> {
+  async deleteAlias(alias: string): Promise<unknown> {
     return this.client.put(`directory/room/${alias}`, {})
   }
 

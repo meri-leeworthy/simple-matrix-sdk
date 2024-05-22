@@ -1,4 +1,5 @@
 import * as z from "zod"
+import { ErrorOutput } from "./client"
 
 export function is<T>(schema: z.ZodType<T>, t: any): t is T {
   try {
@@ -31,7 +32,7 @@ export function deepConvertNumbersToStrings(
   return newObj
 }
 
-export const schemaError = {
+export const schemaError: ErrorOutput = {
   errcode: "Unknown_result",
   error: "Result did not match expected schema",
 }
