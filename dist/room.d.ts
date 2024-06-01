@@ -2,6 +2,7 @@ import { Client } from "./client";
 import { State } from ".";
 import { ErrorOutput, Params } from "./types/client";
 import { ClientEventBaseOutput, ClientEventOutput } from "./types/event";
+import { SpaceHierarchyRoomsChunk } from "./types/hierarchy";
 export declare class Room {
     roomId: string;
     client: Client;
@@ -37,7 +38,7 @@ export declare class Room {
         limit?: number;
         from?: string;
         suggested_only?: boolean;
-    }): Promise<Record<string, unknown>[] | ErrorOutput | undefined>;
+    }): Promise<ErrorOutput | SpaceHierarchyRoomsChunk[]>;
     isUserModerator(userId?: string): Promise<boolean>;
     getMessagesAsyncGenerator(direction?: "f" | "b", limit?: number): AsyncGenerator<any, void, any>;
     sendMessage(body: any): Promise<{
@@ -58,7 +59,7 @@ export declare class Room {
         alias: string;
     } | ErrorOutput>;
     setAlias(alias: string): Promise<unknown>;
-    deleteAlias(alias: string): Promise<unknown>;
+    deleteAlias(alias: string): Promise<{} | ErrorOutput>;
     static sortEvents(events: ClientEventOutput[]): Record<string, ClientEventOutput[]>;
     static replaceEditedMessages(messages: ClientEventOutput[]): {
         type: string;

@@ -105,6 +105,30 @@ export class Client {
     return data
   }
 
+  static async authenticatedDelete(
+    url: string,
+    accessToken: string,
+    opts?: {
+      params?: Params
+      fetch?: any
+    }
+  ): Promise<unknown> {
+    const params = deepConvertNumbersToStrings({ ...opts?.params })
+    if (opts?.params) {
+      const paramsString = new URLSearchParams(params).toString()
+      url = `${url}?${paramsString}`
+    }
+    const fetch = opts?.fetch || window?.fetch || undefined
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+    const data = await response.json()
+    return data
+  }
+
   static async login(
     baseUrl: string,
     username: string,
@@ -231,6 +255,26 @@ export class Client {
     )
   }
 
+  async delete(endpoint: string, params?: Params) {
+    const combinedParams = deepConvertNumbersToStrings({
+      ...this.params,
+      ...params,
+    })
+    const urlType = combinedParams.urlType || undefined
+
+    if (combinedParams.debug)
+      console.log("url", this.buildUrl(endpoint, urlType))
+
+    return await Client.authenticatedDelete(
+      this.buildUrl(endpoint, urlType),
+      this.accessToken,
+      {
+        params: combinedParams,
+        fetch: this.fetch,
+      }
+    )
+  }
+
   async getJoinedRooms(): Promise<{ joined_rooms: string[] } | ErrorOutput> {
     const res = await this.get("joined_rooms")
     if (
@@ -290,8 +334,14 @@ export class Client {
     return data
   }
 
-  async joinRoom(roomIdOrAlias: string): Promise<any> {
-    return await this.post(`join/${roomIdOrAlias}`, {})
+  async joinRoom(
+    roomIdOrAlias: string,
+    params?: Params
+  ): Promise<ErrorOutput | { room_id: string }> {
+    const res = await this.post(`join/${roomIdOrAlias}`, {}, params)
+    if (is(ErrorSchema, res)) return res
+    if (is(z.object({ room_id: z.string() }), res)) return res
+    return schemaError
   }
 
   async leaveRoom(roomId: string): Promise<any> {

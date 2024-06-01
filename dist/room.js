@@ -52,6 +52,7 @@ const content_1 = require("./types/content");
 const client_2 = require("./types/client");
 const event_1 = require("./types/event");
 const utils_1 = require("./types/utils");
+const hierarchy_1 = require("./types/hierarchy");
 class Room {
     constructor(roomId, client) {
         z.string()
@@ -207,7 +208,7 @@ class Room {
             const res = yield this.client.get(`rooms/${this.roomId}/hierarchy`, params);
             if ((0, utils_1.is)(client_2.ErrorSchema, res))
                 return res;
-            if ((0, utils_1.is)(z.object({ rooms: z.array(z.record(z.unknown())) }), res))
+            if ((0, utils_1.is)(hierarchy_1.GetHierarchyResponse, res))
                 return res.rooms;
             return utils_1.schemaError;
         });
@@ -339,7 +340,10 @@ class Room {
     }
     deleteAlias(alias) {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.put(`directory/room/${alias}`, {});
+            const res = yield this.client.delete(`directory/room/${alias}`, {});
+            if ((0, utils_1.is)(client_2.ErrorSchema, res) || (0, utils_1.is)(z.object({}), res))
+                return res;
+            return utils_1.schemaError;
         });
     }
     static sortEvents(events) {

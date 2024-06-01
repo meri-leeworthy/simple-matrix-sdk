@@ -9,6 +9,10 @@ import {
   ClientEventSchema,
 } from "./types/event"
 import { is, schemaError } from "./types/utils"
+import {
+  GetHierarchyResponse,
+  SpaceHierarchyRoomsChunk,
+} from "./types/hierarchy"
 
 export class Room {
   roomId: string
@@ -207,7 +211,7 @@ export class Room {
     limit?: number
     from?: string
     suggested_only?: boolean
-  }): Promise<Record<string, unknown>[] | ErrorOutput | undefined> {
+  }): Promise<ErrorOutput | SpaceHierarchyRoomsChunk[]> {
     const params: Params = { urlType: "client/v1/" }
 
     const max_depth =
@@ -226,8 +230,7 @@ export class Room {
 
     const res = await this.client.get(`rooms/${this.roomId}/hierarchy`, params)
     if (is(ErrorSchema, res)) return res
-    if (is(z.object({ rooms: z.array(z.record(z.unknown())) }), res))
-      return res.rooms
+    if (is(GetHierarchyResponse, res)) return res.rooms
     return schemaError
   }
 
@@ -372,8 +375,10 @@ export class Room {
     })
   }
 
-  async deleteAlias(alias: string): Promise<unknown> {
-    return this.client.put(`directory/room/${alias}`, {})
+  async deleteAlias(alias: string): Promise<{} | ErrorOutput> {
+    const res = await this.client.delete(`directory/room/${alias}`, {})
+    if (is(ErrorSchema, res) || is(z.object({}), res)) return res
+    return schemaError
   }
 
   static sortEvents(

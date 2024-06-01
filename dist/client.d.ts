@@ -20,6 +20,10 @@ export declare class Client {
         params?: Params;
         fetch?: any;
     }): Promise<unknown>;
+    static authenticatedDelete(url: string, accessToken: string, opts?: {
+        params?: Params;
+        fetch?: any;
+    }): Promise<unknown>;
     static login(baseUrl: string, username: string, password: string, fetch?: any): Promise<any>;
     static register(username: string, password: string, baseUrl: string): Promise<any>;
     static isUsernameAvailable(username: string, baseUrl: string): Promise<boolean>;
@@ -29,6 +33,7 @@ export declare class Client {
     get(endpoint: string, params?: Params): Promise<unknown>;
     put(endpoint: string, body: any, params?: Params): Promise<unknown>;
     post(endpoint: string, body: any, params?: Params): Promise<unknown>;
+    delete(endpoint: string, params?: Params): Promise<unknown>;
     getJoinedRooms(): Promise<{
         joined_rooms: string[];
     } | ErrorOutput>;
@@ -38,7 +43,9 @@ export declare class Client {
     } | ErrorOutput>;
     getUser3pids(): Promise<any>;
     uploadFile(file: File): Promise<any>;
-    joinRoom(roomIdOrAlias: string): Promise<any>;
+    joinRoom(roomIdOrAlias: string, params?: Params): Promise<ErrorOutput | {
+        room_id: string;
+    }>;
     leaveRoom(roomId: string): Promise<any>;
     createRoom(body: CreateRoomOptsOutput): Promise<Room | {
         errcode: string;

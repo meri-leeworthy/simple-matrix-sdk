@@ -104,6 +104,24 @@ class Client {
             return data;
         });
     }
+    static authenticatedDelete(url, accessToken, opts) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const params = (0, utils_1.deepConvertNumbersToStrings)(Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params));
+            if (opts === null || opts === void 0 ? void 0 : opts.params) {
+                const paramsString = new URLSearchParams(params).toString();
+                url = `${url}?${paramsString}`;
+            }
+            const fetch = (opts === null || opts === void 0 ? void 0 : opts.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
+            const response = yield fetch(url, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            });
+            const data = yield response.json();
+            return data;
+        });
+    }
     static login(baseUrl, username, password, fetch) {
         return __awaiter(this, void 0, void 0, function* () {
             const fetcher = fetch || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
@@ -197,6 +215,18 @@ class Client {
             });
         });
     }
+    delete(endpoint, params) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const combinedParams = (0, utils_1.deepConvertNumbersToStrings)(Object.assign(Object.assign({}, this.params), params));
+            const urlType = combinedParams.urlType || undefined;
+            if (combinedParams.debug)
+                console.log("url", this.buildUrl(endpoint, urlType));
+            return yield Client.authenticatedDelete(this.buildUrl(endpoint, urlType), this.accessToken, {
+                params: combinedParams,
+                fetch: this.fetch,
+            });
+        });
+    }
     getJoinedRooms() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.get("joined_rooms");
@@ -253,9 +283,14 @@ class Client {
             return data;
         });
     }
-    joinRoom(roomIdOrAlias) {
+    joinRoom(roomIdOrAlias, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.post(`join/${roomIdOrAlias}`, {});
+            const res = yield this.post(`join/${roomIdOrAlias}`, {}, params);
+            if ((0, utils_1.is)(client_1.ErrorSchema, res))
+                return res;
+            if ((0, utils_1.is)(z.object({ room_id: z.string() }), res))
+                return res;
+            return utils_1.schemaError;
         });
     }
     leaveRoom(roomId) {
