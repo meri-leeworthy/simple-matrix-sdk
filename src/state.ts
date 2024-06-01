@@ -1,4 +1,4 @@
-import { ClientEventOutput } from "@/types/event"
+import { ClientEventOutput } from "./types/event"
 
 export class State {
   map: Map<string, Map<string, ClientEventOutput>>

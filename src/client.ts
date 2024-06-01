@@ -1,15 +1,8 @@
-import {
-  ClientOptions,
-  ErrorOutput,
-  ErrorSchema,
-  Params,
-  deepConvertNumbersToStrings,
-  is,
-  schemaError,
-} from "@/types/client"
+import { ClientOptions, ErrorOutput, ErrorSchema, Params } from "./types/client"
 import { Room } from "./room"
 import { CreateRoomOptsOutput } from "./types/types"
 import * as z from "zod"
+import { deepConvertNumbersToStrings, is, schemaError } from "./types/utils"
 
 export class Client {
   private baseUrl: string

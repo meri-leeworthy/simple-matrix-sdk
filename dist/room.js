@@ -46,10 +46,11 @@ var __asyncGenerator = (this && this.__asyncGenerator) || function (thisArg, _ar
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Room = void 0;
 const z = __importStar(require("zod"));
-const client_1 = require("@/client");
-const _1 = require("@/.");
-const content_1 = require("@/types/content");
-const event_1 = require("@/types/event");
+const client_1 = require("./client");
+const _1 = require(".");
+const content_1 = require("./types/content");
+const client_2 = require("./types/client");
+const event_1 = require("./types/event");
 const utils_1 = require("./types/utils");
 class Room {
     constructor(roomId, client) {
@@ -70,7 +71,7 @@ class Room {
     getName() {
         return __awaiter(this, void 0, void 0, function* () {
             const name = yield this.client.get(`rooms/${this.roomId}/state/m.room.name`);
-            if ((0, utils_1.is)(client_1.ErrorSchema, name))
+            if ((0, utils_1.is)(client_2.ErrorSchema, name))
                 return name;
             if (!(0, utils_1.is)(z.object({ name: z.string() }), name))
                 return utils_1.schemaError;
@@ -81,7 +82,7 @@ class Room {
     getMembers() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.get(`members`, { debug: "true" });
-            if ((0, utils_1.is)(client_1.ErrorSchema, res) ||
+            if ((0, utils_1.is)(client_2.ErrorSchema, res) ||
                 (0, utils_1.is)(z.object({ chunk: z.array(event_1.ClientEventSchema) }), res))
                 return res;
             return utils_1.schemaError;
@@ -90,7 +91,7 @@ class Room {
     getState() {
         return __awaiter(this, void 0, void 0, function* () {
             const state = yield this.client.get(`rooms/${this.roomId}/state`);
-            if ((0, utils_1.is)(client_1.ErrorSchema, state))
+            if ((0, utils_1.is)(client_2.ErrorSchema, state))
                 return state;
             if ((0, utils_1.is)(z.array(event_1.ClientEventSchema), state))
                 return new _1.State(state);
@@ -103,7 +104,7 @@ class Room {
             if ((0, utils_1.is)(z.object({ chunk: z.array(event_1.ClientEventSchema) }), res)) {
                 return res;
             }
-            if ((0, utils_1.is)(client_1.ErrorSchema, res))
+            if ((0, utils_1.is)(client_2.ErrorSchema, res))
                 return res;
             return utils_1.schemaError;
         });
@@ -111,7 +112,7 @@ class Room {
     getEvent(eventId) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.client.get(`rooms/${this.roomId}/event/${eventId}`);
-            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(event_1.ClientEventSchema, res))
+            if ((0, utils_1.is)(client_2.ErrorSchema, res) || (0, utils_1.is)(event_1.ClientEventSchema, res))
                 return res;
             return utils_1.schemaError;
         });
@@ -136,7 +137,15 @@ class Room {
     }
     getPowerLevels() {
         return __awaiter(this, void 0, void 0, function* () {
-            return this.client.get(`rooms/${this.roomId}/state/m.room.power_levels`);
+            const res = yield this.client.get(`rooms/${this.roomId}/state/m.room.power_levels`);
+            if ((0, utils_1.is)(z.object({
+                users: z.record(z.number()),
+                events: z.record(z.number()),
+                state_default: z.number(),
+            }), res) ||
+                (0, utils_1.is)(client_2.ErrorSchema, res))
+                return res;
+            return utils_1.schemaError;
         });
     }
     setEventPowerLevel(eventType, powerLevel) {
@@ -147,6 +156,8 @@ class Room {
                 throw new Error("Power level must be between 0 and 100");
             }
             const powerLevels = yield this.getPowerLevels();
+            if ((0, utils_1.is)(client_2.ErrorSchema, powerLevels))
+                return powerLevels;
             const events = powerLevels.events;
             const newEvents = Object.assign(Object.assign({}, events), { [eventType]: powerLevel });
             console.log("newEvents", newEvents); // needs checking :)
@@ -156,8 +167,10 @@ class Room {
     }
     getUserPowerLevel() {
         return __awaiter(this, void 0, void 0, function* () {
-            const { users } = yield this.getPowerLevels();
-            return users[this.client.userId];
+            const res = yield this.getPowerLevels();
+            if ((0, utils_1.is)(client_2.ErrorSchema, res))
+                return res;
+            return res.users[this.client.userId];
         });
     }
     setUserPowerLevel(userId, powerLevel) {
@@ -166,6 +179,8 @@ class Room {
                 throw new Error("Power level must be between 0 and 100");
             }
             const powerLevels = yield this.getPowerLevels();
+            if ((0, utils_1.is)(client_2.ErrorSchema, powerLevels))
+                return powerLevels;
             const users = powerLevels.users;
             const newUsers = Object.assign(Object.assign({}, users), { [userId]: powerLevel });
             const newPowerLevels = Object.assign(Object.assign({}, powerLevels), { users: newUsers });
@@ -190,7 +205,7 @@ class Room {
             if (suggested_only)
                 params["suggested_only"] = "true";
             const res = yield this.client.get(`rooms/${this.roomId}/hierarchy`, params);
-            if ((0, utils_1.is)(client_1.ErrorSchema, res))
+            if ((0, utils_1.is)(client_2.ErrorSchema, res))
                 return res;
             if ((0, utils_1.is)(z.object({ rooms: z.array(z.record(z.unknown())) }), res))
                 return res.rooms;
@@ -200,6 +215,8 @@ class Room {
     isUserModerator(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             const powerLevels = yield this.getPowerLevels();
+            if ((0, utils_1.is)(client_2.ErrorSchema, powerLevels))
+                return false;
             console.log("powerLevels", powerLevels);
             if (!this.client.userId)
                 return false;
@@ -247,7 +264,7 @@ class Room {
     sendMessage(body) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.client.put(`rooms/${this.roomId}/send/m.room.message/${Date.now()}`, body);
-            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(z.object({ event_id: z.string() }), res))
+            if ((0, utils_1.is)(client_2.ErrorSchema, res) || (0, utils_1.is)(z.object({ event_id: z.string() }), res))
                 return res;
             return utils_1.schemaError;
         });
@@ -255,7 +272,7 @@ class Room {
     sendEvent(type, body) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.client.put(`rooms/${this.roomId}/send/${type}/${Date.now()}`, body);
-            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(z.object({ event_id: z.string() }), res))
+            if ((0, utils_1.is)(client_2.ErrorSchema, res) || (0, utils_1.is)(z.object({ event_id: z.string() }), res))
                 return res;
             return utils_1.schemaError;
         });
@@ -263,7 +280,7 @@ class Room {
     sendStateEvent(type, body, stateKey) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.client.put(`rooms/${this.roomId}/state/${type}/${stateKey || ""}`, body);
-            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(z.object({ event_id: z.string() }), res))
+            if ((0, utils_1.is)(client_2.ErrorSchema, res) || (0, utils_1.is)(z.object({ event_id: z.string() }), res))
                 return res;
             return utils_1.schemaError;
         });
@@ -290,7 +307,7 @@ class Room {
     getAvatarMxc() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.client.get(`rooms/${this.roomId}/state/m.room.avatar`);
-            if ((0, utils_1.is)(client_1.ErrorSchema, res))
+            if ((0, utils_1.is)(client_2.ErrorSchema, res))
                 return res;
             if ((0, utils_1.is)(z.object({ url: z.string() }), res))
                 return res.url;
@@ -300,7 +317,7 @@ class Room {
     getAliases() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.client.get(`rooms/${this.roomId}/aliases`);
-            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(z.array(z.string()), res))
+            if ((0, utils_1.is)(client_2.ErrorSchema, res) || (0, utils_1.is)(z.array(z.string()), res))
                 return res;
             return utils_1.schemaError;
         });
@@ -308,7 +325,7 @@ class Room {
     getCanonicalAlias() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.client.get(`rooms/${this.roomId}/state/m.room.canonical_alias`);
-            if ((0, utils_1.is)(client_1.ErrorSchema, res) || (0, utils_1.is)(z.object({ alias: z.string() }), res))
+            if ((0, utils_1.is)(client_2.ErrorSchema, res) || (0, utils_1.is)(z.object({ alias: z.string() }), res))
                 return res;
             return utils_1.schemaError;
         });

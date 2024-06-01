@@ -33,9 +33,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Client = void 0;
-const client_1 = require("@/types/client");
+const client_1 = require("./types/client");
 const room_1 = require("./room");
 const z = __importStar(require("zod"));
+const utils_1 = require("./types/utils");
 class Client {
     constructor(baseUrl, accessToken, opts) {
         this.baseUrl = baseUrl;
@@ -46,7 +47,7 @@ class Client {
     }
     static authenticatedGet(url, accessToken, opts) {
         return __awaiter(this, void 0, void 0, function* () {
-            const params = (0, client_1.deepConvertNumbersToStrings)(Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params));
+            const params = (0, utils_1.deepConvertNumbersToStrings)(Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params));
             // return async function (url: string) {
             if (opts === null || opts === void 0 ? void 0 : opts.params) {
                 const paramsString = new URLSearchParams(params).toString();
@@ -66,7 +67,7 @@ class Client {
     static authenticatedPut(url, accessToken, body, opts) {
         return __awaiter(this, void 0, void 0, function* () {
             const fetch = (opts === null || opts === void 0 ? void 0 : opts.fetch) || (window === null || window === void 0 ? void 0 : window.fetch) || undefined;
-            const params = (0, client_1.deepConvertNumbersToStrings)(Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params));
+            const params = (0, utils_1.deepConvertNumbersToStrings)(Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params));
             if (opts === null || opts === void 0 ? void 0 : opts.params) {
                 const paramsString = new URLSearchParams(params).toString();
                 url = `${url}?${paramsString}`;
@@ -86,7 +87,7 @@ class Client {
     }
     static authenticatedPost(url, accessToken, body, opts) {
         return __awaiter(this, void 0, void 0, function* () {
-            const params = (0, client_1.deepConvertNumbersToStrings)(Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params));
+            const params = (0, utils_1.deepConvertNumbersToStrings)(Object.assign({}, opts === null || opts === void 0 ? void 0 : opts.params));
             if (opts === null || opts === void 0 ? void 0 : opts.params) {
                 const paramsString = new URLSearchParams(params).toString();
                 url = `${url}?${paramsString}`;
@@ -162,7 +163,7 @@ class Client {
     }
     get(endpoint, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const combinedParams = (0, client_1.deepConvertNumbersToStrings)(Object.assign(Object.assign({}, this.params), params));
+            const combinedParams = (0, utils_1.deepConvertNumbersToStrings)(Object.assign(Object.assign({}, this.params), params));
             const urlType = combinedParams.urlType || undefined;
             if (combinedParams.debug)
                 console.log("url", this.buildUrl(endpoint, urlType));
@@ -174,7 +175,7 @@ class Client {
     }
     put(endpoint, body, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const combinedParams = (0, client_1.deepConvertNumbersToStrings)(Object.assign(Object.assign({}, this.params), params));
+            const combinedParams = (0, utils_1.deepConvertNumbersToStrings)(Object.assign(Object.assign({}, this.params), params));
             const urlType = combinedParams.urlType || undefined;
             if (combinedParams.debug)
                 console.log("url", this.buildUrl(endpoint, urlType));
@@ -186,7 +187,7 @@ class Client {
     }
     post(endpoint, body, params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const combinedParams = (0, client_1.deepConvertNumbersToStrings)(Object.assign(Object.assign({}, this.params), params));
+            const combinedParams = (0, utils_1.deepConvertNumbersToStrings)(Object.assign(Object.assign({}, this.params), params));
             const urlType = combinedParams.urlType || undefined;
             if (combinedParams.debug)
                 console.log("url", this.buildUrl(endpoint, urlType));
@@ -199,29 +200,29 @@ class Client {
     getJoinedRooms() {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.get("joined_rooms");
-            if ((0, client_1.is)(client_1.ErrorSchema, res) ||
-                (0, client_1.is)(z.object({ joined_rooms: z.array(z.string()) }), res))
+            if ((0, utils_1.is)(client_1.ErrorSchema, res) ||
+                (0, utils_1.is)(z.object({ joined_rooms: z.array(z.string()) }), res))
                 return res;
-            return client_1.schemaError;
+            return utils_1.schemaError;
         });
     }
     getRoomIdFromAlias(alias) {
         return __awaiter(this, void 0, void 0, function* () {
             const res = yield this.get(`directory/room/${encodeURIComponent(alias)}`);
-            if ((0, client_1.is)(client_1.ErrorSchema, res))
+            if ((0, utils_1.is)(client_1.ErrorSchema, res))
                 return res;
-            if ((0, client_1.is)(z.object({ room_id: z.string() }), res))
+            if ((0, utils_1.is)(z.object({ room_id: z.string() }), res))
                 return res.room_id;
-            return client_1.schemaError;
+            return utils_1.schemaError;
         });
     }
     getProfile(userId) {
         return __awaiter(this, void 0, void 0, function* () {
             const profile = yield this.get(`profile/${userId || this.userId}/displayname`);
-            if ((0, client_1.is)(client_1.ErrorSchema, profile) ||
-                (0, client_1.is)(z.object({ displayname: z.string() }), profile))
+            if ((0, utils_1.is)(client_1.ErrorSchema, profile) ||
+                (0, utils_1.is)(z.object({ displayname: z.string() }), profile))
                 return profile;
-            return client_1.schemaError;
+            return utils_1.schemaError;
         });
     }
     getUser3pids() {
@@ -265,9 +266,9 @@ class Client {
     createRoom(body) {
         return __awaiter(this, void 0, void 0, function* () {
             const roomId = yield this.post("createRoom", body);
-            if ((0, client_1.is)(client_1.ErrorSchema, roomId))
+            if ((0, utils_1.is)(client_1.ErrorSchema, roomId))
                 return roomId;
-            if ((0, client_1.is)(z.object({ room_id: z.string() }), roomId)) {
+            if ((0, utils_1.is)(z.object({ room_id: z.string() }), roomId)) {
                 try {
                     const room = new room_1.Room(roomId.room_id, this);
                     return room;
@@ -276,16 +277,16 @@ class Client {
                     return { errcode: "Received strange roomId", error: roomId.room_id };
                 }
             }
-            return client_1.schemaError;
+            return utils_1.schemaError;
         });
     }
     add3pid(body, password) {
         return __awaiter(this, void 0, void 0, function* () {
             const unauthorised = yield this.post("account/3pid/add", body);
-            if ((0, client_1.is)(client_1.ErrorSchema, unauthorised))
+            if ((0, utils_1.is)(client_1.ErrorSchema, unauthorised))
                 return unauthorised;
-            if (!(0, client_1.is)(z.object({ session: z.any(), flows: z.any() }), unauthorised))
-                return client_1.schemaError;
+            if (!(0, utils_1.is)(z.object({ session: z.any(), flows: z.any() }), unauthorised))
+                return utils_1.schemaError;
             const { session, flows } = unauthorised;
             console.log(flows);
             const next = yield this.post("account/3pid/add", {

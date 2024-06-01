@@ -24,7 +24,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Event = void 0;
-const event_1 = require("@/types/event");
+const event_1 = require("./types/event");
 const z = __importStar(require("zod"));
 const utils_1 = require("./types/utils");
 class Event {

@@ -3,7 +3,7 @@ import {
   ClientEventOutput,
   ClientEventSchema,
   UnsignedDataOutput,
-} from "@/types/event"
+} from "./types/event"
 import * as z from "zod"
 import { is } from "./types/utils"
 

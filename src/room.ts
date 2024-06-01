@@ -1,13 +1,13 @@
 import * as z from "zod"
-import { Client, ErrorSchema } from "@/client"
-import { State, Timeline } from "@/."
-import { EventContentSchema } from "@/types/content"
-import { ErrorOutput, Params } from "@/types/client"
+import { Client } from "./client"
+import { State } from "."
+import { EventContentSchema } from "./types/content"
+import { ErrorOutput, ErrorSchema, Params } from "./types/client"
 import {
   ClientEventBaseOutput,
   ClientEventOutput,
   ClientEventSchema,
-} from "@/types/event"
+} from "./types/event"
 import { is, schemaError } from "./types/utils"
 
 export class Room {

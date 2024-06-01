@@ -1,7 +1,7 @@
-import { Client } from "@/client";
-import { State } from "@/.";
-import { ErrorOutput, Params } from "@/types/client";
-import { ClientEventBaseOutput, ClientEventOutput } from "@/types/event";
+import { Client } from "./client";
+import { State } from ".";
+import { ErrorOutput, Params } from "./types/client";
+import { ClientEventBaseOutput, ClientEventOutput } from "./types/event";
 export declare class Room {
     roomId: string;
     client: Client;
@@ -22,12 +22,16 @@ export declare class Room {
         chunk: ClientEventOutput[];
     } | ErrorOutput>;
     getEvent(eventId: string): Promise<ClientEventOutput | ErrorOutput>;
-    getRelations(eventId: string, params: Record<string, any>, relType?: string, eventType?: string): Promise<any>;
+    getRelations(eventId: string, params: Params, relType?: string, eventType?: string): Promise<unknown>;
     getStateEvent(type: string, stateKey?: string): Promise<ClientEventOutput | ErrorOutput | undefined>;
-    getPowerLevels(): Promise<any | ErrorOutput>;
-    setEventPowerLevel(eventType: string, powerLevel: number): Promise<any | ErrorOutput>;
-    getUserPowerLevel(): Promise<number>;
-    setUserPowerLevel(userId: string, powerLevel: number): Promise<any>;
+    getPowerLevels(): Promise<{
+        users: Record<string, number>;
+        events: Record<string, number>;
+        state_default: number;
+    } | ErrorOutput>;
+    setEventPowerLevel(eventType: string, powerLevel: number): Promise<unknown | ErrorOutput>;
+    getUserPowerLevel(): Promise<number | ErrorOutput>;
+    setUserPowerLevel(userId: string, powerLevel: number): Promise<unknown>;
     getHierarchy(opts?: {
         max_depth?: number;
         limit?: number;
@@ -53,8 +57,8 @@ export declare class Room {
     getCanonicalAlias(): Promise<{
         alias: string;
     } | ErrorOutput>;
-    setAlias(alias: string): Promise<any>;
-    deleteAlias(alias: string): Promise<any>;
+    setAlias(alias: string): Promise<unknown>;
+    deleteAlias(alias: string): Promise<unknown>;
     static sortEvents(events: ClientEventOutput[]): Record<string, ClientEventOutput[]>;
     static replaceEditedMessages(messages: ClientEventOutput[]): {
         type: string;

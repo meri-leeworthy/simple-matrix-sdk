@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Event = exports.ClientEventSchema = exports.UnsignedDataSchema = exports.ClientEventBaseSchema = void 0;
 const z = __importStar(require("zod"));
 const content_1 = require("./content");
-const utils_1 = require("@/types/utils");
+const utils_1 = require("./utils");
 exports.ClientEventBaseSchema = z.object({
     type: z.string({ invalid_type_error: "Event type must be a string" }),
     content: z.unknown(),

@@ -1,4 +1,4 @@
-import { ClientOptions, ErrorOutput, Params } from "@/types/client";
+import { ClientOptions, ErrorOutput, Params } from "./types/client";
 import { Room } from "./room";
 import { CreateRoomOptsOutput } from "./types/types";
 export declare class Client {

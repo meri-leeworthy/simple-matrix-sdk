@@ -1,4 +1,4 @@
-import { ClientEventOutput, UnsignedDataOutput } from "@/types/event";
+import { ClientEventOutput, UnsignedDataOutput } from "./types/event";
 export declare class Event {
     type: string;
     content: unknown;

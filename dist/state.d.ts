@@ -1,4 +1,4 @@
-import { ClientEventOutput } from "@/types/event";
+import { ClientEventOutput } from "./types/event";
 export declare class State {
     map: Map<string, Map<string, ClientEventOutput>>;
     constructor(chunk: ClientEventOutput[]);

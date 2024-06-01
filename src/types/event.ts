@@ -1,6 +1,6 @@
 import * as z from "zod"
 import { ContentUnionSchema } from "./content"
-import { is } from "@/types/utils"
+import { is } from "./utils"
 
 export const ClientEventBaseSchema = z.object({
   type: z.string({ invalid_type_error: "Event type must be a string" }),
