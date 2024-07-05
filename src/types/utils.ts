@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { ErrorOutput } from "./client"
+import { ErrorOutput, ErrorSchema } from "./client"
 
 export function is<T>(schema: z.ZodType<T>, t: any): t is T {
   try {
@@ -8,6 +8,14 @@ export function is<T>(schema: z.ZodType<T>, t: any): t is T {
   } catch (e) {
     return false
   }
+}
+
+export function isError(t: any): t is ErrorOutput {
+  return is(ErrorSchema, t)
+}
+
+export function parse<T>(schema: z.ZodType<T>, t: any): T {
+  return schema.parse(t)
 }
 
 export function deepConvertNumbersToStrings(
