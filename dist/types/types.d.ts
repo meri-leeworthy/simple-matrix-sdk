@@ -109,25 +109,25 @@ export declare const MatrixRoomCreateContent: z.ZodObject<{
         event_id: z.ZodString;
         room_id: z.ZodString;
     }, "strip", z.ZodTypeAny, {
-        room_id: string;
         event_id: string;
+        room_id: string;
     }, {
-        room_id: string;
         event_id: string;
+        room_id: string;
     }>>;
 }, "strip", z.ZodTypeAny, {
     creator: string;
     room_version?: string | undefined;
     predecessor?: {
-        room_id: string;
         event_id: string;
+        room_id: string;
     } | undefined;
 }, {
     creator: string;
     room_version?: string | undefined;
     predecessor?: {
-        room_id: string;
         event_id: string;
+        room_id: string;
     } | undefined;
 }>;
 export declare const MatrixRoomJoinRulesContent: z.ZodObject<{
@@ -219,9 +219,9 @@ export declare const CreateRoomOptsSchema: z.ZodObject<{
         state_key?: string | undefined;
     }>, "many">>;
 }, "strip", z.ZodTypeAny, {
-    name?: string | undefined;
     invite?: string[] | undefined;
     room_version?: string | undefined;
+    name?: string | undefined;
     topic?: string | undefined;
     invite_3pid?: {
         id_server: string;
@@ -240,9 +240,9 @@ export declare const CreateRoomOptsSchema: z.ZodObject<{
         state_key?: string | undefined;
     }[] | undefined;
 }, {
-    name?: string | undefined;
     invite?: string[] | undefined;
     room_version?: string | undefined;
+    name?: string | undefined;
     topic?: string | undefined;
     invite_3pid?: {
         id_server: string;

@@ -1538,12 +1538,12 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                     user_id: z.ZodOptional<z.ZodString>;
                 }, "strip", z.ZodTypeAny, {
                     type: string;
-                    sender: string;
-                    room_id: string;
                     event_id: string;
+                    room_id: string;
+                    sender: string;
                     origin_server_ts: number;
-                    content?: unknown;
                     state_key?: string | undefined;
+                    content?: unknown;
                     age?: number | undefined;
                     replaces_state?: string | undefined;
                     prev_content?: {
@@ -1669,12 +1669,12 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                     user_id?: string | undefined;
                 }, {
                     type: string;
-                    sender: string;
-                    room_id: string;
                     event_id: string;
+                    room_id: string;
+                    sender: string;
                     origin_server_ts: number;
-                    content?: unknown;
                     state_key?: string | undefined;
+                    content?: unknown;
                     age?: number | undefined;
                     replaces_state?: string | undefined;
                     prev_content?: {
@@ -1800,6 +1800,7 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                     user_id?: string | undefined;
                 }>>;
             }, "strip", z.ZodTypeAny, {
+                transaction_id?: string | undefined;
                 age?: number | undefined;
                 prev_content?: {
                     body: string;
@@ -1921,16 +1922,15 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                         room: number;
                     } | undefined;
                 } | undefined;
-                transaction_id?: string | undefined;
                 "m.relations"?: unknown;
                 redacted_because?: {
                     type: string;
-                    sender: string;
-                    room_id: string;
                     event_id: string;
+                    room_id: string;
+                    sender: string;
                     origin_server_ts: number;
-                    content?: unknown;
                     state_key?: string | undefined;
+                    content?: unknown;
                     age?: number | undefined;
                     replaces_state?: string | undefined;
                     prev_content?: {
@@ -2056,6 +2056,7 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                     user_id?: string | undefined;
                 } | undefined;
             }, {
+                transaction_id?: string | undefined;
                 age?: number | undefined;
                 prev_content?: {
                     body: string;
@@ -2177,16 +2178,15 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                         room: number;
                     } | undefined;
                 } | undefined;
-                transaction_id?: string | undefined;
                 "m.relations"?: unknown;
                 redacted_because?: {
                     type: string;
-                    sender: string;
-                    room_id: string;
                     event_id: string;
+                    room_id: string;
+                    sender: string;
                     origin_server_ts: number;
-                    content?: unknown;
                     state_key?: string | undefined;
+                    content?: unknown;
                     age?: number | undefined;
                     replaces_state?: string | undefined;
                     prev_content?: {
@@ -2314,12 +2314,12 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             }>>;
         }>, "strip", z.ZodTypeAny, {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
@@ -2444,6 +2444,7 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             } | undefined;
             user_id?: string | undefined;
             unsigned?: {
+                transaction_id?: string | undefined;
                 age?: number | undefined;
                 prev_content?: {
                     body: string;
@@ -2565,16 +2566,15 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                         room: number;
                     } | undefined;
                 } | undefined;
-                transaction_id?: string | undefined;
                 "m.relations"?: unknown;
                 redacted_because?: {
                     type: string;
-                    sender: string;
-                    room_id: string;
                     event_id: string;
+                    room_id: string;
+                    sender: string;
                     origin_server_ts: number;
-                    content?: unknown;
                     state_key?: string | undefined;
+                    content?: unknown;
                     age?: number | undefined;
                     replaces_state?: string | undefined;
                     prev_content?: {
@@ -2702,12 +2702,12 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             } | undefined;
         }, {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
@@ -2832,6 +2832,7 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             } | undefined;
             user_id?: string | undefined;
             unsigned?: {
+                transaction_id?: string | undefined;
                 age?: number | undefined;
                 prev_content?: {
                     body: string;
@@ -2953,16 +2954,15 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                         room: number;
                     } | undefined;
                 } | undefined;
-                transaction_id?: string | undefined;
                 "m.relations"?: unknown;
                 redacted_because?: {
                     type: string;
-                    sender: string;
-                    room_id: string;
                     event_id: string;
+                    room_id: string;
+                    sender: string;
                     origin_server_ts: number;
-                    content?: unknown;
                     state_key?: string | undefined;
+                    content?: unknown;
                     age?: number | undefined;
                     replaces_state?: string | undefined;
                     prev_content?: {
@@ -3095,14 +3095,15 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
         type: z.ZodString;
     }, "strip", z.ZodTypeAny, {
         type: string;
+        state_key: string;
         content: {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
@@ -3227,6 +3228,7 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             } | undefined;
             user_id?: string | undefined;
             unsigned?: {
+                transaction_id?: string | undefined;
                 age?: number | undefined;
                 prev_content?: {
                     body: string;
@@ -3348,16 +3350,15 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                         room: number;
                     } | undefined;
                 } | undefined;
-                transaction_id?: string | undefined;
                 "m.relations"?: unknown;
                 redacted_because?: {
                     type: string;
-                    sender: string;
-                    room_id: string;
                     event_id: string;
+                    room_id: string;
+                    sender: string;
                     origin_server_ts: number;
-                    content?: unknown;
                     state_key?: string | undefined;
+                    content?: unknown;
                     age?: number | undefined;
                     replaces_state?: string | undefined;
                     prev_content?: {
@@ -3485,18 +3486,18 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             } | undefined;
         };
         sender: string;
-        state_key: string;
         origin_server_ts: number;
     }, {
         type: string;
+        state_key: string;
         content: {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
@@ -3621,6 +3622,7 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             } | undefined;
             user_id?: string | undefined;
             unsigned?: {
+                transaction_id?: string | undefined;
                 age?: number | undefined;
                 prev_content?: {
                     body: string;
@@ -3742,16 +3744,15 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                         room: number;
                     } | undefined;
                 } | undefined;
-                transaction_id?: string | undefined;
                 "m.relations"?: unknown;
                 redacted_because?: {
                     type: string;
-                    sender: string;
-                    room_id: string;
                     event_id: string;
+                    room_id: string;
+                    sender: string;
                     origin_server_ts: number;
-                    content?: unknown;
                     state_key?: string | undefined;
+                    content?: unknown;
                     age?: number | undefined;
                     replaces_state?: string | undefined;
                     prev_content?: {
@@ -3879,7 +3880,6 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             } | undefined;
         };
         sender: string;
-        state_key: string;
         origin_server_ts: number;
     }>, "many">;
     guest_can_join: z.ZodBoolean;
@@ -3894,14 +3894,15 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
     room_id: string;
     children_state: {
         type: string;
+        state_key: string;
         content: {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
@@ -4026,6 +4027,7 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             } | undefined;
             user_id?: string | undefined;
             unsigned?: {
+                transaction_id?: string | undefined;
                 age?: number | undefined;
                 prev_content?: {
                     body: string;
@@ -4147,16 +4149,15 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                         room: number;
                     } | undefined;
                 } | undefined;
-                transaction_id?: string | undefined;
                 "m.relations"?: unknown;
                 redacted_because?: {
                     type: string;
-                    sender: string;
-                    room_id: string;
                     event_id: string;
+                    room_id: string;
+                    sender: string;
                     origin_server_ts: number;
-                    content?: unknown;
                     state_key?: string | undefined;
+                    content?: unknown;
                     age?: number | undefined;
                     replaces_state?: string | undefined;
                     prev_content?: {
@@ -4284,30 +4285,30 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             } | undefined;
         };
         sender: string;
-        state_key: string;
         origin_server_ts: number;
     }[];
     guest_can_join: boolean;
     num_joined_members: number;
     world_readable: boolean;
     avatar_url?: string | undefined;
-    canonical_alias?: string | undefined;
     join_rule?: string | undefined;
     name?: string | undefined;
-    room_type?: string | undefined;
     topic?: string | undefined;
+    canonical_alias?: string | undefined;
+    room_type?: string | undefined;
 }, {
     room_id: string;
     children_state: {
         type: string;
+        state_key: string;
         content: {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
@@ -4432,6 +4433,7 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             } | undefined;
             user_id?: string | undefined;
             unsigned?: {
+                transaction_id?: string | undefined;
                 age?: number | undefined;
                 prev_content?: {
                     body: string;
@@ -4553,16 +4555,15 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
                         room: number;
                     } | undefined;
                 } | undefined;
-                transaction_id?: string | undefined;
                 "m.relations"?: unknown;
                 redacted_because?: {
                     type: string;
-                    sender: string;
-                    room_id: string;
                     event_id: string;
+                    room_id: string;
+                    sender: string;
                     origin_server_ts: number;
-                    content?: unknown;
                     state_key?: string | undefined;
+                    content?: unknown;
                     age?: number | undefined;
                     replaces_state?: string | undefined;
                     prev_content?: {
@@ -4690,18 +4691,17 @@ export declare const SpaceHierarchyRoomsChunk: z.ZodObject<{
             } | undefined;
         };
         sender: string;
-        state_key: string;
         origin_server_ts: number;
     }[];
     guest_can_join: boolean;
     num_joined_members: number;
     world_readable: boolean;
     avatar_url?: string | undefined;
-    canonical_alias?: string | undefined;
     join_rule?: string | undefined;
     name?: string | undefined;
-    room_type?: string | undefined;
     topic?: string | undefined;
+    canonical_alias?: string | undefined;
+    room_type?: string | undefined;
 }>;
 export type SpaceHierarchyRoomsChunk = z.infer<typeof SpaceHierarchyRoomsChunk>;
 export declare const GetHierarchyResponse: z.ZodObject<{
@@ -6245,12 +6245,12 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                         user_id: z.ZodOptional<z.ZodString>;
                     }, "strip", z.ZodTypeAny, {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -6376,12 +6376,12 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                         user_id?: string | undefined;
                     }, {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -6507,6 +6507,7 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                         user_id?: string | undefined;
                     }>>;
                 }, "strip", z.ZodTypeAny, {
+                    transaction_id?: string | undefined;
                     age?: number | undefined;
                     prev_content?: {
                         body: string;
@@ -6628,16 +6629,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                             room: number;
                         } | undefined;
                     } | undefined;
-                    transaction_id?: string | undefined;
                     "m.relations"?: unknown;
                     redacted_because?: {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -6763,6 +6763,7 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                         user_id?: string | undefined;
                     } | undefined;
                 }, {
+                    transaction_id?: string | undefined;
                     age?: number | undefined;
                     prev_content?: {
                         body: string;
@@ -6884,16 +6885,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                             room: number;
                         } | undefined;
                     } | undefined;
-                    transaction_id?: string | undefined;
                     "m.relations"?: unknown;
                     redacted_because?: {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -7021,12 +7021,12 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 }>>;
             }>, "strip", z.ZodTypeAny, {
                 type: string;
-                sender: string;
-                room_id: string;
                 event_id: string;
+                room_id: string;
+                sender: string;
                 origin_server_ts: number;
-                content?: unknown;
                 state_key?: string | undefined;
+                content?: unknown;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
@@ -7151,6 +7151,7 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
                 user_id?: string | undefined;
                 unsigned?: {
+                    transaction_id?: string | undefined;
                     age?: number | undefined;
                     prev_content?: {
                         body: string;
@@ -7272,16 +7273,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                             room: number;
                         } | undefined;
                     } | undefined;
-                    transaction_id?: string | undefined;
                     "m.relations"?: unknown;
                     redacted_because?: {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -7409,12 +7409,12 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
             }, {
                 type: string;
-                sender: string;
-                room_id: string;
                 event_id: string;
+                room_id: string;
+                sender: string;
                 origin_server_ts: number;
-                content?: unknown;
                 state_key?: string | undefined;
+                content?: unknown;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
@@ -7539,6 +7539,7 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
                 user_id?: string | undefined;
                 unsigned?: {
+                    transaction_id?: string | undefined;
                     age?: number | undefined;
                     prev_content?: {
                         body: string;
@@ -7660,16 +7661,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                             room: number;
                         } | undefined;
                     } | undefined;
-                    transaction_id?: string | undefined;
                     "m.relations"?: unknown;
                     redacted_because?: {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -7802,14 +7802,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
             type: z.ZodString;
         }, "strip", z.ZodTypeAny, {
             type: string;
+            state_key: string;
             content: {
                 type: string;
-                sender: string;
-                room_id: string;
                 event_id: string;
+                room_id: string;
+                sender: string;
                 origin_server_ts: number;
-                content?: unknown;
                 state_key?: string | undefined;
+                content?: unknown;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
@@ -7934,6 +7935,7 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
                 user_id?: string | undefined;
                 unsigned?: {
+                    transaction_id?: string | undefined;
                     age?: number | undefined;
                     prev_content?: {
                         body: string;
@@ -8055,16 +8057,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                             room: number;
                         } | undefined;
                     } | undefined;
-                    transaction_id?: string | undefined;
                     "m.relations"?: unknown;
                     redacted_because?: {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -8192,18 +8193,18 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
             };
             sender: string;
-            state_key: string;
             origin_server_ts: number;
         }, {
             type: string;
+            state_key: string;
             content: {
                 type: string;
-                sender: string;
-                room_id: string;
                 event_id: string;
+                room_id: string;
+                sender: string;
                 origin_server_ts: number;
-                content?: unknown;
                 state_key?: string | undefined;
+                content?: unknown;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
@@ -8328,6 +8329,7 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
                 user_id?: string | undefined;
                 unsigned?: {
+                    transaction_id?: string | undefined;
                     age?: number | undefined;
                     prev_content?: {
                         body: string;
@@ -8449,16 +8451,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                             room: number;
                         } | undefined;
                     } | undefined;
-                    transaction_id?: string | undefined;
                     "m.relations"?: unknown;
                     redacted_because?: {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -8586,7 +8587,6 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
             };
             sender: string;
-            state_key: string;
             origin_server_ts: number;
         }>, "many">;
         guest_can_join: z.ZodBoolean;
@@ -8601,14 +8601,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
         room_id: string;
         children_state: {
             type: string;
+            state_key: string;
             content: {
                 type: string;
-                sender: string;
-                room_id: string;
                 event_id: string;
+                room_id: string;
+                sender: string;
                 origin_server_ts: number;
-                content?: unknown;
                 state_key?: string | undefined;
+                content?: unknown;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
@@ -8733,6 +8734,7 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
                 user_id?: string | undefined;
                 unsigned?: {
+                    transaction_id?: string | undefined;
                     age?: number | undefined;
                     prev_content?: {
                         body: string;
@@ -8854,16 +8856,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                             room: number;
                         } | undefined;
                     } | undefined;
-                    transaction_id?: string | undefined;
                     "m.relations"?: unknown;
                     redacted_because?: {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -8991,30 +8992,30 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
             };
             sender: string;
-            state_key: string;
             origin_server_ts: number;
         }[];
         guest_can_join: boolean;
         num_joined_members: number;
         world_readable: boolean;
         avatar_url?: string | undefined;
-        canonical_alias?: string | undefined;
         join_rule?: string | undefined;
         name?: string | undefined;
-        room_type?: string | undefined;
         topic?: string | undefined;
+        canonical_alias?: string | undefined;
+        room_type?: string | undefined;
     }, {
         room_id: string;
         children_state: {
             type: string;
+            state_key: string;
             content: {
                 type: string;
-                sender: string;
-                room_id: string;
                 event_id: string;
+                room_id: string;
+                sender: string;
                 origin_server_ts: number;
-                content?: unknown;
                 state_key?: string | undefined;
+                content?: unknown;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
@@ -9139,6 +9140,7 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
                 user_id?: string | undefined;
                 unsigned?: {
+                    transaction_id?: string | undefined;
                     age?: number | undefined;
                     prev_content?: {
                         body: string;
@@ -9260,16 +9262,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                             room: number;
                         } | undefined;
                     } | undefined;
-                    transaction_id?: string | undefined;
                     "m.relations"?: unknown;
                     redacted_because?: {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -9397,32 +9398,32 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
             };
             sender: string;
-            state_key: string;
             origin_server_ts: number;
         }[];
         guest_can_join: boolean;
         num_joined_members: number;
         world_readable: boolean;
         avatar_url?: string | undefined;
-        canonical_alias?: string | undefined;
         join_rule?: string | undefined;
         name?: string | undefined;
-        room_type?: string | undefined;
         topic?: string | undefined;
+        canonical_alias?: string | undefined;
+        room_type?: string | undefined;
     }>, "many">;
 }, "strip", z.ZodTypeAny, {
     rooms: {
         room_id: string;
         children_state: {
             type: string;
+            state_key: string;
             content: {
                 type: string;
-                sender: string;
-                room_id: string;
                 event_id: string;
+                room_id: string;
+                sender: string;
                 origin_server_ts: number;
-                content?: unknown;
                 state_key?: string | undefined;
+                content?: unknown;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
@@ -9547,6 +9548,7 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
                 user_id?: string | undefined;
                 unsigned?: {
+                    transaction_id?: string | undefined;
                     age?: number | undefined;
                     prev_content?: {
                         body: string;
@@ -9668,16 +9670,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                             room: number;
                         } | undefined;
                     } | undefined;
-                    transaction_id?: string | undefined;
                     "m.relations"?: unknown;
                     redacted_because?: {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -9805,18 +9806,17 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
             };
             sender: string;
-            state_key: string;
             origin_server_ts: number;
         }[];
         guest_can_join: boolean;
         num_joined_members: number;
         world_readable: boolean;
         avatar_url?: string | undefined;
-        canonical_alias?: string | undefined;
         join_rule?: string | undefined;
         name?: string | undefined;
-        room_type?: string | undefined;
         topic?: string | undefined;
+        canonical_alias?: string | undefined;
+        room_type?: string | undefined;
     }[];
     next_batch?: string | undefined;
 }, {
@@ -9824,14 +9824,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
         room_id: string;
         children_state: {
             type: string;
+            state_key: string;
             content: {
                 type: string;
-                sender: string;
-                room_id: string;
                 event_id: string;
+                room_id: string;
+                sender: string;
                 origin_server_ts: number;
-                content?: unknown;
                 state_key?: string | undefined;
+                content?: unknown;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
@@ -9956,6 +9957,7 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
                 user_id?: string | undefined;
                 unsigned?: {
+                    transaction_id?: string | undefined;
                     age?: number | undefined;
                     prev_content?: {
                         body: string;
@@ -10077,16 +10079,15 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                             room: number;
                         } | undefined;
                     } | undefined;
-                    transaction_id?: string | undefined;
                     "m.relations"?: unknown;
                     redacted_because?: {
                         type: string;
-                        sender: string;
-                        room_id: string;
                         event_id: string;
+                        room_id: string;
+                        sender: string;
                         origin_server_ts: number;
-                        content?: unknown;
                         state_key?: string | undefined;
+                        content?: unknown;
                         age?: number | undefined;
                         replaces_state?: string | undefined;
                         prev_content?: {
@@ -10214,18 +10215,17 @@ export declare const GetHierarchyResponse: z.ZodObject<{
                 } | undefined;
             };
             sender: string;
-            state_key: string;
             origin_server_ts: number;
         }[];
         guest_can_join: boolean;
         num_joined_members: number;
         world_readable: boolean;
         avatar_url?: string | undefined;
-        canonical_alias?: string | undefined;
         join_rule?: string | undefined;
         name?: string | undefined;
-        room_type?: string | undefined;
         topic?: string | undefined;
+        canonical_alias?: string | undefined;
+        room_type?: string | undefined;
     }[];
     next_batch?: string | undefined;
 }>;

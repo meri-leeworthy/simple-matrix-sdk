@@ -514,12 +514,12 @@ export declare const ClientEventBaseSchema: z.ZodObject<{
     user_id: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
     type: string;
-    sender: string;
-    room_id: string;
     event_id: string;
+    room_id: string;
+    sender: string;
     origin_server_ts: number;
-    content?: unknown;
     state_key?: string | undefined;
+    content?: unknown;
     age?: number | undefined;
     replaces_state?: string | undefined;
     prev_content?: {
@@ -645,12 +645,12 @@ export declare const ClientEventBaseSchema: z.ZodObject<{
     user_id?: string | undefined;
 }, {
     type: string;
-    sender: string;
-    room_id: string;
     event_id: string;
+    room_id: string;
+    sender: string;
     origin_server_ts: number;
-    content?: unknown;
     state_key?: string | undefined;
+    content?: unknown;
     age?: number | undefined;
     replaces_state?: string | undefined;
     prev_content?: {
@@ -1797,12 +1797,12 @@ export declare const UnsignedDataSchema: z.ZodObject<{
         user_id: z.ZodOptional<z.ZodString>;
     }, "strip", z.ZodTypeAny, {
         type: string;
-        sender: string;
-        room_id: string;
         event_id: string;
+        room_id: string;
+        sender: string;
         origin_server_ts: number;
-        content?: unknown;
         state_key?: string | undefined;
+        content?: unknown;
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
@@ -1928,12 +1928,12 @@ export declare const UnsignedDataSchema: z.ZodObject<{
         user_id?: string | undefined;
     }, {
         type: string;
-        sender: string;
-        room_id: string;
         event_id: string;
+        room_id: string;
+        sender: string;
         origin_server_ts: number;
-        content?: unknown;
         state_key?: string | undefined;
+        content?: unknown;
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
@@ -2059,6 +2059,7 @@ export declare const UnsignedDataSchema: z.ZodObject<{
         user_id?: string | undefined;
     }>>;
 }, "strip", z.ZodTypeAny, {
+    transaction_id?: string | undefined;
     age?: number | undefined;
     prev_content?: {
         body: string;
@@ -2180,16 +2181,15 @@ export declare const UnsignedDataSchema: z.ZodObject<{
             room: number;
         } | undefined;
     } | undefined;
-    transaction_id?: string | undefined;
     "m.relations"?: unknown;
     redacted_because?: {
         type: string;
-        sender: string;
-        room_id: string;
         event_id: string;
+        room_id: string;
+        sender: string;
         origin_server_ts: number;
-        content?: unknown;
         state_key?: string | undefined;
+        content?: unknown;
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
@@ -2315,6 +2315,7 @@ export declare const UnsignedDataSchema: z.ZodObject<{
         user_id?: string | undefined;
     } | undefined;
 }, {
+    transaction_id?: string | undefined;
     age?: number | undefined;
     prev_content?: {
         body: string;
@@ -2436,16 +2437,15 @@ export declare const UnsignedDataSchema: z.ZodObject<{
             room: number;
         } | undefined;
     } | undefined;
-    transaction_id?: string | undefined;
     "m.relations"?: unknown;
     redacted_because?: {
         type: string;
-        sender: string;
-        room_id: string;
         event_id: string;
+        room_id: string;
+        sender: string;
         origin_server_ts: number;
-        content?: unknown;
         state_key?: string | undefined;
+        content?: unknown;
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
@@ -4107,12 +4107,12 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
             user_id: z.ZodOptional<z.ZodString>;
         }, "strip", z.ZodTypeAny, {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
@@ -4238,12 +4238,12 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
             user_id?: string | undefined;
         }, {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
@@ -4369,6 +4369,7 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
             user_id?: string | undefined;
         }>>;
     }, "strip", z.ZodTypeAny, {
+        transaction_id?: string | undefined;
         age?: number | undefined;
         prev_content?: {
             body: string;
@@ -4490,16 +4491,15 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
                 room: number;
             } | undefined;
         } | undefined;
-        transaction_id?: string | undefined;
         "m.relations"?: unknown;
         redacted_because?: {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
@@ -4625,6 +4625,7 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
             user_id?: string | undefined;
         } | undefined;
     }, {
+        transaction_id?: string | undefined;
         age?: number | undefined;
         prev_content?: {
             body: string;
@@ -4746,16 +4747,15 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
                 room: number;
             } | undefined;
         } | undefined;
-        transaction_id?: string | undefined;
         "m.relations"?: unknown;
         redacted_because?: {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
@@ -4883,12 +4883,12 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
     }>>;
 }>, "strip", z.ZodTypeAny, {
     type: string;
-    sender: string;
-    room_id: string;
     event_id: string;
+    room_id: string;
+    sender: string;
     origin_server_ts: number;
-    content?: unknown;
     state_key?: string | undefined;
+    content?: unknown;
     age?: number | undefined;
     replaces_state?: string | undefined;
     prev_content?: {
@@ -5013,6 +5013,7 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
     } | undefined;
     user_id?: string | undefined;
     unsigned?: {
+        transaction_id?: string | undefined;
         age?: number | undefined;
         prev_content?: {
             body: string;
@@ -5134,16 +5135,15 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
                 room: number;
             } | undefined;
         } | undefined;
-        transaction_id?: string | undefined;
         "m.relations"?: unknown;
         redacted_because?: {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {
@@ -5271,12 +5271,12 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
     } | undefined;
 }, {
     type: string;
-    sender: string;
-    room_id: string;
     event_id: string;
+    room_id: string;
+    sender: string;
     origin_server_ts: number;
-    content?: unknown;
     state_key?: string | undefined;
+    content?: unknown;
     age?: number | undefined;
     replaces_state?: string | undefined;
     prev_content?: {
@@ -5401,6 +5401,7 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
     } | undefined;
     user_id?: string | undefined;
     unsigned?: {
+        transaction_id?: string | undefined;
         age?: number | undefined;
         prev_content?: {
             body: string;
@@ -5522,16 +5523,15 @@ export declare const ClientEventSchema: z.ZodObject<z.objectUtil.extendShape<{
                 room: number;
             } | undefined;
         } | undefined;
-        transaction_id?: string | undefined;
         "m.relations"?: unknown;
         redacted_because?: {
             type: string;
-            sender: string;
-            room_id: string;
             event_id: string;
+            room_id: string;
+            sender: string;
             origin_server_ts: number;
-            content?: unknown;
             state_key?: string | undefined;
+            content?: unknown;
             age?: number | undefined;
             replaces_state?: string | undefined;
             prev_content?: {

@@ -4,12 +4,12 @@ export declare class State {
     constructor(chunk: ClientEventOutput[]);
     get(type: string, stateKey?: string): {
         type: string;
-        sender: string;
-        room_id: string;
         event_id: string;
+        room_id: string;
+        sender: string;
         origin_server_ts: number;
-        content?: unknown;
         state_key?: string | undefined;
+        content?: unknown;
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
@@ -134,6 +134,7 @@ export declare class State {
         } | undefined;
         user_id?: string | undefined;
         unsigned?: {
+            transaction_id?: string | undefined;
             age?: number | undefined;
             prev_content?: {
                 body: string;
@@ -255,16 +256,15 @@ export declare class State {
                     room: number;
                 } | undefined;
             } | undefined;
-            transaction_id?: string | undefined;
             "m.relations"?: unknown;
             redacted_because?: {
                 type: string;
-                sender: string;
-                room_id: string;
                 event_id: string;
+                room_id: string;
+                sender: string;
                 origin_server_ts: number;
-                content?: unknown;
                 state_key?: string | undefined;
+                content?: unknown;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
@@ -393,12 +393,12 @@ export declare class State {
     } | undefined;
     getAll(type: string): Map<string, {
         type: string;
-        sender: string;
-        room_id: string;
         event_id: string;
+        room_id: string;
+        sender: string;
         origin_server_ts: number;
-        content?: unknown;
         state_key?: string | undefined;
+        content?: unknown;
         age?: number | undefined;
         replaces_state?: string | undefined;
         prev_content?: {
@@ -523,6 +523,7 @@ export declare class State {
         } | undefined;
         user_id?: string | undefined;
         unsigned?: {
+            transaction_id?: string | undefined;
             age?: number | undefined;
             prev_content?: {
                 body: string;
@@ -644,16 +645,15 @@ export declare class State {
                     room: number;
                 } | undefined;
             } | undefined;
-            transaction_id?: string | undefined;
             "m.relations"?: unknown;
             redacted_because?: {
                 type: string;
-                sender: string;
-                room_id: string;
                 event_id: string;
+                room_id: string;
+                sender: string;
                 origin_server_ts: number;
-                content?: unknown;
                 state_key?: string | undefined;
+                content?: unknown;
                 age?: number | undefined;
                 replaces_state?: string | undefined;
                 prev_content?: {
