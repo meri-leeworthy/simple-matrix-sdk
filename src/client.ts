@@ -1,8 +1,13 @@
-import { ClientOptions, ErrorOutput, ErrorSchema, Params } from "./types/client"
+import { ClientOptions, ErrorOutput, Params } from "./types/client"
 import { Room } from "./room"
 import { CreateRoomOptsOutput } from "./types/types"
 import * as z from "zod"
-import { deepConvertNumbersToStrings, is, schemaError } from "./types/utils"
+import {
+  deepConvertNumbersToStrings,
+  is,
+  isError,
+  schemaError,
+} from "./types/utils"
 
 export class Client {
   private baseUrl: string
@@ -278,7 +283,7 @@ export class Client {
   async getJoinedRooms(): Promise<{ joined_rooms: string[] } | ErrorOutput> {
     const res = await this.get("joined_rooms")
     if (
-      is(ErrorSchema, res) ||
+      isError(res) ||
       is(z.object({ joined_rooms: z.array(z.string()) }), res)
     )
       return res
@@ -287,7 +292,7 @@ export class Client {
 
   async getRoomIdFromAlias(alias: string): Promise<string | ErrorOutput> {
     const res = await this.get(`directory/room/${encodeURIComponent(alias)}`)
-    if (is(ErrorSchema, res)) return res
+    if (isError(res)) return res
     if (is(z.object({ room_id: z.string() }), res)) return res.room_id
     return schemaError
   }
@@ -298,10 +303,7 @@ export class Client {
     const profile = await this.get(
       `profile/${userId || this.userId}/displayname`
     )
-    if (
-      is(ErrorSchema, profile) ||
-      is(z.object({ displayname: z.string() }), profile)
-    )
+    if (isError(profile) || is(z.object({ displayname: z.string() }), profile))
       return profile
     return schemaError
   }
@@ -339,7 +341,7 @@ export class Client {
     params?: Params
   ): Promise<ErrorOutput | { room_id: string }> {
     const res = await this.post(`join/${roomIdOrAlias}`, {}, params)
-    if (is(ErrorSchema, res)) return res
+    if (isError(res)) return res
     if (is(z.object({ room_id: z.string() }), res)) return res
     return schemaError
   }
@@ -352,7 +354,7 @@ export class Client {
     body: CreateRoomOptsOutput
   ): Promise<Room | { errcode: string; error?: string }> {
     const roomId = await this.post("createRoom", body)
-    if (is(ErrorSchema, roomId)) return roomId
+    if (isError(roomId)) return roomId
     if (is(z.object({ room_id: z.string() }), roomId)) {
       try {
         const room = new Room(roomId.room_id, this)
@@ -376,7 +378,7 @@ export class Client {
     password: string
   ): Promise<unknown> {
     const unauthorised = await this.post("account/3pid/add", body)
-    if (is(ErrorSchema, unauthorised)) return unauthorised
+    if (isError(unauthorised)) return unauthorised
     if (!is(z.object({ session: z.any(), flows: z.any() }), unauthorised))
       return schemaError
     const { session, flows } = unauthorised

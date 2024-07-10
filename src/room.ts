@@ -2,13 +2,13 @@ import * as z from "zod"
 import { Client } from "./client"
 import { State } from "."
 import { EventContentSchema } from "./types/content"
-import { ErrorOutput, ErrorSchema, Params } from "./types/client"
+import { ErrorOutput, Params } from "./types/client"
 import {
   ClientEventBaseOutput,
   ClientEventOutput,
   ClientEventSchema,
 } from "./types/event"
-import { is, schemaError } from "./types/utils"
+import { is, isError, schemaError } from "./types/utils"
 import {
   GetHierarchyResponse,
   SpaceHierarchyRoomsChunk,
@@ -40,7 +40,7 @@ export class Room {
 
   async getName(): Promise<{ name: string } | ErrorOutput> {
     const name = await this.client.get(`rooms/${this.roomId}/state/m.room.name`)
-    if (is(ErrorSchema, name)) return name
+    if (isError(name)) return name
     if (!is(z.object({ name: z.string() }), name)) return schemaError
     this.name = name.name
     return name
@@ -51,7 +51,7 @@ export class Room {
   > {
     const res = await this.get(`members`, { debug: "true" })
     if (
-      is(ErrorSchema, res) ||
+      isError(res) ||
       is(z.object({ chunk: z.array(ClientEventSchema) }), res)
     )
       return res
@@ -60,7 +60,7 @@ export class Room {
 
   async getState(): Promise<State | ErrorOutput> {
     const state = await this.client.get(`rooms/${this.roomId}/state`)
-    if (is(ErrorSchema, state)) return state
+    if (isError(state)) return state
     if (is(z.array(ClientEventSchema), state)) return new State(state)
     return schemaError
   }
@@ -77,13 +77,13 @@ export class Room {
     if (is(z.object({ chunk: z.array(ClientEventSchema) }), res)) {
       return res
     }
-    if (is(ErrorSchema, res)) return res
+    if (isError(res)) return res
     return schemaError
   }
 
   async getEvent(eventId: string): Promise<ClientEventOutput | ErrorOutput> {
     const res = await this.client.get(`rooms/${this.roomId}/event/${eventId}`)
-    if (is(ErrorSchema, res) || is(ClientEventSchema, res)) return res
+    if (isError(res) || is(ClientEventSchema, res)) return res
     return schemaError
   }
 
@@ -138,7 +138,7 @@ export class Room {
         }),
         res
       ) ||
-      is(ErrorSchema, res)
+      isError(res)
     )
       return res
     return schemaError
@@ -155,7 +155,7 @@ export class Room {
 
     const powerLevels = await this.getPowerLevels()
 
-    if (is(ErrorSchema, powerLevels)) return powerLevels
+    if (isError(powerLevels)) return powerLevels
     const events = powerLevels.events
 
     const newEvents = {
@@ -178,7 +178,7 @@ export class Room {
 
   async getUserPowerLevel(): Promise<number | ErrorOutput> {
     const res = await this.getPowerLevels()
-    if (is(ErrorSchema, res)) return res
+    if (isError(res)) return res
     return res.users[this.client.userId]
   }
 
@@ -190,7 +190,7 @@ export class Room {
       throw new Error("Power level must be between 0 and 100")
     }
     const powerLevels = await this.getPowerLevels()
-    if (is(ErrorSchema, powerLevels)) return powerLevels
+    if (isError(powerLevels)) return powerLevels
     const users = powerLevels.users
     const newUsers = {
       ...users,
@@ -229,14 +229,14 @@ export class Room {
     if (suggested_only) params["suggested_only"] = "true"
 
     const res = await this.client.get(`rooms/${this.roomId}/hierarchy`, params)
-    if (is(ErrorSchema, res)) return res
+    if (isError(res)) return res
     if (is(GetHierarchyResponse, res)) return res.rooms
     return schemaError
   }
 
   async isUserModerator(userId?: string): Promise<boolean> {
     const powerLevels = await this.getPowerLevels()
-    if (is(ErrorSchema, powerLevels)) return false
+    if (isError(powerLevels)) return false
     console.log("powerLevels", powerLevels)
     if (!this.client.userId) return false
     const userPowerLevel = powerLevels.users[userId || this.client.userId]
@@ -294,8 +294,7 @@ export class Room {
       `rooms/${this.roomId}/send/m.room.message/${Date.now()}`,
       body
     )
-    if (is(ErrorSchema, res) || is(z.object({ event_id: z.string() }), res))
-      return res
+    if (isError(res) || is(z.object({ event_id: z.string() }), res)) return res
     return schemaError
   }
 
@@ -307,8 +306,7 @@ export class Room {
       `rooms/${this.roomId}/send/${type}/${Date.now()}`,
       body
     )
-    if (is(ErrorSchema, res) || is(z.object({ event_id: z.string() }), res))
-      return res
+    if (isError(res) || is(z.object({ event_id: z.string() }), res)) return res
     return schemaError
   }
 
@@ -321,8 +319,7 @@ export class Room {
       `rooms/${this.roomId}/state/${type}/${stateKey || ""}`,
       body
     )
-    if (is(ErrorSchema, res) || is(z.object({ event_id: z.string() }), res))
-      return res
+    if (isError(res) || is(z.object({ event_id: z.string() }), res)) return res
     return schemaError
   }
 
@@ -349,14 +346,14 @@ export class Room {
     const res = await this.client.get(
       `rooms/${this.roomId}/state/m.room.avatar`
     )
-    if (is(ErrorSchema, res)) return res
+    if (isError(res)) return res
     if (is(z.object({ url: z.string() }), res)) return res.url
     return schemaError
   }
 
   async getAliases(): Promise<string[] | ErrorOutput> {
     const res = await this.client.get(`rooms/${this.roomId}/aliases`)
-    if (is(ErrorSchema, res) || is(z.array(z.string()), res)) return res
+    if (isError(res) || is(z.array(z.string()), res)) return res
     return schemaError
   }
 
@@ -364,8 +361,7 @@ export class Room {
     const res = await this.client.get(
       `rooms/${this.roomId}/state/m.room.canonical_alias`
     )
-    if (is(ErrorSchema, res) || is(z.object({ alias: z.string() }), res))
-      return res
+    if (isError(res) || is(z.object({ alias: z.string() }), res)) return res
     return schemaError
   }
 
@@ -377,7 +373,7 @@ export class Room {
 
   async deleteAlias(alias: string): Promise<{} | ErrorOutput> {
     const res = await this.client.delete(`directory/room/${alias}`, {})
-    if (is(ErrorSchema, res) || is(z.object({}), res)) return res
+    if (isError(res) || is(z.object({}), res)) return res
     return schemaError
   }
 
